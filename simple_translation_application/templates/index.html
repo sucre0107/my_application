@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="{% static 'staticfiles_for_project/css/tailwind.css' %}">
+</head>
+<body>
+<form class="" novalidate>
+	{% csrf_token %}
+	{% for field in form %}
+		<div class="flex">
+			<label for="{{ field.name }}">{{ field.label }}</label>
+			{{ field }}
+			{{ endfor }}
+		</div>
+	{% endfor %}
+
+	<button id="translateBtn"
+			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+			type="button">
+		翻译
+	</button>
+</form>
+<script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
+<script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
+
+<script>
+    $(function () {
+        btnClickEvent();
+
+    })
+
+    // 按钮点击事件
+    function btnClickEvent() {
+        $('#translateBtn').click(function () {
+            $.ajax({
+                url: '{% url 'translate' %}',
+                type: 'POST',
+                data: $('form').serialize(),
+                dataType: 'JSON',
+                success: function (res) {
+                    console.log($('#id_text').serialize());
+                    if (res.status) {
+						var translation = res.data.translation
+						$('#id_translation').val(translation)
+
+					} else {
+
+					}
+                    //
+                }
+            })
+        })
+    }
+
+
+
+
+</script>
+</body>
+</html>
