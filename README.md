@@ -46,7 +46,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'my_application'@'localhost';
 
 
 
-### 2 集成tailwind
+### 2 集成tailwind--(此方法有问题,最后还是使用tailwind 官方的方法)
 
 
 

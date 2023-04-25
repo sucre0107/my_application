@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-33i&l@30v(i5)udw*vmy93)vb-k!zsg4c&z1_4_$zqpl*p5ir7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
 
 
 # Application definition
@@ -182,3 +182,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
