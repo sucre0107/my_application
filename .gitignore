@@ -1,11 +1,5 @@
 # for tailwind css
-/src
-/tailwind_app/static_src
-tailwind_app/static_src/tailwind.config.js
-tailwind_app/static_src/postcss.config.js
-tailwind_app/static_src/package-lock.json
-/staticfiles
-/node_modules
+node_modules
 #------------------------#
 
 

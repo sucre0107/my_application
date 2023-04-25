@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class Tailwind_appConfig(AppConfig):
-    name = 'tailwind_app'
+class TailwindAppConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "tailwind_app"
