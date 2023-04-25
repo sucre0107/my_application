@@ -46,13 +46,26 @@ GRANT ALL PRIVILEGES ON *.* TO 'my_application'@'localhost';
 
 
 
+### 2 集成tailwind
+
+
+
+#### 2.1运行需要的命令
+
+```bash
+python3 manage.py tailwind start  
+python3 manage.py runserver
+```
+
+#### 2.2 参考资料
+
+> https://django-tailwind.readthedocs.io/en/latest/installation.html
 
 
 
 
 
-
-# 不能建立容器,我搞不定,直接诉诸机器安装
+# 不能建立容器,我搞不定,直接宿主机安装
 
 ### 1. 建立docker 容器
 

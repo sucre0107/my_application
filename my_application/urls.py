@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    # path("__reload__/", include("django_browser_reload.urls")), # tailwind的配置
     path("admin/", admin.site.urls),
     path("trans/", include("simple_translation_application.urls")),
 

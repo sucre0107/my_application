@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "simple_translation_application",
+    "tailwind",
+    "tailwind_app",
+    # "django_browser_reload",  # tailwind的配置
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -47,8 +50,16 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",  # tailwind的配置
 
 ]
+
+# tailwind的配置
+TAILWIND_APP_NAME = 'tailwind_app'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 
 
 ROOT_URLCONF = "my_application.urls"
@@ -171,6 +182,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "simple_translation_application/static"),
     os.path.join(BASE_DIR, "staticfiles"),
+    os.path.join(BASE_DIR, "tailwind_app/static"),
+
 ]
 
 
