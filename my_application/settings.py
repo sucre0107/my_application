@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     #"django.middleware.security.SecurityMiddleware",
-    #"django.contrib.sessions.middleware.SessionMiddleware",
-    #"django.middleware.common.CommonMiddleware",
-    #"django.middleware.csrf.CsrfViewMiddleware",
-    #"django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
@@ -186,3 +186,4 @@ try:
     from .local_settings import *
 except ImportError:
     ValueError("No local_settings.py found. Did you forget to create one?")
+# 本地开发环境配置
