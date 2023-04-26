@@ -95,26 +95,25 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "my_application", # 数据库名
-        'USER': 'my_application',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': "", # 数据库名
+        'USER': '',# 数据库用户名
+        'PASSWORD': '', # 数据库密码
+        'HOST': '127.0.0.1', # 数据库主机
+        'PORT': '3306', # 数据库端口
     }
 }
 # 用于连接 Redis 数据库
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://:redispw@localhost:32768/1',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379", # Redis 地址
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+            "PASSWORD": "", # Redis 密码
         },
-        # 缓存前缀，
-        'KEY_PREFIX': 'my_application',
-        # 最大连接数
-        'CONNECTION_POOL_KWARGS': {'max_connections': 100},
-        'TIMEOUT': 300,  # 缓存超时时间
+        "KEY_PREFIX": "my_application", # Redis 前缀
+        "TIMEOUT": 300, # Redis 过期时间
     }
 }
 

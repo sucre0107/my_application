@@ -1,4 +1,5 @@
 import pymysql
+pymysql.version_info = (1, 4, 3, "final", 0)
 pymysql.install_as_MySQLdb()
 # 这一行代码必须放在这里，否则会报错
 # 因为django在启动的时候会去读取这个文件，所以这个文件必须在django启动之前就已经存在
