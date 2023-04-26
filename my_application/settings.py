@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-33i&l@30v(i5)udw*vmy93)vb-k!zsg4c&z1_4_$zqpl*p5ir7
 DEBUG = True
 
 ALLOWED_HOSTS = [] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
-
+# 这里是验证外部请求request的header中的host是否在ALLOWED_HOSTS中，如果不在，就不能访问
 
 # Application definition
 
@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     "tailwind_app",
 ]
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    #"django.middleware.security.SecurityMiddleware",
+    #"django.contrib.sessions.middleware.SessionMiddleware",
+    #"django.middleware.common.CommonMiddleware",
+    #"django.middleware.csrf.CsrfViewMiddleware",
+    #"django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
