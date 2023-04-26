@@ -4,3 +4,15 @@ node_modules
 
 # for settings
 local_settings.py
+
+
+# for mirgrations
+*/migrations/*.py
+!*/migrations/__init__.py
+# keep __init__.py files 排除__init__.py文件
+
+# for macOS
+.DS_Store
+
+#for pycharm
+.idea
