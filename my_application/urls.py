@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from simple_translation_application import views, urls
+from ai_apps import views, urls
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,6 +24,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     # path("__reload__/", include("django_browser_reload.urls")), # tailwind的配置
     path("admin/", admin.site.urls),
-    path("trans/", include("simple_translation_application.urls")),
+    path("ai_apps/", include("ai_apps.urls")),
 
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "simple_translation_application",
+    "ai_apps",
     "tailwind_app",
 ]
 MIDDLEWARE = [
@@ -57,7 +57,7 @@ ROOT_URLCONF = "my_application.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "simple_translation_application/templates"),],
+        "DIRS": [os.path.join(BASE_DIR, "ai_apps/templates"), ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -169,7 +169,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "simple_translation_application/static"),
+    os.path.join(BASE_DIR, "ai_apps/static"),
     os.path.join(BASE_DIR, "staticfiles"),
     os.path.join(BASE_DIR, "tailwind_app/static"),
 

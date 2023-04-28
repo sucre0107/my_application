@@ -20,35 +20,36 @@ class BaseResponse(object):
 
 
 # Create your views here.
-def index(request):
+def translator(request):
     # 只是为了页面展示
     form = forms.TranslationForm()
-    return render(request, "index.html", {"form": form})
+    return render(request, "translator.html", {"form": form})
 
 
 def translate(request):
+
     res = BaseResponse()
     # print(request.POST)
 
     text = request.POST.get('text')
     # print(type(text))
     # template里面的变量要注意空格
-    template = """
-    translate English to Chinese:
-    English: {original_text}
-    Chinese:
-    """
-    prompt = PromptTemplate(template=template, input_variables=["original_text"])
-    llm = OpenAI()
-    llm_chain = LLMChain(prompt=prompt, llm=llm)
-    original_text = text
-    result = llm_chain.run(original_text)
-    res.status = True
-    # res.date的值是一个字典，添加一个键值对，key是translation，value是result
-    res.data = {}
-    res.data["translation"] = result
-    # 还有其他写法吗？
-    # 给字典添加一个键值对
-    # print(res.dict)
+    try:
+        template = """
+        translate English to Chinese:
+        English: {original_text}
+        Chinese:
+        """
+        prompt = PromptTemplate(template=template, input_variables=["original_text"])
+        llm = OpenAI(streaming=True) # 不写参数就是默认的，默认model_name = "text-davinci-003"
+        llm_chain = LLMChain(prompt=prompt, llm=llm)
+        original_text = text
+        result = llm_chain.run(original_text)
+        res.status = True
+        # res.date的值是一个字典，添加一个键值对，key是translation，value是result
+        res.data = {}
+        res.data["translation"] = result
+    except Exception as e:
+        print(e)
 
     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
