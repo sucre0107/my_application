@@ -7,10 +7,17 @@
 	<link rel="stylesheet" href="{% static 'tailwind_app/css/tailwind.css' %}">
 </head>
 <body>
-<form class="" novalidate>
+
+	<p class="w-full mx-auto text-red-400 text-blue-100">
+                hello world111
+            </p>
+
+
+<div class="relative border border-red-600">
+	<form class="" novalidate>
 	{% csrf_token %}
 	{% for field in form %}
-		<div class="flex">
+		<div class="">
 			<label for="{{ field.name }}">{{ field.label }}</label>
 			{{ field }}
 			{{ endfor }}
@@ -23,6 +30,8 @@
 		翻译
 	</button>
 </form>
+</div>
+
 <script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
 <script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
 
