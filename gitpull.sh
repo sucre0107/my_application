@@ -6,4 +6,4 @@ git fetch --all
 
 sleep 0.5
 
-git reset --hard origin/master
+git reset --hard origin/main
