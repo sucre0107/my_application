@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-33i&l@30v(i5)udw*vmy93)vb-k!zsg4c&z1_4_$zqpl*p5ir7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
+#STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
+ALLOWED_HOSTS = ['127.0.0.1'] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
 # 这里是验证外部请求request的header中的host是否在ALLOWED_HOSTS中，如果不在，就不能访问
 
 # Application definition
