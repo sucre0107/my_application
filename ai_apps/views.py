@@ -169,4 +169,3 @@ def translate(request):
     return StreamingHttpResponse(stream_res(), content_type="text/event-stream")
 
 
-·
