@@ -16,3 +16,6 @@ local_settings.py
 
 #for pycharm
 .idea
+
+# for rav
+rav.yaml
