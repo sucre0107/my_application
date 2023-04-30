@@ -13,21 +13,22 @@
 
 <div class="relative border border-red-600">
 	<form class="" novalidate>
-	{% csrf_token %}
-	{% for field in form %}
-		<div class="">
-			<label for="{{ field.name }}">{{ field.label }}</label>
-			{{ field }}
-			{{ endfor }}
-		</div>
-	{% endfor %}
+		{% csrf_token %}
+		{% for field in form %}
+			<div class="">
+				<label for="{{ field.name }}">{{ field.label }}</label>
+				{{ field }}
+				{{ endfor }}
+			</div>
+		{% endfor %}
 
-	<button id="translateBtn"
-			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-			type="button">
-		翻译
-	</button>
-</form>
+
+		<button id="translateBtn"
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				type="button">
+			翻译
+		</button>
+	</form>
 </div>
 
 <script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
@@ -35,42 +36,58 @@
 
 <script>
     $(function () {
-        btnClickEvent();
-		clearOldTranslation();
-    })
+        // 创建 EventSource 对象，并指定 URL
+        const eventSource = new EventSource("{% url 'translate' %}");
 
-    // 按钮点击事件
-    function btnClickEvent() {
-        $('#translateBtn').click(function () {
-            $.ajax({
-                url: '{% url 'translate' %}',
-                type: 'POST',
-                data: $('form').serialize(),
-                dataType: 'JSON',
-                success: function (res) {
-                    console.log($('#id_text').serialize());
-                    if (res.status) {
-						var translation = res.data.translation
-						$('#id_translation').val(translation)
-
-					} else {
-
-					}
-                    //
-                }
-            })
+        // 监听 message 事件
+        eventSource.addEventListener("message", (event) => {
+            const data = JSON.parse(event.data);
+            if (data.status) {
+                const translation = data.data.translation;
+                appendTranslation(translation);
+            }
+			});
+            btnClickEvent();
+            clearOldTranslation();
         })
-    }
-// 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
-	function clearOldTranslation(){
-        $('#id_text').change(function () {
-			$('#id_translation').val('')
-		})
-	}
 
 
+        // 按钮点击事件
+        function btnClickEvent() {
+            $('#translateBtn').click(function () {
+                $.ajax({
+                    url: '{% url 'translate' %}',
+                    type: 'POST',
+                    data: $('form').serialize(),
+                    dataType: 'JSON',
+                    success: function (res) {
+                        console.log($('#id_text').serialize());
+                        if (res.status) {
+                            // 什么也不做，等待服务器返回stream数据
+
+                        } else {
+							alert("fail")
+                        }
+                    }
+                })
+            })
+        }
+
+        function appendTranslation(translation) {
+            var translationTextarea = $('#id_translation');
+            var currentTranslation = translationTextarea.val();
+            translationTextarea.val(currentTranslation + translation)
+        }
 
 
+        //
+
+        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
+        function clearOldTranslation() {
+            $('#id_text').change(function () {
+                $('#id_translation').val('')
+            })
+        }
 </script>
 </body>
 </html>

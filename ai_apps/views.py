@@ -89,45 +89,84 @@ def translator(request):
 #     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
 # 原生openai,使用chatcompletion，便宜，推荐
+# def translate(request):
+#
+#     res = BaseResponse()
+#     # print(request.POST)
+#
+#     text = request.POST.get('text')
+#     # print(type(text))
+#     # template里面的变量要注意空格
+#     try:
+#         template = """
+#         translate English to Chinese:
+#         English: {original_text}
+#         Chinese:
+#         """
+#         prompt = template.format(original_text=text)
+#         chat_completion = openai.ChatCompletion.create(
+#             model="gpt-3.5-turbo",
+#             messages=[{"role":"system","content": "you are a translator" },
+#                       {"role":"user","content": prompt}
+#                       ],
+#             temperature=0,
+#             stream=True,
+#         )
+#         result = chat_completion.choices[0].message.content
+#         ######这样可以取得token的使用情况
+#         # usage_completion = chat_completion.usage.completion_tokens
+#         # usage_prompt = chat_completion.usage.prompt_tokens
+#         # total_tokens = chat_completion.usage.total_tokens
+#         # print(usage_completion,usage_prompt,total_tokens)
+#         ######
+#         res.status = True
+#         # res.date的值是一个字典，添加一个键值对，key是translation，value是result
+#         res.data = {}
+#         res.data["translation"] = result
+#         # print(chat_completion)
+#         # print(result)
+#     except Exception as e:
+#         print(e)
+#
+#     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
+
+from django.http import StreamingHttpResponse
+import json
+
 def translate(request):
+    def stream_res():
+        text = request.POST.get('text')
+        try:
+            template = """
+            translate English to Chinese:
+            English: {original_text}
+            Chinese:
+            """
+            prompt = template.format(original_text=text)
+            yield b"data: {\"message\": \"Initializing chat...\"}\n\n"
 
-    res = BaseResponse()
-    # print(request.POST)
+            chat_completion = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "system", "content": "you are a translator"},
+                          {"role": "user", "content": prompt}
+                          ],
+                temperature=0,
+                stream=True,
+            )
+            for chat_completion_chunk in chat_completion:
+                result = chat_completion_chunk.choices[0].message.content.strip()
+                if not result:
+                    continue
+                res = {
+                    "status": True,
+                    "data": {"translation": result},
+                }
+                res_json = json.dumps(res)
+                yield f"data: {res_json}\n\n".encode("utf-8")
+        except Exception as e:
+            print(e)
 
-    text = request.POST.get('text')
-    # print(type(text))
-    # template里面的变量要注意空格
-    try:
-        template = """
-        translate English to Chinese:
-        English: {original_text}
-        Chinese:
-        """
-        prompt = template.format(original_text=text)
-        chat_completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role":"system","content": "you are a translator" },
-                      {"role":"user","content": prompt}
-                      ],
-            temperature=0,
-        )
-        result = chat_completion.choices[0].message.content
-        ######这样可以取得token的使用情况
-        # usage_completion = chat_completion.usage.completion_tokens
-        # usage_prompt = chat_completion.usage.prompt_tokens
-        # total_tokens = chat_completion.usage.total_tokens
-        # print(usage_completion,usage_prompt,total_tokens)
-        ######
-        res.status = True
-        # res.date的值是一个字典，添加一个键值对，key是translation，value是result
-        res.data = {}
-        res.data["translation"] = result
-        # print(chat_completion)
-        # print(result)
-    except Exception as e:
-        print(e)
-
-    return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
+    return StreamingHttpResponse(stream_res(), content_type="text/event-stream")
 
 
-
+·
