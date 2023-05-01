@@ -43,16 +43,15 @@ INSTALLED_APPS = [
     "tailwind_app",
 ]
 MIDDLEWARE = [
-    #"django.middleware.security.SecurityMiddleware",
+    "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
+    #"my_application.middleware.SimpleAuthMiddleware", # 自定义的中间件,做简单的验证
 ]
-
 
 ROOT_URLCONF = "my_application.urls"
 
