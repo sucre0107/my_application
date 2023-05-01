@@ -14,8 +14,8 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 class BaseResponse(object):
     def __init__(self, status=False, detail=None, data=None):
         self.status = status
-        self.detail = detail
-        self.data = data
+        self.detail = detail or {}
+        self.data = data or {}
 
     @property
     def dict(self):
@@ -130,42 +130,46 @@ def translator(request):
 #
 #     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
+
+import asyncio
 from django.http import StreamingHttpResponse
 import json
 
-def translate(request):
-    def stream_res():
-        text = request.POST.get('text')
-        try:
-            template = """
-            translate English to Chinese:
-            English: {original_text}
-            Chinese:
-            """
-            prompt = template.format(original_text=text)
-            yield b"data: {\"message\": \"Initializing chat...\"}\n\n"
+async def stream_data(text):
+    res = BaseResponse()
+    try:
+        template = """
+        translate English to Chinese:
+        English: {original_text}
+        Chinese:
+        """
+        prompt = template.format(original_text=text)
 
-            chat_completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "system", "content": "you are a translator"},
-                          {"role": "user", "content": prompt}
-                          ],
-                temperature=0,
-                stream=True,
-            )
-            for chat_completion_chunk in chat_completion:
-                result = chat_completion_chunk.choices[0].message.content.strip()
-                if not result:
-                    continue
-                res = {
-                    "status": True,
-                    "data": {"translation": result},
-                }
-                res_json = json.dumps(res)
-                yield f"data: {res_json}\n\n".encode("utf-8")
-        except Exception as e:
-            print(e)
+        # 向 OpenAI API 发送请求，并逐步产生一系列事件
+        chat_completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "you are a translator"},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0,
+            stream=True,
+        )
 
-    return StreamingHttpResponse(stream_res(), content_type="text/event-stream")
+        for chat_completion_chunk in chat_completion:
+            message = chat_completion_chunk.choices[0].get("delta", {}).get("content")
+            if not message:
+                continue
+            res.status = True
+            res.data["translation"] = message
+            res_json = json.dumps(res.dict, ensure_ascii=False)
+            yield f"data:{res_json}\n\n"
+    except Exception as e:
+        print(e)
 
+
+async def translate(request):
+    text = request.POST.get("text")
+
+    return StreamingHttpResponse(stream_data(text), content_type="text/event-stream")
 

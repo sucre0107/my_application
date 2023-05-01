@@ -36,58 +36,59 @@
 
 <script>
     $(function () {
-        // 创建 EventSource 对象，并指定 URL
-        const eventSource = new EventSource("{% url 'translate' %}");
 
-        // 监听 message 事件
-        eventSource.addEventListener("message", (event) => {
-            const data = JSON.parse(event.data);
-            if (data.status) {
-                const translation = data.data.translation;
-                appendTranslation(translation);
-            }
-			});
-            btnClickEvent();
-            clearOldTranslation();
-        })
+        btnClickEvent();
+        clearOldTranslation();
+    })
 
 
-        // 按钮点击事件
-        function btnClickEvent() {
-            $('#translateBtn').click(function () {
-                $.ajax({
-                    url: '{% url 'translate' %}',
-                    type: 'POST',
-                    data: $('form').serialize(),
-                    dataType: 'JSON',
-                    success: function (res) {
-                        console.log($('#id_text').serialize());
-                        if (res.status) {
-                            // 什么也不做，等待服务器返回stream数据
+    // 按钮点击事件
+    function btnClickEvent() {
+        $('#translateBtn').click(function () {
+            $.ajax({
+                url: '{% url 'translate' %}',
+                type: 'POST',
+                data: $('form').serialize(),
+                dataType: 'text',// 服务器返回的数据类型
+                success: function (res) {
+                    console.log($('#id_text').serialize());
+                    if (res) {
+                        console.log(res);
+                        // 创建 EventSource 对象，并指定 URL
+                        const eventSource = new EventSource("{% url 'stream_data' %}");
 
-                        } else {
-							alert("fail")
-                        }
+                        // 监听 message 事件
+                        eventSource.addEventListener("message", (event) => {
+                            const data = JSON.parse(event.data);
+                            if (data.status) {
+                                console.log(data.data.translation);
+                                const translation = data.data.translation;
+                                appendTranslation(translation);
+                            }
+                        });
+                    } else {
+                        alert("fail")
                     }
-                })
+                }
             })
-        }
+        })
+    }
 
-        function appendTranslation(translation) {
-            var translationTextarea = $('#id_translation');
-            var currentTranslation = translationTextarea.val();
-            translationTextarea.val(currentTranslation + translation)
-        }
+    function appendTranslation(translation) {
+        var translationTextarea = $('#id_translation');
+        var currentTranslation = translationTextarea.val();
+        translationTextarea.val(currentTranslation + translation)
+    }
 
 
-        //
+    //
 
-        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
-        function clearOldTranslation() {
-            $('#id_text').change(function () {
-                $('#id_translation').val('')
-            })
-        }
+    // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
+    function clearOldTranslation() {
+        $('#id_text').change(function () {
+            $('#id_translation').val('')
+        })
+    }
 </script>
 </body>
 </html>
