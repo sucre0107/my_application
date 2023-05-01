@@ -110,7 +110,7 @@ def translate(request):
                       {"role":"user","content": prompt}
                       ],
             temperature=0,
-            stream=True,
+            # stream=True,
         )
         result = chat_completion.choices[0].message.content
         ######这样可以取得token的使用情况
