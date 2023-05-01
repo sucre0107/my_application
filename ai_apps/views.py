@@ -89,54 +89,14 @@ def translator(request):
 #     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
 # 原生openai,使用chatcompletion，便宜，推荐
-# def translate(request):
-#
-#     res = BaseResponse()
-#     # print(request.POST)
-#
-#     text = request.POST.get('text')
-#     # print(type(text))
-#     # template里面的变量要注意空格
-#     try:
-#         template = """
-#         translate English to Chinese:
-#         English: {original_text}
-#         Chinese:
-#         """
-#         prompt = template.format(original_text=text)
-#         chat_completion = openai.ChatCompletion.create(
-#             model="gpt-3.5-turbo",
-#             messages=[{"role":"system","content": "you are a translator" },
-#                       {"role":"user","content": prompt}
-#                       ],
-#             temperature=0,
-#             stream=True,
-#         )
-#         result = chat_completion.choices[0].message.content
-#         ######这样可以取得token的使用情况
-#         # usage_completion = chat_completion.usage.completion_tokens
-#         # usage_prompt = chat_completion.usage.prompt_tokens
-#         # total_tokens = chat_completion.usage.total_tokens
-#         # print(usage_completion,usage_prompt,total_tokens)
-#         ######
-#         res.status = True
-#         # res.date的值是一个字典，添加一个键值对，key是translation，value是result
-#         res.data = {}
-#         res.data["translation"] = result
-#         # print(chat_completion)
-#         # print(result)
-#     except Exception as e:
-#         print(e)
-#
-#     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
+def translate(request):
 
-
-import asyncio
-from django.http import StreamingHttpResponse
-import json
-
-async def stream_data(text):
     res = BaseResponse()
+    # print(request.POST)
+
+    text = request.POST.get('text')
+    # print(type(text))
+    # template里面的变量要注意空格
     try:
         template = """
         translate English to Chinese:
@@ -144,32 +104,33 @@ async def stream_data(text):
         Chinese:
         """
         prompt = template.format(original_text=text)
-
-        # 向 OpenAI API 发送请求，并逐步产生一系列事件
         chat_completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "you are a translator"},
-                {"role": "user", "content": prompt},
-            ],
+            messages=[{"role":"system","content": "you are a translator" },
+                      {"role":"user","content": prompt}
+                      ],
             temperature=0,
             stream=True,
         )
-
-        for chat_completion_chunk in chat_completion:
-            message = chat_completion_chunk.choices[0].get("delta", {}).get("content")
-            if not message:
-                continue
-            res.status = True
-            res.data["translation"] = message
-            res_json = json.dumps(res.dict, ensure_ascii=False)
-            yield f"data:{res_json}\n\n"
+        result = chat_completion.choices[0].message.content
+        ######这样可以取得token的使用情况
+        # usage_completion = chat_completion.usage.completion_tokens
+        # usage_prompt = chat_completion.usage.prompt_tokens
+        # total_tokens = chat_completion.usage.total_tokens
+        # print(usage_completion,usage_prompt,total_tokens)
+        ######
+        res.status = True
+        # res.date的值是一个字典，添加一个键值对，key是translation，value是result
+        res.data = {}
+        res.data["translation"] = result
+        # print(chat_completion)
+        # print(result)
     except Exception as e:
         print(e)
 
+    return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
-async def translate(request):
-    text = request.POST.get("text")
 
-    return StreamingHttpResponse(stream_data(text), content_type="text/event-stream")
+
+
 
