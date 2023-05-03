@@ -3,18 +3,18 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Translator</title>
+	<title>Email Writer</title>
 	<link rel="stylesheet" href="{% static 'tailwind_app/css/tailwind.css' %}">
 </head>
 <body>
 <div class="my-5">
-	<h1 class="text-center font-bold text-4xl py-10 ">翻译</h1>
+	<h1 class="text-center font-bold text-4xl py-10 ">邮件助手</h1>
 </div>
 
 <div class="relative mt-10">
 	<form class="block w-3/4 mx-auto" novalidate>
 	{% csrf_token %}
-	{% for field in form %}
+	{% for field in emailWriterForm %}
 		<div class="my-2">
 			<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
 			{{ field }}
@@ -26,7 +26,7 @@
 		<button id="translateBtn"
 				class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
 				type="button">
-			翻译
+			生成邮件
 		</button>
 	</form>
 </div>
@@ -40,7 +40,7 @@
     $(function () {
 
         btnClickEvent();
-        clearOldTranslation();
+        clearMyEmail();
     })
 
 
@@ -48,15 +48,15 @@
     function btnClickEvent() {
         $('#translateBtn').click(function () {
             $.ajax({
-                url: '{% url 'translate' %}',
+                url: '{% url 'generate_email' %}',
                 type: 'POST',
                 data: $('form').serialize(),
                 dataType: 'json',// 服务器返回的数据类型
                 success: function (res) {
-                    console.log($('#id_text').serialize());
+                    console.log($('#id_received_email').serialize());
                     if (res.status) {
                         console.log(res);
-                        $('#id_translation').val(res.data.translation)
+                        $('#id_my_response_email').val(res.data.my_response_email)
                     } else {
                         alert("fail")
                     }
@@ -69,9 +69,10 @@
     //
 
     // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
-    function clearOldTranslation() {
-        $('#id_text').change(function () {
-            $('#id_translation').val('')
+    function clearMyEmail() {
+        $('#id_received_email').change(function () {
+            $('#id_my_response_email').val('')
+			$('#id_include_info').val('')
         })
     }
 </script>

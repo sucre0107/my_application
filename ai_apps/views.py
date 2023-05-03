@@ -131,6 +131,42 @@ def translate(request):
     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
 
+def email_writer(request):
+    # 只是为了页面展示
+    emailWriterForm = forms.EmailWriterForm()
 
+    return render(request, "email_writer.html", {"emailWriterForm": emailWriterForm})
 
+def generate_email(request):
+    res = BaseResponse()
+    received_email = request.POST.get('received_email')
+    include_info = request.POST.get('include_info')
+    my_extra_requirement = request.POST.get('my_extra_requirement')
+    try:
+        template = """
+            We received an email from a customer：{received_email},
+            help me write a an email reply in English that includes this information: {include_info}? 
+            Additionally, follow these conditions when writing the email: {my_extra_requirement}.
+            """
+        prompt = template.format(
+            received_email=received_email,
+            include_info=include_info,
+            my_extra_requirement=my_extra_requirement
+        )
+        chat_completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "system", "content": "You are a reliable AI email writing assistant who can help me write satisfying English emails based on my prompts."},
+                      {"role": "user", "content": prompt}
+                      ],
+            temperature=0,
+            # stream=True,
+        )
+        result = chat_completion.choices[0].message.content
 
+        res.status = True
+        res.data = {}
+        res.data["my_response_email"] = result
+    except Exception as e:
+        print(e)
+
+    return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
