@@ -50,7 +50,7 @@
                 xhrFields: {
                     onprogress: function (e) {
                         const data = e.currentTarget.responseText;
-                        ¥('#id_translation').val(data);
+                        $('#id_translation').val(data);
                     }
                 },
 				// 此处不能添加success，否则会导致onprogress不执行
