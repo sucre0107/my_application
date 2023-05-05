@@ -45,7 +45,7 @@
         $('#translateBtn').on('click', function () {
             $.ajax({
                 url: '{% url "test_stream" %}',
-                method: 'GET',
+                method: 'POST',
                 xhrFields: {
                     onprogress: function (e) {
                         const data = e.currentTarget.responseText;
