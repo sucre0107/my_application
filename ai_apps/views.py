@@ -63,11 +63,13 @@ def test_stream(request):
             if result:
                 yield result
                 #res.status = True
-    response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
-    response['Cache-Control'] = 'no-cache'
-    return response
-
-
+        response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
+        response['Cache-Control'] = 'no-cache'
+        return response
+    #     for i in range(10):
+    #         sleep(1)
+    #         yield i
+    #     response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
 
 
 
