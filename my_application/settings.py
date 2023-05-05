@@ -50,7 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    #"my_application.middleware.SimpleAuthMiddleware", # 自定义的中间件,做简单的验证
+    # "my_application.middleware.SimpleAuthMiddleware", # 自定义的中间件,做简单的验证
 ]
 
 ROOT_URLCONF = "my_application.urls"
