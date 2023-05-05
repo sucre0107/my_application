@@ -1,6 +1,6 @@
 import os
 from time import sleep
-
+import asyncio
 import openai
 from django.http import JsonResponse, StreamingHttpResponse
 from django.shortcuts import render, HttpResponse
@@ -48,14 +48,14 @@ def test_stream(request):
             stream=True):
 
             result = chunk.choices[0].get("delta", {}).get("content")
+            if result:
 
-            yield result
+                yield result
+
     response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
     print(response)
     response['Cache-Control'] = 'no-cache'
     return response
-
-
 
 
 
