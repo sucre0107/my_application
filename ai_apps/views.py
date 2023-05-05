@@ -23,21 +23,8 @@ class BaseResponse(object):
         return self.__dict__
 
 
-def gen_message(msg):
-    return f'data: {msg} '
 
 
-def iterator():
-    for i in range(10):
-        sleep(1)
-        yield gen_message(f'iteration {i}')
-
-
-# def test_stream(request):
-#     stream = iterator()
-#     response = StreamingHttpResponse(stream, status=200, content_type='text/event-stream')
-#     response['Cache-Control'] = 'no-cache'
-#     return response
 
 from django.http import StreamingHttpResponse
 
@@ -61,25 +48,16 @@ def test_stream(request):
             stream=True):
 
             result = chunk.choices[0].get("delta", {}).get("content")
-            #print(result)
             if result is not None:
-                sleep(1)
-                #print(result)
                 yield result
-                #res.status = True
     response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
     print(response)
     response['Cache-Control'] = 'no-cache'
     return response
 
 
-    # def event_stream():
-    #     for i in range(10):
-    #         sleep(1)
-    #         yield i
-    # response = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
-    # response['Cache-Control'] = 'no-cache'
-    # return response
+
+
 
 
 
