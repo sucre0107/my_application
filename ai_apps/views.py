@@ -61,12 +61,14 @@ def test_stream(request):
             stream=True):
 
             result = chunk.choices[0].get("delta", {}).get("content")
-            print(result)
+            #print(result)
             if result is not None:
-                print(result)
+                sleep(1)
+                #print(result)
                 yield result
                 #res.status = True
     response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
+    print(response)
     response['Cache-Control'] = 'no-cache'
     return response
 
