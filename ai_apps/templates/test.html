@@ -46,18 +46,15 @@
             $.ajax({
                 url: '{% url "test_stream" %}',
                 method: 'POST',
+				data:$('form').serialize(),
                 xhrFields: {
                     onprogress: function (e) {
                         const data = e.currentTarget.responseText;
-                        // 处理数据并更新页面
-					// parts = data.split(':');
-					//	const part = parts[1].trim();
-                      //  console.log("data:",data);
-                        //console.log("parts:",parts);
-                        //console.log("part:",part);
-						document.getElementById('id_translation').innerHTML = data;
+                        ¥('#id_translation').val(data);
                     }
-                }
+                },
+				// 此处不能添加success，否则会导致onprogress不执行
+
             });
         });
 

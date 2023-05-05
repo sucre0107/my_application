@@ -50,6 +50,7 @@ def test_stream(request):
         """
     def event_stream(request):
         text = request.POST.get('text')
+        print(text)
         prompt = template.format(original_text=text)
         for chunk in openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -60,16 +61,23 @@ def test_stream(request):
             stream=True):
 
             result = chunk.choices[0].get("delta", {}).get("content")
-            if result:
+            print(result)
+            if result is not None:
+                print(result)
                 yield result
                 #res.status = True
-        response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
-        response['Cache-Control'] = 'no-cache'
-        return response
+    response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
+    response['Cache-Control'] = 'no-cache'
+    return response
+
+
+    # def event_stream():
     #     for i in range(10):
     #         sleep(1)
     #         yield i
-    #     response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
+    # response = StreamingHttpResponse(event_stream(), content_type='text/event-stream')
+    # response['Cache-Control'] = 'no-cache'
+    # return response
 
 
 
