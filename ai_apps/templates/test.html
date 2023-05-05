@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+	test
+{% endblock title %}
+
+
+{% block content %}
+
+
+
+	<div class="relative mt-10">
+	<form class="block w-3/4 mx-auto" novalidate>
+	{% csrf_token %}
+	{% for field in form %}
+		<div class="my-2">
+			<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
+			{{ field }}
+			{{ endfor }}
+		</div>
+	{% endfor %}
+
+
+		<button id="translateBtn"
+				class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
+				type="button">
+			翻译
+		</button>
+	</form>
+</div>
+	<script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
+	<script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
+	{#	<script>#}
+	{#        const es = new EventSource('{% url "test_stream" %}');#}
+	{#        es.addEventListener('update', function (event) {#}
+	{#            const data = event.data;#}
+	{#            // 处理数据并更新页面#}
+	{#            document.getElementById('pp').innerHTML = data;#}
+	{#        });#}
+	{##}
+	{#	</script>#}
+
+	<script>
+        $('#translateBtn').on('click', function () {
+            $.ajax({
+                url: '{% url "test_stream" %}',
+                method: 'GET',
+                xhrFields: {
+                    onprogress: function (e) {
+                        const data = e.currentTarget.responseText;
+                        // 处理数据并更新页面
+					// parts = data.split(':');
+					//	const part = parts[1].trim();
+                      //  console.log("data:",data);
+                        //console.log("parts:",parts);
+                        //console.log("part:",part);
+						document.getElementById('id_translation').innerHTML = data;
+                    }
+                }
+            });
+        });
+
+	</script>
+
+{% endblock %}

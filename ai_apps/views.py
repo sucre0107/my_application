@@ -1,7 +1,8 @@
 import os
+from time import sleep
 
 import openai
-from django.http import JsonResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from django.shortcuts import render, HttpResponse
 from . import forms
 from langchain.llms import OpenAI
@@ -21,6 +22,58 @@ class BaseResponse(object):
     def dict(self):
         return self.__dict__
 
+
+def gen_message(msg):
+    return f'data: {msg} '
+
+
+def iterator():
+    for i in range(10):
+        sleep(1)
+        yield gen_message(f'iteration {i}')
+
+
+# def test_stream(request):
+#     stream = iterator()
+#     response = StreamingHttpResponse(stream, status=200, content_type='text/event-stream')
+#     response['Cache-Control'] = 'no-cache'
+#     return response
+
+from django.http import StreamingHttpResponse
+
+def test_stream(request):
+    #res = BaseResponse()
+    template = """
+        translate English to Chinese:
+        English: {original_text}
+        Chinese:
+        """
+    def event_stream(request):
+        text = request.POST.get('text')
+        prompt = template.format(original_text=text)
+        for chunk in openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "system", "content": "you are a translator"},
+                      {"role": "user", "content": prompt}
+                      ],
+            temperature=0,
+            stream=True):
+
+            result = chunk.choices[0].get("delta", {}).get("content")
+            if result:
+                yield result
+                #res.status = True
+    response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
+    response['Cache-Control'] = 'no-cache'
+    return response
+
+
+
+
+
+def home(request):
+    form = forms.TranslationForm()
+    return render(request, 'test.html', {'form': form})
 def index(request):
     return render(request, "index.html")
 

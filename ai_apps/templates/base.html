@@ -8,8 +8,8 @@
 </head>
 <body>
 <div class="flex mx-5 my-10">
-	<a class="block w-52 text-center font-bold text-2xl p-3 border border-gray-300 hover:bg-blue-700" href="">翻译助手</a>
-	<a class="block w-30 text-center font-bold text-2xl" href="">邮件助手</a>
+	<a class="cus-navbtn" href="{% url 'translator' %}">翻译助手</a>
+	<a class="cus-navbtn" href="{% url 'email_writer' %}">邮件助手</a>
 </div>
 
 {% block content %}
