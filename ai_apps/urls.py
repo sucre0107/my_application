@@ -4,6 +4,7 @@ from ai_apps import views
 from django.conf import settings
 
 urlpatterns = [
+    path("",views.index, name="index"),
     path("trans/",views.translator, name="translator"),
     path("trans/translate/",views.translate, name="translate"),
     path("email/",views.email_writer, name="email_writer"),

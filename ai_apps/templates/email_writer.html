@@ -1,16 +1,8 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Email Writer</title>
-	<link rel="stylesheet" href="{% static 'tailwind_app/css/tailwind.css' %}">
-</head>
-<body>
-<div class="my-5">
-	<h1 class="text-center font-bold text-4xl py-10 ">邮件助手</h1>
-</div>
 
+
+{% block content %}
 <div class="relative mt-10">
 	<form class="block w-3/4 mx-auto" novalidate>
 	{% csrf_token %}
@@ -23,7 +15,7 @@
 	{% endfor %}
 
 
-		<button id="translateBtn"
+		<button id="generateEmailBtn"
 				class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
 				type="button">
 			生成邮件
@@ -46,7 +38,7 @@
 
     // 按钮点击事件
     function btnClickEvent() {
-        $('#translateBtn').click(function () {
+        $('#generateEmailBtn').click(function () {
             $.ajax({
                 url: '{% url 'generate_email' %}',
                 type: 'POST',
@@ -76,5 +68,4 @@
         })
     }
 </script>
-</body>
-</html>
+{% endblock %}

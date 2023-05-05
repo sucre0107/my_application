@@ -21,6 +21,9 @@ class BaseResponse(object):
     def dict(self):
         return self.__dict__
 
+def index(request):
+    return render(request, "index.html")
+
 
 # Create your views here.
 def translator(request):
