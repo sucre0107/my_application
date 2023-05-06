@@ -10,6 +10,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.callbacks.base import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
+
 # 封装一个响应类
 # 将数据封装到一个对象中，这样就可以在视图函数中直接返回对象，而不用再去构造响应体了
 class BaseResponse(object):
@@ -23,47 +24,56 @@ class BaseResponse(object):
         return self.__dict__
 
 
-
-
-
 from django.http import StreamingHttpResponse
 
-def test_stream(request):
-    #res = BaseResponse()
+
+
+def event_stream(text):
     template = """
-        translate English to Chinese:
-        English: {original_text}
-        Chinese:
-        """
-    def event_stream(request):
-        text = request.POST.get('text')
-        print(text)
-        prompt = template.format(original_text=text)
-        for chunk in openai.ChatCompletion.create(
+                            translate English to Chinese:
+                            English: {original_text}
+                            Chinese:
+                            """
+
+    prompt = template.format(original_text=text)
+    chunks = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "you are a translator"},
                       {"role": "user", "content": prompt}
                       ],
             temperature=0,
-            stream=True):
+            stream=True)
 
-            result = chunk.choices[0].get("delta", {}).get("content")
-            if result:
+    for chunk in chunks:
 
-                yield result
+        result = chunk.choices[0].get("delta", {}).get("content")
+        finish_reason = chunk.choices[0].get("finish_reason")
+        if result is not None:
+            print(result)
+            yield f"data: {result}\n\n"
+        if finish_reason == "stop":
+            break
+    yield 'data: \n\n'
 
-    response = StreamingHttpResponse(event_stream(request), content_type='text/event-stream')
-    print(response)
+
+def event_stream_pack(request):
+    print(request)
+    print("request:",request)
+    text = request.GET.get('text')
+    print("text:",text)
+
+    event_stream_data = event_stream(text)
+    response = StreamingHttpResponse(event_stream_data, status=200, content_type='text/event-stream')
     response['Cache-Control'] = 'no-cache'
     return response
-
-
 
 
 
 def home(request):
     form = forms.TranslationForm()
     return render(request, 'test.html', {'form': form})
+
+
 def index(request):
     return render(request, "index.html")
 
@@ -136,7 +146,6 @@ def translator(request):
 
 # 原生openai,使用chatcompletion，便宜，推荐
 def translate(request):
-
     res = BaseResponse()
     # print(request.POST)
 
@@ -152,8 +161,8 @@ def translate(request):
         prompt = template.format(original_text=text)
         chat_completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role":"system","content": "you are a translator" },
-                      {"role":"user","content": prompt}
+            messages=[{"role": "system", "content": "you are a translator"},
+                      {"role": "user", "content": prompt}
                       ],
             temperature=0,
             # stream=True,
@@ -183,6 +192,7 @@ def email_writer(request):
 
     return render(request, "email_writer.html", {"emailWriterForm": emailWriterForm})
 
+
 def generate_email(request):
     res = BaseResponse()
     received_email = request.POST.get('received_email')
@@ -201,7 +211,8 @@ def generate_email(request):
         )
         chat_completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "You are a reliable AI email writing assistant who can help me write satisfying English emails based on my prompts."},
+            messages=[{"role": "system",
+                       "content": "You are a reliable AI email writing assistant who can help me write satisfying English emails based on my prompts."},
                       {"role": "user", "content": prompt}
                       ],
             temperature=0,

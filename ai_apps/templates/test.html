@@ -11,53 +11,80 @@
 
 
 	<div class="relative mt-10">
-	<form class="block w-3/4 mx-auto" novalidate>
-	{% csrf_token %}
-	{% for field in form %}
-		<div class="my-2">
-			<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
-			{{ field }}
-			{{ endfor }}
-		</div>
-	{% endfor %}
+		<form class="block w-3/4 mx-auto" novalidate>
+			{% csrf_token %}
+			{% for field in form %}
+				<div class="my-2">
+					<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
+					{{ field }}
+					{{ endfor }}
+				</div>
+			{% endfor %}
 
-
-		<button id="translateBtn"
-				class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
-				type="button">
-			翻译
-		</button>
-	</form>
-</div>
+			<button id="stopbtn" class="" type="button">stop</button>
+			<button id="translateBtn"
+					class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
+					type="button">
+				翻译
+			</button>
+		</form>
+	</div>
 	<script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
 	<script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
-	{#	<script>#}
-	{#        const es = new EventSource('{% url "test_stream" %}');#}
-	{#        es.addEventListener('update', function (event) {#}
-	{#            const data = event.data;#}
-	{#            // 处理数据并更新页面#}
-	{#            document.getElementById('pp').innerHTML = data;#}
-	{#        });#}
-	{##}
-	{#	</script>#}
 
 	<script>
-        $('#translateBtn').on('click', function () {
-            $.ajax({
-                url: '{% url "test_stream" %}',
-                method: 'POST',
-				data:$('form').serialize(),
-                xhrFields: {
-                    onprogress: function (e) {
-                        const data = e.currentTarget.responseText;
-                        $('#id_translation').val(data);
-                    }
-                },
-				// 此处不能添加success，否则会导致onprogress不执行
-
+        $(function () {
+            // 点击翻译事件
+            $('#translateBtn').click(function () {
+                streamEvent();
+            });
+            // 点击停止事件
+            $('#stopbtn').click(function () {
+                stopGernerateEvent();
             });
         });
 
+
+        function streamEvent() {
+            text = $('#id_text').val()
+            if (!text) {
+                // 内容为空不连接后端，省钱
+                alert('请输入要翻译的内容')
+            } else {
+                // 内容为空，连接后端
+                stop = false
+                const eventSource = new EventSource(`{% url 'event_stream_pack' %}?text=${text}&stop=${stop}`);
+                eventSource.addEventListener('message', function (e) {
+                    const data = e.data;
+                    //const finish_reason = e.data;
+                    if (data == '') {
+                        eventSource.close();
+                    }
+                    const output = document.getElementById('id_translation');
+                    output.innerHTML += data
+                    console.log(output.innerHTML)
+                    if (stop == true) {
+                        eventSource.close();
+                    }
+                });
+                // 处理连接断开的情况
+                eventSource.addEventListener('error', function () {
+                    console.error('连接已断开', "error");
+                    // 如果需要，可以尝试重新连接
+                });
+            }
+        }
+
+        function stopGernerateEvent() {
+            text = $('#id_text').val()
+            stop = true
+            const eventSource = new EventSource(`{% url 'event_stream_pack' %}?text=${text}&stop=${stop}`);
+            eventSource.close()
+
+        }
+
+
 	</script>
+
 
 {% endblock %}
