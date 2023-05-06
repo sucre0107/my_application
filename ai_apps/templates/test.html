@@ -42,6 +42,8 @@
             $('#stopbtn').click(function () {
                 stopGernerateEvent();
             });
+            clearOldTranslation();
+
         });
 
 
@@ -52,8 +54,8 @@
                 alert('请输入要翻译的内容')
             } else {
                 // 内容为空，连接后端
-                stop = false
-                const eventSource = new EventSource(`{% url 'event_stream_pack' %}?text=${text}&stop=${stop}`);
+                stop = "false"
+                const eventSource = new EventSource(`{% url 'pack_event_stream' %}?text=${text}&stop=${stop}`);
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
                     //const finish_reason = e.data;
@@ -63,9 +65,7 @@
                     const output = document.getElementById('id_translation');
                     output.innerHTML += data
                     console.log(output.innerHTML)
-                    if (stop == true) {
-                        eventSource.close();
-                    }
+
                 });
                 // 处理连接断开的情况
                 eventSource.addEventListener('error', function () {
@@ -76,11 +76,17 @@
         }
 
         function stopGernerateEvent() {
-            text = $('#id_text').val()
-            stop = true
-            const eventSource = new EventSource(`{% url 'event_stream_pack' %}?text=${text}&stop=${stop}`);
+            stop = "true"
+            const eventSource = new EventSource(`{% url 'pack_event_stream' %}?text=${text}&stop=${stop}`);
             eventSource.close()
 
+        }
+
+        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
+        function clearOldTranslation() {
+            $('#id_text').change(function () {
+                $('#id_translation').val('')
+            })
         }
 
 

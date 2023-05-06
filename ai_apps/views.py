@@ -28,7 +28,7 @@ from django.http import StreamingHttpResponse
 
 
 
-def event_stream(text):
+def generate_stream_data(text):
     template = """
                             translate English to Chinese:
                             English: {original_text}
@@ -56,22 +56,22 @@ def event_stream(text):
     yield 'data: \n\n'
 
 
-def event_stream_pack(request):
-    print(request)
-    print("request:",request)
-    text = request.GET.get('text')
-    print("text:",text)
+def pack_event_stream(request):
+    # 当请求头stop为true时，停止推送数据
+    stop = request.GET.get('stop')
+    if stop == 'false':
+        text = request.GET.get('text')
+        stream_data = generate_stream_data(text)
+        response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream')
+        response['Cache-Control'] = 'no-cache'
+        # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
+        response['X-Accel-Buffering'] = 'no'
+        return response
+    return HttpResponse('后台已经停止推送数据')
 
-    event_stream_data = event_stream(text)
-    response = StreamingHttpResponse(event_stream_data, status=200, content_type='text/event-stream')
-    response['Cache-Control'] = 'no-cache'
-    # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
-    response['X-Accel-Buffering'] = 'no'
-    return response
 
 
-
-def home(request):
+def test_index(request):
     form = forms.TranslationForm()
     return render(request, 'test.html', {'form': form})
 

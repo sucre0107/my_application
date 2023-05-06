@@ -7,9 +7,8 @@ from utils import demo
 urlpatterns = [
                   path("", views.index, name="index"),
                   # ------------测试------------#
-                  #path('stream/', views.test_stream, name='test_stream'),
-                path('stream/home/', views.home, name='home'),
-                    path('stream/event/', views.event_stream_pack, name='event_stream_pack'),
+                  path('stream/home/', views.test_index, name='text_index'),
+                  path('stream/event/', views.pack_event_stream, name='pack_event_stream'),
                   # ------------测试------------#
                   path("trans/", views.translator, name="translator"),
                   path("trans/translate/", views.translate, name="translate"),
