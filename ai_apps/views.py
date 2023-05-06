@@ -65,6 +65,8 @@ def event_stream_pack(request):
     event_stream_data = event_stream(text)
     response = StreamingHttpResponse(event_stream_data, status=200, content_type='text/event-stream')
     response['Cache-Control'] = 'no-cache'
+    # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
+    response['X-Accel-Buffering'] = 'no'
     return response
 
 
