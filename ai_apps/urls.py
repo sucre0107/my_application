@@ -11,7 +11,7 @@ urlpatterns = [
                   path('stream/event/', views.pack_event_stream, name='pack_event_stream'),
                   # ------------测试------------#
                   path("trans/", views.translator, name="translator"),
-                  path("trans/translate/", views.translate, name="translate"),
+                  path("trans/translate/", views.pack_trans_stream, name="pack_trans_stream"),
                   path("email/", views.email_writer, name="email_writer"),
                   path("email/generate/", views.generate_email, name="generate_email")
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

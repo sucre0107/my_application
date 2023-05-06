@@ -147,45 +147,48 @@ def translator(request):
 #     return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
 
 # 原生openai,使用chatcompletion，便宜，推荐
-def translate(request):
-    res = BaseResponse()
-    # print(request.POST)
 
-    text = request.POST.get('text')
-    # print(type(text))
-    # template里面的变量要注意空格
-    try:
-        template = """
-        translate English to Chinese:
-        English: {original_text}
-        Chinese:
-        """
-        prompt = template.format(original_text=text)
-        chat_completion = openai.ChatCompletion.create(
+def generate_stream_data(text):
+    template = text
+
+    #prompt = template.format(original_text=text)
+    prompt = template
+    chunks = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "you are a translator"},
-                      {"role": "user", "content": prompt}
+            messages=[{"role": "system", "content": "you are my translate assistant and need to determine whether to translate my text into Chinese or English based on its content.you need give me only the translation result and no more other words"},
+                      {"role": "user", "content": "hello"},
+                      {"role": "assistant", "content": "你好"},
+                      {"role": "user", "content": "你好"},
+                      {"role": "assistant", "content": "hello"},
+                      {"role": "user", "content": prompt},
                       ],
             temperature=0,
-            # stream=True,
-        )
-        result = chat_completion.choices[0].message.content
-        ######这样可以取得token的使用情况
-        # usage_completion = chat_completion.usage.completion_tokens
-        # usage_prompt = chat_completion.usage.prompt_tokens
-        # total_tokens = chat_completion.usage.total_tokens
-        # print(usage_completion,usage_prompt,total_tokens)
-        ######
-        res.status = True
-        # res.date的值是一个字典，添加一个键值对，key是translation，value是result
-        res.data = {}
-        res.data["translation"] = result
-        # print(chat_completion)
-        # print(result)
-    except Exception as e:
-        print(e)
+            stream=True)
 
-    return JsonResponse(res.dict, json_dumps_params={'ensure_ascii': False})
+    for chunk in chunks:
+
+        result = chunk.choices[0].get("delta", {}).get("content")
+        finish_reason = chunk.choices[0].get("finish_reason")
+        if result is not None:
+            #print(result)
+            yield f"data: {result}\n\n"
+        if finish_reason == "stop":
+            break
+    yield 'data: \n\n'
+
+
+def pack_trans_stream(request):
+    # 当请求头stop为true时，停止推送数据
+    stop = request.GET.get('stop')
+    if stop == 'false':
+        text = request.GET.get('text')
+        stream_data = generate_stream_data(text)
+        response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream')
+        response['Cache-Control'] = 'no-cache'
+        # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
+        response['X-Accel-Buffering'] = 'no'
+        return response
+    return HttpResponse('后台已经停止推送数据')
 
 
 def email_writer(request):

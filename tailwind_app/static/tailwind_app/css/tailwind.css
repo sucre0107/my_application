@@ -608,10 +608,6 @@ video {
   display: flex;
 }
 
-.hidden {
-  display: none;
-}
-
 .w-3\/4 {
   width: 75%;
 }
@@ -657,6 +653,11 @@ video {
 
 .p-2\.5 {
   padding: 0.625rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .py-3 {
