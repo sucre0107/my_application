@@ -1,17 +1,13 @@
 from django.conf.urls.static import static
 from django.urls import path
 from ai_apps import views
+from ai_apps.views import translator,index,email
 from django.conf import settings
-from utils import demo
 
 urlpatterns = [
-                  path("", views.index, name="index"),
-                  # ------------测试------------#
-                  path('stream/home/', views.test_index, name='text_index'),
-                  path('stream/event/', views.pack_event_stream, name='pack_event_stream'),
-                  # ------------测试------------#
-                  path("trans/", views.translator, name="translator"),
-                  path("trans/translate/", views.pack_trans_stream, name="pack_trans_stream"),
-                  path("email/", views.email_writer, name="email_writer"),
-                  path("email/generate/", views.generate_email, name="generate_email")
+                  path("", index.index, name="index"),
+                  path("trans/", translator.translator, name="translator"),
+                  path("trans/translate/", translator.pack_trans_stream, name="pack_trans_stream"),
+                  path("email/", email.email_writer, name="email_writer"),
+                  path("email/generate/", email.pack_email_stream, name="pack_email_stream")
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
