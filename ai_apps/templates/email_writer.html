@@ -49,22 +49,28 @@
         });
 
         let lastReceivedEmail = ''
+        let lastMyExtraRequirement = ''
+        let lastIncludeInfo = ''
 
         function streamEvent() {
             received_email = $('#id_received_email').val()
-			// 如果内容相同，不连接后端，省钱
-            if (received_email == lastReceivedEmail) {
+            my_extra_requirement = $('#id_my_extra_requirement').val();
+            include_info = $('#id_include_info').val();
+            // 如果内容相同，不连接后端，省钱
+            if (received_email == lastReceivedEmail && my_extra_requirement == lastMyExtraRequirement && include_info == lastIncludeInfo) {
                 alert('请勿重复提交')
                 return
             } else {
                 // 如果内容不同，连接后端，并且更新lastReceivedEmail
-				// 取到
+                // 取到
                 lastReceivedEmail = received_email;
+                lastIncludeInfo = include_info;
+                lastMyExtraRequirement = my_extra_requirement;
                 my_extra_requirement = $('#id_my_extra_requirement').val();
                 include_info = $('#id_include_info').val();
 
             }
-			// 判断text有没有内容
+            // 判断text有没有内容
             if (!received_email) {
                 // 内容为空不连接后端，省钱
                 alert('请输入要回复的邮件的内容')
