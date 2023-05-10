@@ -75,7 +75,7 @@
             } else {
                 // 内容不为空，连接后端
                 stop = "false"  // 设置get请求的stop参数，在后端判断是否停止
-                const eventSource = new EventSource(`{% url 'pack_email_stream' %}?received_email=${received_email}&stop=${stop}`);
+                const eventSource = new EventSource(`{% url 'pack_email_stream' %}?stop=${stop}&received_email=${received_email}&my_extra_requirement=${my_extra_requirement}&include_info=${include_info}`);
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
                     if (data == '') {
