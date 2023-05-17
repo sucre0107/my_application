@@ -16,14 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from ai_apps import views, urls
+from pknight_docs.views import index
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("ai_apps/", include("ai_apps.urls")),
-    path("pknight_docs/", include("pknight_docs.urls")),
-
+    path("",index.index, name="pknight_doc_index"),
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

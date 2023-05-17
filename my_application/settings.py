@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ai_apps",
     "tailwind_app",
+    "pknight_docs",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -55,10 +56,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "my_application.urls"
 
+
+# 模版文件的文件名不能相同，否则只会渲染第一个路径下的模版文件
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "ai_apps/templates"), ],
+        "DIRS": [
+                    os.path.join(BASE_DIR, "ai_apps/templates"),
+                    os.path.join(BASE_DIR, "pknight_docs/templates"),
+                    os.path.join(BASE_DIR, "templates"),
+                 ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -75,24 +82,19 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+# 本地的数据库配置
 
-# 用于连接 MySQL 数据库
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': DATABASE_NAME, # 数据库名
-#         'USER': 'root',
-#         'PASSWORD': '123456',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
+
+# mysql 数据库配置
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -103,6 +105,8 @@ DATABASES = {
         'PORT': '3306', # 数据库端口
     }
 }
+
+
 # 用于连接 Redis 数据库
 CACHES = {
     "default": {
@@ -172,6 +176,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "ai_apps/static"),
     os.path.join(BASE_DIR, "staticfiles"),
     os.path.join(BASE_DIR, "tailwind_app/static"),
+    os.path.join(BASE_DIR, "pknight_docs/static"),
 
 ]
 
