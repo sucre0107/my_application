@@ -77,13 +77,12 @@ TEMPLATES = [
         },
     },
 ]
-# DATABASE_NAME = os.environ.get("DATABASE_NAME")
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# 后续在local_settings.py中重新配置数据库
 # 本地的数据库配置
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -94,7 +93,6 @@ DATABASES = {
 
 
 # mysql 数据库配置
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
