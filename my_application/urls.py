@@ -21,9 +21,9 @@ from django.conf.urls.static import static
 from my_application import views
 # path 必须是相对路径，否则会报错
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("ai_apps/", include("ai_apps.urls")),
-    path("pknight_docs/", include("pknight_docs.urls")),
-    path("pknight/", views.pknight, name="pknight"),
+    path("pknight/admin/", admin.site.urls),
+    path("pknight/ai_apps/", include("ai_apps.urls")),
+    path("pknight/pknight_docs/", include("pknight_docs.urls")),
+    path("pknight/pknight/", views.pknight, name="pknight"),
 
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
