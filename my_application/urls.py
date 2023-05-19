@@ -16,14 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from ai_apps import views, urls
 from django.conf import settings
 from django.conf.urls.static import static
-
+from my_application import views
 
 urlpatterns = [
-    path("/admin/", admin.site.urls),
-    path("/ai_apps/", include("ai_apps.urls")),
-    path("/pknight_docs/", include("pknight_docs.urls")),
+    path("admin/", admin.site.urls),
+    path("ai_apps/", include("ai_apps.urls")),
+    path("pknight_docs/", include("pknight_docs.urls")),
+    path("pknight/", views.pknight, name="pknight"),
 
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
