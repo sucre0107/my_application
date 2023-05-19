@@ -22,8 +22,8 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("ai_apps/", include("ai_apps.urls")),
-    path("pknight_docs/", include("pknight_docs.urls")),
+    path("pknight/admin/", admin.site.urls),
+    path("pknight/ai_apps/", include("ai_apps.urls")),
+    path("pknight/pknight_docs/", include("pknight_docs.urls")),
 
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
