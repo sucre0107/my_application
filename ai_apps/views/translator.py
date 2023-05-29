@@ -78,7 +78,14 @@ def generate_stream_data(text):
     chunks = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "system", "content": "you are my translate assistant and need to determine whether to translate my text into Chinese or English based on its content I give you.you need give me only the translation result and no more other words"},
-                      {"role": "user", "content": "Translate '{prompt}' into English or Chinese".format(prompt=prompt)},
+                      {"role": "user", "content":
+                                                '''
+                                                  Translate 
+                                                  ##
+                                                  {prompt}
+                                                  ##
+                                                  into English or Chinese
+                                                '''.format(prompt=prompt)},
                       ],
             temperature=0,
             stream=True)

@@ -1,0 +1,13 @@
+{% extends 'base_for_pknight_docs.html' %}
+{% load static %}
+
+{% block title %}
+	usbelf - pknight_docs
+{% endblock title %}
+
+
+{% block content %}
+<div class="markdown-content">
+        {{ md_html|safe }}
+</div>
+{% endblock content %}
