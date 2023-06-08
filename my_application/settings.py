@@ -27,7 +27,7 @@ DEBUG = True
 
 #STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-ALLOWED_HOSTS = ['127.0.0.1'] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
+ALLOWED_HOSTS = [] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
 # 这里是验证外部请求request的header中的host是否在ALLOWED_HOSTS中，如果不在，就不能访问
 
 # Application definition

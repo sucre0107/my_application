@@ -84,8 +84,9 @@ def pack_email_stream(request):
         my_extra_requirement = request.GET.get('my_extra_requirement')
         stream_data = generate_stream_data(received_email,include_info,my_extra_requirement)
         response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream')
+        # 针对浏览器端--浏览器不应该缓存响应内容。这样可以确保每次请求都会从服务器获取最新的数据，而不是使用本地缓存。
         response['Cache-Control'] = 'no-cache'
-        # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
+        # 针对nginx服务器端--服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
         response['X-Accel-Buffering'] = 'no'
         return response
     return HttpResponse('后台已经停止推送数据')
