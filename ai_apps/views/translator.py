@@ -98,8 +98,9 @@ def generate_stream_data(text):
         print(result)
         finish_reason = chunk.choices[0].get("finish_reason")
         if result is not None:
+            # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
             result = result.encode('utf-8')
-            #print(result)
+            print(result)
             yield f"data: {result}\n\n"
         if finish_reason == "stop":
             break
