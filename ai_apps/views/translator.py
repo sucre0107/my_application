@@ -92,12 +92,13 @@ def generate_stream_data(text):
 
     for chunk in chunks:
 
-        result = chunk.choices[0].get("delta", {}).get("content").encode('utf-8')
+        result = chunk.choices[0].get("delta", {}).get("content")
         # 如果有需要，可以打印出来看看
         # print(chunk)
         print(result)
         finish_reason = chunk.choices[0].get("finish_reason")
         if result is not None:
+            result = result.encode('utf-8')
             #print(result)
             yield f"data: {result}\n\n"
         if finish_reason == "stop":
