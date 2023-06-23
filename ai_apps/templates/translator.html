@@ -53,14 +53,14 @@
 
         function streamEvent() {
             text = $('#id_text').val()
-			// 如果内容相同，不连接后端，省钱
+            // 如果内容相同，不连接后端，省钱
             if (text == lastText) {
                 alert('请勿重复提交')
                 return
             } else {
                 lastText = text
             }
-			// 判断text有没有内容
+            // 判断text有没有内容
             if (!text) {
                 // 内容为空不连接后端，省钱
                 alert('请输入要翻译的内容')
@@ -73,9 +73,13 @@
                     if (data == '') {
                         eventSource.close();
                     }
+                    // 将 UTF-8 字节串解码为字符串
+                    const decoder = new TextDecoder('utf-8');
+                    const text = decoder.decode(new Uint8Array(data));
+                    // 获取id=id_translation的textarea框
                     output = document.getElementById('id_translation');
-					// 输出data
-					console.log(data)
+                    // 输出data
+                    console.log(data)
                     output.value += data
 
                 });
