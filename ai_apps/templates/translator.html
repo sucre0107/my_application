@@ -74,8 +74,8 @@
                         eventSource.close();
                     }
                     // 将 UTF-8 字节串解码为字符串
-                    const decoder = new TextDecoder('utf-8');
-                    const text = decoder.decode(new Uint8Array(data));
+                    // const decoder = new TextDecoder('utf-8');
+                    // const text = decoder.decode(new Uint8Array(data));
                     // 获取id=id_translation的textarea框
                     output = document.getElementById('id_translation');
                     // 输出data
