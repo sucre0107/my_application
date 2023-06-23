@@ -92,7 +92,8 @@ def generate_stream_data(text):
 
     for chunk in chunks:
 
-        result = chunk.choices[0].get("delta", {}).get("content")
+        # result = chunk.choices[0].get("delta", {}).get("content")
+        result = chunk.choices[0]['delta']['content']
         # 如果有需要，可以打印出来看看
         print(chunk)
         print(result)
