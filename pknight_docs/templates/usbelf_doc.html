@@ -7,12 +7,12 @@
 
 
 {% block content %}
-	<div class="container max-w-screen-xl mx-auto mt-5">
-		<h3 class="ml-2 mb-2">USBelf Tutorial</h3>
-		<h4 class="ml-2 mb-2">
-			Overview
-		</h4>
-		<p class="ml-2 mb-2">
+	<div class="container max-w-screen-xl mx-auto pt-5 px-5">
+		<h2 class="mb-2">USBelf Tutorial</h2>
+		<h3 class="mb-2">
+			1. Overview
+		</h3>
+		<p class="mb-2">
 			USBelf includes a small hardware dongle and a suite of
 			mobile and desktop applications. Together, they provide
 			wireless DMX and RDM control as well as several other
@@ -24,10 +24,10 @@
 			USBelf stands out for its simplicity, powerful features, and
 			high reliability. We believe it will be your ideal choice.
 		</p>
-		<h4 class="ml-2 mb-2">
-			Hardware
-		</h4>
-		<p class="ml-2 mb-2">
+		<h3 class="mb-2">
+			2. Hardware
+		</h3>
+		<p class="mb-2">
 			The USBelf is a compact and portable device that comes
 			equipped with a 3-pin or 5-pin DMX interface, as well as a
 			Type-C wired interface for power supply and communication
@@ -48,10 +48,11 @@
 		</p>
 		<img src="{% static 'pknight_docs/usbelf/assets/images/features-and-hardware.jpg' %}"
 			 alt="features-and-hardware-usbelf">
-		<h4 class="mt-5">
-			Get the Apps
-		</h4>
-		<div class="mt-5">
+		<h3 class="mb-2">
+			3. Get the Apps
+		</h3>
+		{#	apps 	#}
+		<div class="mt-5 ml-3">
 			{#	?{{ request.GET.urlencode }}这个后缀对文件名进行编码，避免有空格或者特殊字符	#}
 			<a href="{% static 'pknight_docs/usbelf/assets/apps/USBelf-V2.0.3.zip' %}?{{ request.GET.urlencode }}">
 				<button
@@ -75,6 +76,114 @@
 				</button>
 			</a>
 		</div>
+		<h3 class="mb-2 mt-5">
+			4. App on Windows
+		</h3>
+		<h4 class="mb-2">
+			4.1 Installation Failed
+		</h4>
+		<div class="relative flex flex-col md:flex-row justify-between">
+			<img class="ml-3 mb-2 w-96"
+				 src="{% static 'pknight_docs/usbelf/assets/images/installation-error.png' %}?{{ request.GET.urlencode }}"
+				 alt="installation error">
+			<div class="relative pl-5">
+				<p class="mb-2">
+					Since our application relies on the 32-bit version of the Visual C++ runtime libraries, it is
+					essential
+					to
+					install the Visual C++ Redistributable for 32-bit Windows systems.
+				</p>
+				<p class="mb-2 mt-5">
+					<a class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+					   href="{% static 'pknight_docs/usbelf/assets/VC_redist.x86.exe' %}?{{ request.GET.urlencode }}">Download
+						the Visual C++ Redistributable</a>
+				</p>
+			</div>
+
+		</div>
+		<h4 class="mb-2 mt-5">
+			4.2 How to connect the
+			dongle to the computer app？
+		</h4>
+		<p class="mb-2">
+			To connect our hardware device to the computer app, simply use the USBA to Type-C cable included in the
+			package to connect it to your Windows computer. Then, open the app as shown in the figure below. Once the IP
+			address matches that of your computer and the message 'connected successfully' is displayed, the connection
+			has been established.
+		</p>
+		<img src="{% static 'pknight_docs/usbelf/assets/images/connected-successfully.png' %}?{{ request.GET.urlencode }}"
+			 alt="connected successfully">
+		<h4 class="mb-2 mt-5">
+			4.3 App Interface - RDM Tab
+		</h4>
+
+		<img class="zoomable-image object-contain cursor-zoom-in"
+			 src="{% static 'pknight_docs/usbelf/assets/images/app-interface-areas.jpg' %}?{{ request.GET.urlencode }}"
+			 alt="app interface areas">
+		<h4 class="mb-2 mt-5">
+			4.4 RDM Fixture Area
+		</h4>
+		<div class="relative h-full">
+			<img class="zoomable-image object-contain cursor-zoom-in"
+				 src="{% static 'pknight_docs/usbelf/assets/images/RDM fixture search area.png' %}?{{ request.GET.urlencode }}"
+				 alt="RDM fixture area">
+			<ul class="mt-5">
+				<li class="">
+					<span class="font-bold">&#x27A4;"Actual No." editing box :</span><br>
+					Here, actual No. is an abbreviation for actual number.
+					when we need to write DMX address codes for multiple RDM light fixtures that have been discovered,
+					we
+					naturally want to be able to do it all at once. Therefore, we need to set the actual number of each
+					fixture before using the "One-click batch addressing" or "Visual addressing" tools to perform batch
+					addressing.
+
+					<button type="button"
+							class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+					>
+						<span>How can we understand the actual number of a light fixture?</span>
+						<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+							 viewBox="0 0 20 20"
+							 xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd"
+								  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+								  clip-rule="evenodd"></path>
+						</svg>
+					</button>
+					<div id="accordion-flush-body" class="mt-3 border-b hidden relative"
+						 aria-labelledby="accordion-flush-heading-1">
+						<img src="{% static 'pknight_docs/usbelf/assets/images/actual-number.png' %}" alt="actual number">
+						<p class="mb-2 text-gray-500 dark:text-gray-400">
+							
+						</p>
+					</div>
+				</li>
+				<li>sadas</li>
+			</ul>
+
+
+		</div>
 	</div>
+	{# 折叠对象的js #}
+	<script>
+        const accordionBtn = document.getElementsByClassName('accordion-btn');
+        for (let i = 0; i < accordionBtn.length; i++) {
+            accordionBtn[i].addEventListener("click", function () {
+                let icon = this.querySelector('[data-accordion-icon]');
+                this.classList.toggle("active");
+                icon.classList.toggle('rotate-180');
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+	</script>
+
+
+
+
+
 
 {% endblock content %}
