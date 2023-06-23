@@ -93,6 +93,7 @@ def generate_stream_data(text):
     for chunk in chunks:
 
         result = chunk.choices[0].get("delta", {}).get("content")
+        print(chunk)
         finish_reason = chunk.choices[0].get("finish_reason")
         if result is not None:
             #print(result)
