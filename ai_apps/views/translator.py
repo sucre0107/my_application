@@ -115,5 +115,6 @@ def pack_trans_stream(request):
         response['Cache-Control'] = 'no-cache'
         # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
         response['X-Accel-Buffering'] = 'no'
+        print(response)
         return response
     return HttpResponse('后台已经停止推送数据')
