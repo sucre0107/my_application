@@ -99,7 +99,7 @@ def generate_stream_data(text):
         finish_reason = chunk.choices[0].get("finish_reason")
         if result is not None:
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
-            result = result.encode('utf-8')
+            # result = result.encode('utf-8')
             print(type(result))
             output_str = result # 去掉字符串开头和结尾的 "b'" 字符串
 
