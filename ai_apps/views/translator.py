@@ -4,6 +4,8 @@ from utils.base import BaseResponse
 from django.shortcuts import render
 import openai
 from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
+
+
 def translator(request):
     # 只是为了页面展示
     form = forms.TranslationForm()
@@ -74,22 +76,23 @@ def translator(request):
 def generate_stream_data(text):
     template = text
 
-    #prompt = template.format(original_text=text)
+    # prompt = template.format(original_text=text)
     prompt = template
     chunks = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "system", "content": "you are my translate assistant and need to determine whether to translate my text into Chinese or English based on its content I give you.you need give me only the translation result and no more other words"},
-                      {"role": "user", "content":
-                                                '''
-                                                  Translate 
-                                                  ##
-                                                  {prompt}
-                                                  ##
-                                                  into English or Chinese
-                                                '''.format(prompt=prompt)},
-                      ],
-            temperature=0,
-            stream=True)
+        model="gpt-3.5-turbo",
+        messages=[{"role": "system",
+                   "content": "you are my translate assistant and need to determine whether to translate my text into Chinese or English based on its content I give you.you need give me only the translation result and no more other words"},
+                  {"role": "user", "content":
+                      '''
+                        Translate 
+                        ##
+                        {prompt}
+                        ##
+                        into English or Chinese
+                      '''.format(prompt=prompt)},
+                  ],
+        temperature=0,
+        stream=True)
 
     for chunk in chunks:
         # 得到delta的content，存在字典里面
@@ -101,12 +104,12 @@ def generate_stream_data(text):
         if result is not None:
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
             byte_str = result.encode('utf-8')
-            #b64_str = base64.b64encode(byte_str).decode('utf-8')
+            # b64_str = base64.b64encode(byte_str).decode('utf-8')
 
-            print(type(result))  #这里是bytes类型
+            print(type(result))  # 这里是bytes类型
 
             print("result", result)
-            print(f"data: {byte_str}\n\n",type(f"data: {result}\n\n"))
+            print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n"))
             yield f"data: {byte_str}\n\n"
         if finish_reason == "stop":
             break
@@ -119,7 +122,8 @@ def pack_trans_stream(request):
     if stop == 'false':
         text = request.GET.get('text')
         stream_data = generate_stream_data(text)
-        response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream', charset='utf-8')
+        response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream', charset='utf-8',
+                                         ensure_ascii=False)
         response['Cache-Control'] = 'no-cache'
         # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
         response['X-Accel-Buffering'] = 'no'
