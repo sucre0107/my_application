@@ -73,11 +73,15 @@
                     if (data == '') {
                         eventSource.close();
                     }
+                      const byte_str = atob(data);
+                      const string = new TextDecoder().decode(new Uint8Array([...byte_str].map(c => c.charCodeAt(0))));
+
                     // 获取id=id_translation的textarea框
                     output = document.getElementById('id_translation');
                     // 输出data
                     console.log("data:",data,typeof(data))
-                    output.value += data
+					console.log("string:",string,typeof(string))
+                    output.value += string
 
                 });
                 // 处理连接断开的情况
