@@ -73,6 +73,7 @@
                     if (data == '') {
                         eventSource.close();
                     } else {
+                        console.log("data:", data, typeof (data))
                         const decoder = new TextDecoder('utf-8');
                         const str = decoder.decode(data);
                         // 获取id=id_translation的textarea框
