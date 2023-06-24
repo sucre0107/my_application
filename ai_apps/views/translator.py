@@ -111,7 +111,7 @@ def generate_stream_data(text):
             print(type(result))  # 这里是str类型，字符串
             # print(type(byte_str))  # 这里是bytes类型，字节
             print(f"result: {result}\n\n") # 这里是str类型，字符串
-            yield f"data: {result}\n\n"
+            yield f"data: {byte_str}\n\n"
         if finish_reason == "stop":
             break
     yield 'data: \n\n'
