@@ -72,15 +72,17 @@
                     const data = e.data;
                     if (data == '') {
                         eventSource.close();
+                    } else {
+                        const byte_str = atob(data);
+
+                        // 获取id=id_translation的textarea框
+                        output = document.getElementById('id_translation');
+                        // 输出data
+                        console.log("data:", data, typeof (data))
+
+                        output.value += byte_str;
                     }
-                    const byte_str = atob(data);
 
-                    // 获取id=id_translation的textarea框
-                    output = document.getElementById('id_translation');
-                    // 输出data
-                    console.log("data:", data, typeof (data))
-
-                    output.value += byte_str;
 
                 });
                 // 处理连接断开的情况
