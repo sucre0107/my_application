@@ -73,14 +73,18 @@
                     if (data == '') {
                         eventSource.close();
                     } else {
-                        const byte_str = atob(data);
+                        //const byte_str = atob(data);
+					// 给字符串切片2～-1
+					// 为什么要切片？因为后端传过来的数据是byte类型，需要转换成字符串
+					// 为什么要切片2～-1？因为后端传过来的数据是byte类型，需要转换成字符串，转换后的字符串前面有b'，后面有'，需要去掉
+					// 为什么要切片2～-1？因为后端传过来的数据是byte类型，需要转换成字符串，转换后的字符串前面有b'，后面有'，需要去掉
 
                         // 获取id=id_translation的textarea框
                         output = document.getElementById('id_translation');
                         // 输出data
                         console.log("data:", data, typeof (data))
 
-                        output.value += byte_str;
+                        output.value += data;
                     }
 
 
