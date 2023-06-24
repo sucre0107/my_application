@@ -103,8 +103,9 @@ def generate_stream_data(text):
             print(type(result))
             output_str = result # 去掉字符串开头和结尾的 "b'" 字符串
 
-            print("result" , result)
+            print("result", result)
             print("output_str", output_str)
+            print(f"data: {output_str}\n\n")
             yield f"data: {output_str}\n\n"
         if finish_reason == "stop":
             break
