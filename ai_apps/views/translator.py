@@ -101,9 +101,11 @@ def generate_stream_data(text):
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
             result = result.encode('utf-8')
             print(type(result))
-
-            print(result)
-            yield f"data: {result}\n\n"
+            output_str = result.strip("b'")  # 去掉字符串开头和结尾的 "b'" 字符串
+            output_str = result.strip("'")
+            print("result" , result)
+            print("output_str", output_str)
+            yield f"data: {output_str}\n\n"
         if finish_reason == "stop":
             break
     yield 'data: \n\n'
