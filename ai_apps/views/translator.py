@@ -97,19 +97,21 @@ def generate_stream_data(text):
     for chunk in chunks:
         # 得到delta的content，存在字典里面
         result = chunk.choices[0].get("delta", {}).get("content")
-        # 如果有需要，可以打印出来看看
-        # print(chunk)
-        print(type(chunk))
         finish_reason = chunk.choices[0].get("finish_reason")
+        # 如果有需要，可以打印出来看看
+        print(chunk)
+        # print(type(chunk))  # openai的一个对象
+
         if result is not None:
+
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
             byte_str = result.encode('utf-8')
             # b64_str = base64.b64encode(byte_str).decode('utf-8')
 
-            print(type(result))  # 这里是bytes类型
+            #print(type(result))  # 这里是bytes类型
 
-            print("result", result)
-            print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n"))
+            #print("result", result)
+            #print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n"))
             yield f"data: {byte_str}\n\n"
         if finish_reason == "stop":
             break
@@ -123,10 +125,10 @@ def pack_trans_stream(request):
         text = request.GET.get('text')
         stream_data = generate_stream_data(text)
         response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream', charset='utf-8',
-                                         ensure_ascii=False)
+                                         )
         response['Cache-Control'] = 'no-cache'
         # 服务器端不缓存数据，nginx就不会缓存数据，这样就可以实时看到数据了
         response['X-Accel-Buffering'] = 'no'
-        print(response)
+        # print(response) # StreamingHttpResponse对象
         return response
     return HttpResponse('后台已经停止推送数据')
