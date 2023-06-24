@@ -105,7 +105,7 @@ def generate_stream_data(text):
 
             print("result", result)
             print("output_str", output_str)
-            print(f"data: {output_str}\n\n")
+            print(f"data: {output_str}\n\n",type(f"data: {output_str}\n\n"))
             yield f"data: {output_str}\n\n"
         if finish_reason == "stop":
             break
