@@ -99,7 +99,7 @@ def generate_stream_data(text):
         result = chunk.choices[0].get("delta", {}).get("content")
         finish_reason = chunk.choices[0].get("finish_reason")
         # 如果有需要，可以打印出来看看
-        # print(chunk)
+        print(chunk)
         # print(type(chunk))  # openai的一个对象
 
         if result is not None:
