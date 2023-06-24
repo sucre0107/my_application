@@ -99,7 +99,7 @@ def generate_stream_data(text):
         result = chunk.choices[0].get("delta", {}).get("content")
         finish_reason = chunk.choices[0].get("finish_reason")
         # 如果有需要，可以打印出来看看
-        print(chunk)
+        # print(chunk)
         # print(type(chunk))  # openai的一个对象
 
         if result is not None:
@@ -108,8 +108,8 @@ def generate_stream_data(text):
             byte_str = result.encode('utf-8')
             # b64_str = base64.b64encode(byte_str).decode('utf-8')
 
-            #print(type(result))  # 这里是bytes类型
-
+            print(type(result))  # 这里是bytes类型
+            print(type(byte_str))  # 这里是bytes类型
             #print("result", result)
             #print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n"))
             yield f"data: {byte_str}\n\n"
