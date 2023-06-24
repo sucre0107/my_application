@@ -108,10 +108,9 @@ def generate_stream_data(text):
             byte_str = result.encode('utf-8')
             # b64_str = base64.b64encode(byte_str).decode('utf-8')
 
-            print(type(result))  # 这里是bytes类型
-            print(type(byte_str))  # 这里是bytes类型
-            #print("result", result)
-            #print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n"))
+            print(type(result))  # 这里是str类型，字符串
+            print(type(byte_str))  # 这里是bytes类型，字节
+            #print(f"data: {byte_str}\n\n", type(f"data: {result}\n\n")) # 这里是str类型，字符串
             yield f"data: {byte_str}\n\n"
         if finish_reason == "stop":
             break
