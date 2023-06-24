@@ -100,14 +100,12 @@ def generate_stream_data(text):
         finish_reason = chunk.choices[0].get("finish_reason")
         if result is not None:
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
-            byte_str = result.encode('utf-8')
-            print(type(result))
-            b64_str = base64.b64encode(byte_str).decode('utf-8')
+            result = result.encode('utf-8')
+            print(type(result))  #这里是bytes类型
 
             print("result", result)
-            print("b64_str", b64_str)
-            print(f"data: {b64_str}\n\n",type(f"data: {b64_str}\n\n"))
-            yield f"data: {b64_str}\n\n"
+            print(f"data: {result}\n\n",type(f"data: {result}\n\n"))
+            yield f"data: {result}\n\n"
         if finish_reason == "stop":
             break
     yield 'data: \n\n'
