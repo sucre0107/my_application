@@ -75,13 +75,16 @@
                     } else {
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
                         // 将data去掉开始的b'和结尾的'，并转换为json格式
-						const new_data = data.slice(2, -1)
-						console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
+                        const new_data = data.slice(2, -1)
+                        const newStr = new_data.replace(/\\n/g, '\n').replace(/\\x([0-9a-f]{2})/g, (match, p1) => {
+                            return String.fromCharCode(parseInt(p1, 16));
+                        });
+                        // console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
                         // 获取id=id_translation的textarea框
                         output = document.getElementById('id_translation');
                         // 输出data
 
-                        output.value += new_data;
+                        output.value += newStr;
                     }
 
 
