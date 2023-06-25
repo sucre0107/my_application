@@ -76,17 +76,11 @@
                         console.log("由于后端停止，关闭sse连接")
                     } else {
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
-                        // 解析JSON格式的数据
+                        // 解析JSON格式的数据，将json字符串转换成json对象
                         var pasedData = JSON.parse(data);
-                        // newStr = data.slice(2, -1)
-                        // console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
-                        // 获取id=id_translation的textarea框
-                        // 追加到文本框中
 						var paredContent = pasedData.content
+						// 获取id=id_translation的textarea框
                         var textarea = document.getElementById('id_translation');
-                        //if (textarea.value !== '') {
-                          //  textarea.value += ' ';
-                        //}
                         textarea.value += paredContent;
                     }
 

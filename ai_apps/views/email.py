@@ -1,3 +1,4 @@
+import json
 
 from ai_apps import forms
 from utils.base import BaseResponse
@@ -114,8 +115,12 @@ def generate_stream_data(received_email,include_info,my_extra_requirement):
 
         result = chunk.choices[0].get("delta", {}).get("content")
         finish_reason = chunk.choices[0].get("finish_reason")
+        if result is None:
+            continue
         if result is not None:
-            yield f"data: {result}\n\n"
+            json_str = {"content": result}
+            bytes_str = json.dumps(json_str, ensure_ascii=False)
+            yield f"data: {bytes_str}\n\n".encode('utf-8')
         if finish_reason == "stop":
             break
     yield 'data: \n\n'

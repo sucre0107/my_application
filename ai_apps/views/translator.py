@@ -100,21 +100,14 @@ def generate_stream_data(text):
         # 得到delta的content，存在字典里面
         result = chunk.choices[0].get("delta", {}).get("content")
         finish_reason = chunk.choices[0].get("finish_reason")
-        # 如果有需要，可以打印出来看看
-        print(chunk)
         # print(type(chunk))  # openai的一个对象
         if result is None:
             continue
         if result is not None:
-
-            # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
-            # byte_str = result.encode('utf-8')
-            # b64_str = base64.b64encode(byte_str).decode('utf-8')
+            # 创建一个字典，key是content，value是result，如果不创建字典，直接使用result，各种问题会出来
             json_str = {"content": result}
+            # 必须使用ensure_ascii=False，否则中文会乱码
             bytes_str = json.dumps(json_str, ensure_ascii=False)
-            print(type(result))  # 这里是str类型，字符串
-            # print(type(byte_str))  # 这里是bytes类型，字节
-            print(f"data: {bytes_str}\n\n".encode('utf-8')) # 这里是str类型，字符串
             yield f"data: {bytes_str}\n\n".encode('utf-8')
         if finish_reason == "stop":
             break

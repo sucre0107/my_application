@@ -79,11 +79,18 @@
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
                     if (data == '') {
-                        eventSource.close();
+                        // 如果data为空，说明后端已经停止了，关闭连接
+                        eventSource.close()
+                        console.log("由于后端停止，关闭sse连接")
+                    } else {
+                        console.log("data:", data, typeof (data)) // 输出data,是string类型
+                        // 解析JSON格式的数据，将json字符串转换成json对象
+                        var pasedData = JSON.parse(data);
+						var paredContent = pasedData.content
+						// 获取id=id_translation的textarea框
+                        var textarea = document.getElementById('id_translation');
+                        textarea.value += paredContent;
                     }
-                    output = document.getElementById('id_my_response_email');
-
-                    output.value += data
 
                 });
                 // 处理连接断开的情况
