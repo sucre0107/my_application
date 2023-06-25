@@ -1,4 +1,6 @@
 import base64
+import json
+
 from ai_apps import forms
 from utils.base import BaseResponse
 from django.shortcuts import render
@@ -105,13 +107,14 @@ def generate_stream_data(text):
         if result is not None:
 
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
-            byte_str = result.encode('utf-8')
+            # byte_str = result.encode('utf-8')
             # b64_str = base64.b64encode(byte_str).decode('utf-8')
-
-            print(type(result))  # 这里是str类型，字符串
+            json_str = {"content": result}
+            json.dumps(json_str, ensure_ascii=False)
+            bytes_str = print(type(result))  # 这里是str类型，字符串
             # print(type(byte_str))  # 这里是bytes类型，字节
             print(f"result: {result}\n\n") # 这里是str类型，字符串
-            yield f"data: {byte_str}\n\n"
+            yield b'data: ' + bytes_str + b'\n\n'
         if finish_reason == "stop":
             break
     yield 'data: \n\n'
