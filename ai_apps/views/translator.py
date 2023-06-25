@@ -103,7 +103,8 @@ def generate_stream_data(text):
         # 如果有需要，可以打印出来看看
         print(chunk)
         # print(type(chunk))  # openai的一个对象
-
+        if result is None:
+            continue
         if result is not None:
 
             # 这里必须要encode，否则会报错，因为result是unicode编码，而sse只支持utf-8编码
