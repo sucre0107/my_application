@@ -70,8 +70,9 @@
                 const eventSource = new EventSource(`{% url 'pack_trans_stream' %}?text=${text}&stop=${stop}`);
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
-                    if (data == '') {
-                        eventSource.close();
+                    if (data.content == '') {
+                        // 如果data.content为空，说明不接受这次的翻译结果，不做任何操作
+						return
                     } else {
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
                         // 解析JSON格式的数据
