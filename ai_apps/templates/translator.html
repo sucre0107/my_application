@@ -70,9 +70,10 @@
                 const eventSource = new EventSource(`{% url 'pack_trans_stream' %}?text=${text}&stop=${stop}`);
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
-                    if (data.content == '') {
-                        // 如果data.content为空，说明不接受这次的翻译结果，不做任何操作
-						return
+                    if (data == '') {
+                        // 如果data为空，说明后端已经停止了，关闭连接
+                        eventSource.close()
+                        console.log("由于后端停止，关闭sse连接")
                     } else {
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
                         // 解析JSON格式的数据
@@ -80,12 +81,13 @@
                         // newStr = data.slice(2, -1)
                         // console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
                         // 获取id=id_translation的textarea框
-                        var content = pasedData.content.trim().replace(/^"|\"$/g, '');
-
-                        output = document.getElementById('id_translation');
-                        // 输出data
-
-                        output.value += content;
+                        // 追加到文本框中
+						var paredContent = pasedData.content
+                        var textarea = document.getElementById('id_translation');
+                        if (textarea.value !== '') {
+                            textarea.value += ' ';
+                        }
+                        textarea.value += content + '\n';
                     }
 
 
