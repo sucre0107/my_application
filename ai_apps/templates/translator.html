@@ -74,13 +74,17 @@
                         eventSource.close();
                     } else {
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
-						// newStr = data.slice(2, -1)
-						// console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
+                        // 解析JSON格式的数据
+                        var pasedData = JSON.parse(data);
+                        // newStr = data.slice(2, -1)
+                        // console.log("new_data:", new_data, typeof (new_data)) // 输出data,是string类型
                         // 获取id=id_translation的textarea框
+                        var content = pasedData.content.trim().replace(/^"|\"$/g, '');
+
                         output = document.getElementById('id_translation');
                         // 输出data
 
-                        output.value += data;
+                        output.value += content;
                     }
 
 
