@@ -114,7 +114,7 @@ def generate_stream_data(text):
             bytes_str = json.dumps(json_str, ensure_ascii=False)
             print(type(result))  # 这里是str类型，字符串
             # print(type(byte_str))  # 这里是bytes类型，字节
-            print(f"result: {result}\n\n") # 这里是str类型，字符串
+            print(f"data: {bytes_str}\n\n".encode('utf-8')) # 这里是str类型，字符串
             yield f"data: {bytes_str}\n\n".encode('utf-8')
         if finish_reason == "stop":
             break
