@@ -110,8 +110,8 @@ def generate_stream_data(text):
             # byte_str = result.encode('utf-8')
             # b64_str = base64.b64encode(byte_str).decode('utf-8')
             json_str = {"content": result}
-            json.dumps(json_str, ensure_ascii=False)
-            bytes_str = print(type(result))  # 这里是str类型，字符串
+            bytes_str = json.dumps(json_str, ensure_ascii=False)
+            print(type(result))  # 这里是str类型，字符串
             # print(type(byte_str))  # 这里是bytes类型，字节
             print(f"result: {result}\n\n") # 这里是str类型，字符串
             yield b'data: ' + bytes_str + b'\n\n'
