@@ -634,6 +634,20 @@ p {
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
+.cus-accordion-flush-body {
+  position: relative;
+  margin-top: 0.75rem;
+  display: none;
+  border-radius: 0.5rem;
+  border-bottom-width: 1px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -672,6 +686,10 @@ p {
 
 .z-50 {
   z-index: 50;
+}
+
+.m-5 {
+  margin: 1.25rem;
 }
 
 .mx-5 {

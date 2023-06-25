@@ -127,7 +127,7 @@
 			<img class="zoomable-image object-contain cursor-zoom-in"
 				 src="{% static 'pknight_docs/usbelf/assets/images/RDM fixture search area.png' %}?{{ request.GET.urlencode }}"
 				 alt="RDM fixture area">
-			<ul class="mt-5">
+			<ul class="m-5">
 				<!-- "Actual No." editing box -->
 				<li class="">
 					<span class="font-bold">&#x27A4;"Actual No." editing box :</span><br>
@@ -150,7 +150,7 @@
 								  clip-rule="evenodd"></path>
 						</svg>
 					</button>
-					<div id="accordion-flush-body" class="mt-3 border-b hidden relative"
+					<div id="accordion-flush-body" class="cus-accordion-flush-body"
 						 aria-labelledby="accordion-flush-heading-1">
 						<img src="{% static 'pknight_docs/usbelf/assets/images/actual-number.png' %}"
 							 alt="actual number">
@@ -188,7 +188,7 @@
 								  clip-rule="evenodd"></path>
 						</svg>
 					</button>
-					<div id="accordion-flush-body" class="mt-3 border-b hidden relative"
+					<div id="accordion-flush-body" class="cus-accordion-flush-body"
 						 aria-labelledby="accordion-flush-heading-1">
 						<img src="{% static 'pknight_docs/usbelf/assets/images/ip-network-selector.png' %}"
 							 alt="ip-network-selector">
@@ -211,7 +211,7 @@
 					<button type="button"
 							class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
 					>
-						<span>Know more attributes</span>
+						<span>Know more details about attributes</span>
 						<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
 							 viewBox="0 0 20 20"
 							 xmlns="http://www.w3.org/2000/svg">
@@ -220,13 +220,18 @@
 								  clip-rule="evenodd"></path>
 						</svg>
 					</button>
-					<div id="accordion-flush-body" class="mt-3 border-b hidden relative"
+					<div id="accordion-flush-body" class="cus-accordion-flush-body"
 						 aria-labelledby="accordion-flush-heading-1">
 						<p class="mt-3 mb-2 text-gray-500">
-							On my computer,
-							192.168.1.18 is assigned to my wireless network, while 192.168.1.116 is assigned to my wired
-							network. However, in most cases, we don't need to worry about this because the device
-							communicates through a USB cable.
+							<span class="font-bold">★ No. </span> <br>
+							The number before the "-" represents the order in which the fixtures were discovered.The
+							number after the "-" indicates their actual position within the lighting system.<br>
+							If you have any questions, you can also refer to the instructions for the "Actual No."
+							editing box located above.
+						</p>
+						<p class="mt-3 mb-2 text-gray-500">
+							<span class="font-bold">★ UID </span> <br>
+							<!-- 写到这里 -->
 						</p>
 					</div>
 				</li>
