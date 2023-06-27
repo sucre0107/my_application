@@ -6,11 +6,13 @@ from django.shortcuts import render
 import openai
 from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
 
+
 def customer_service_assistant(request):
     # 只是为了页面展示
     CustomerServiceAssistantForm = forms.CustomerServiceAssistantForm()
 
-    return render(request, "customer_service_assistant.html", {"CustomerServiceAssistantForm": CustomerServiceAssistantForm})
+    return render(request, "customer_service_assistant.html",
+                  {"CustomerServiceAssistantForm": CustomerServiceAssistantForm})
 
 
 # def translate(request):
@@ -83,7 +85,7 @@ def pack_reply_stream(request):
         received_email = request.GET.get('customer_message')
         include_info = request.GET.get('include_info')
         my_extra_requirement = request.GET.get('my_extra_requirement')
-        stream_data = generate_stream_data(received_email,include_info,my_extra_requirement)
+        stream_data = generate_stream_data(received_email, include_info, my_extra_requirement)
         response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream')
         # 针对浏览器端--浏览器不应该缓存响应内容。这样可以确保每次请求都会从服务器获取最新的数据，而不是使用本地缓存。
         response['Cache-Control'] = 'no-cache'
@@ -91,11 +93,15 @@ def pack_reply_stream(request):
         response['X-Accel-Buffering'] = 'no'
         return response
     return HttpResponse('后台已经停止推送数据')
-def generate_stream_data(customer_message,include_info,my_extra_requirement):
+
+
+def generate_stream_data(customer_message, include_info, my_extra_requirement):
     template = """
                 We received a message from a customer ：{customer_message},
                 ##
                 help me write a reply in English that includes this information: {include_info}? 
+                ##
+                make sure the replay in a casual chat format without a letter structure. Feel free to use emojis if necessary.
                 ##
                 Additionally, when giving the reply, follow these conditions: {my_extra_requirement}.
                 """
@@ -126,5 +132,3 @@ def generate_stream_data(customer_message,include_info,my_extra_requirement):
         if finish_reason == "stop":
             break
     yield 'data: \n\n'
-
-
