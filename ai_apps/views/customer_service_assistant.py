@@ -93,8 +93,10 @@ def pack_reply_stream(request):
     return HttpResponse('后台已经停止推送数据')
 def generate_stream_data(customer_message,include_info,my_extra_requirement):
     template = """
-                We received a message from a customer on WhatsApp.：{customer_message},
-                help me write a an email reply in English that includes this information: {include_info}? 
+                We received a message from a customer ：{customer_message},
+                ##
+                help me write a reply in English that includes this information: {include_info}? 
+                ##
                 Additionally, when giving the reply, follow these conditions: {my_extra_requirement}.
                 """
     prompt = template.format(
