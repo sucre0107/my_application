@@ -1,0 +1,120 @@
+{% extends 'base_for_ai_apps.html' %}
+{% load static %}
+
+{% block title %}
+	邮件助手
+{% endblock title %}
+
+{% block content %}
+	<div class="relative mt-10">
+		<form class="block w-3/4 mx-auto" novalidate>
+			{% csrf_token %}
+			{% for field in CustomerServiceAssistantForm %}
+				<div class="my-2">
+					<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
+					{{ field }}
+					{{ endfor }}
+				</div>
+			{% endfor %}
+
+			<button id="stopbtn"
+					class="my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 px-8 rounded"
+					type="button">停止
+			</button>
+			<button id="generateReplyBtn"
+					class="w-full my-5 bg-blue-500 hover:bg-blue-700 text-white text-xl font-bold py-3 rounded"
+					type="button">
+				生成邮件
+			</button>
+		</form>
+	</div>
+
+
+
+	<script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
+	<script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
+
+	<script>
+        $(function () {
+            // 点击翻译事件
+            $('#generateReplyBtn').click(function () {
+                streamEvent();
+            });
+            // 点击停止事件
+            $('#stopbtn').click(function () {
+                stopGernerateEvent();
+            });
+            clearOldReply();
+
+        });
+
+        let lastCustomerMessage = ''
+        let lastMyExtraRequirement = ''
+        let lastIncludeInfo = ''
+
+        function streamEvent() {
+            customer_message = $('#id_customer_message').val()
+            my_extra_requirement = $('#id_my_extra_requirement').val();
+            include_info = $('#id_include_info').val();
+            // 如果内容相同，不连接后端，省钱
+            if (customer_message == lastCustomerMessage && my_extra_requirement == lastMyExtraRequirement && include_info == lastIncludeInfo) {
+                alert('请勿重复提交')
+                return
+            } else {
+                // 如果内容不同，连接后端，并且更新lastReceivedEmail
+                // 取到
+                lastCustomerMessage = customer_message;
+                lastIncludeInfo = include_info;
+                lastMyExtraRequirement = my_extra_requirement;
+
+            }
+            // 判断text有没有内容
+            if (!customer_message || !my_extra_requirement || !include_info) {
+                // 内容为空不连接后端，省钱
+                alert('请输入要回复的邮件的内容')
+            } else {
+                // 内容不为空，连接后端
+                stop = "false"  // 设置get请求的stop参数，在后端判断是否停止
+                const eventSource = new EventSource(`{% url 'pack_reply_stream' %}?stop=${stop}&customer_message=${customer_message}&my_extra_requirement=${my_extra_requirement}&include_info=${include_info}`);
+                eventSource.addEventListener('message', function (e) {
+                    const data = e.data;
+                    if (data == '') {
+                        // 如果data为空，说明后端已经停止了，关闭连接
+                        eventSource.close()
+                        console.log("由于后端停止，关闭sse连接")
+                    } else {
+                        console.log("data:", data, typeof (data)) // 输出data,是string类型
+                        // 解析JSON格式的数据，将json字符串转换成json对象
+                        var pasedData = JSON.parse(data);
+						var paredContent = pasedData.content
+						// 获取id=id_translation的textarea框
+                        var textarea = document.getElementById('id_my_reply');
+                        textarea.value += paredContent;
+                    }
+
+                });
+                // 处理连接断开的情况
+                eventSource.addEventListener('error', function () {
+                    console.error('连接已断开', "error");
+                    // 如果需要，可以尝试重新连接
+                });
+            }
+        }
+
+        function stopGernerateEvent() {
+            stop = "true"
+            const eventSource = new EventSource(`{% url 'pack_reply_stream' %}?text=${text}&stop=${stop}`);
+            eventSource.close()
+
+        }
+
+        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
+        function clearOldReply() {
+            $('#id_customer_message').change(function () {
+                $('#id_my_reply').val('')
+            })
+        }
+
+
+	</script>
+{% endblock %}

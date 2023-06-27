@@ -222,22 +222,148 @@
 					</button>
 					<div id="accordion-flush-body" class="cus-accordion-flush-body"
 						 aria-labelledby="accordion-flush-heading-1">
-						<p class="mt-3 mb-2 text-gray-500">
-							<span class="font-bold">★ No. </span> <br>
-							The number before the "-" represents the order in which the fixtures were discovered.The
-							number after the "-" indicates their actual position within the lighting system.<br>
-							If you have any questions, you can also refer to the instructions for the "Actual No."
-							editing box located above.
+						<div>
+							<!-- tab - No.  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ No. </span> <br>
+								The number before the "-" represents the order in which the fixtures were discovered.The
+								number after the "-" indicates their actual position within the lighting system.<br>
+								If you have any questions, you can also refer to the instructions for the "Actual No."
+								editing box located above.
+							</p>
+							<!-- tab - UUID  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ UUID </span> <br>
+								"UUID" is the abbreviation of "Universally Unique Identifier". Each lamp has its own
+								unique
+								hexadecimal code.
+							</p>
+							<!-- tab - Addr  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Addr </span> <br>
+								"Addr" is the abbreviation of "Address", representing the DMX address code of the
+								fixture,
+								which is usually an integer in the range of 0-255.
+							</p>
+							<!-- tab - Chan  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Chan </span> <br>
+								"Chan" is the abbreviation of "channels", representing the number of channels of the
+								fixture in the current personality mode.
+							</p>
+							<!-- tab - Device Lable  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Device Lable </span> <br>
+								As the name suggests, "label" refers to the label or identifier of the luminaire. It is
+								usually a phrase, word, or number used to identify and distinguish different fixtures.
+							</p>
+							<!-- tab - Manufacturer Lable  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Manufacturer Lable </span> <br>
+								As the name suggests, "Manufacturer label" refers to the label or identifier of the
+								manufacturer of this fixture.
+							</p>
+							<!-- tab -  Device Mode  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Device Mode </span> <br>
+								"Device Mode" is a description of the functions of the fixture. For example, if the
+								fixture
+								is a beam light, it is in "beam mode"; if it is a color-changing light, it is in "wash
+								mode"; if it is a pattern light, it is in "spot mode", and so on.
+							</p>
+							<!-- tab -  Personality Description  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Personality Description </span> <br>
+								The options for describing "Personality" in DMX lighting include various preset modes
+								that
+								describe the functions and control methods of a fixture. Each Personality contains a set
+								of
+								channels that can control different attributes of the fixture, such as color,
+								brightness,
+								movement, etc. Examples of Personality options include "RGB", "CMY", "Color Wheel", and
+								others, each corresponding to a different color control method. Users can select the
+								appropriate Personality and set the value of each channel to control the effect of the
+								fixture using a DMX controller.
+							</p>
+							<!-- tab -  Software Version  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Software Version </span> <br>
+								"Software Version" refers to the specific version of software that is installed on the
+								fixture
+							</p>
+							<!-- tab -  Sensor Count  -->
+							<p class="mt-3 mb-2 text-gray-500">
+								<span class="font-bold">★ Sensor Count </span> <br>
+								"Sensor Count" refers to the number of sensors installed on the fixture. <br>
+								Sensors can help users better understand the working status and environmental conditions
+								of
+								the fixture, thereby improving the management and maintenance of the fixture. For
+								example,
+								when the sensor detects that the temperature of the fixture is too high, the controller
+								can
+								automatically reduce the brightness of the fixture or turn off the fixture to avoid
+								overheating and damage. In addition, sensors can also be used to monitor the power
+								status
+								and service life of the fixture, reminding users to replace bulbs or repair fixtures in
+								a
+								timely manner.
+
+								In summary, sensors are an important component of RDM fixtures that provide useful
+								environmental and status information to help users better manage and maintain the
+								fixture.
+							</p>
+						</div>
+					</div>
+				</li>
+				<!-- Speed dropdown menu -->
+				<li class="">
+					<span class="font-bold">&#x27A4;"Speed" dropdown menu :</span><br>
+					<div class="relative flex flex-col md:flex-row items-end justify-between">
+						<img class="mt-1 mb-1 zoomable-image object-contain cursor-zoom-in"
+							 src="{% static 'pknight_docs/usbelf/assets/images/speed-dropdown-menu.png' %}"
+							 alt="speed dropdown menu">
+						<p class="md:ml-5">
+							By clicking on the "Speed" dropdown menu in RDM fixtures, you can select the speed at
+							which
+							RDM data is sent. There are six options available: Speed0, Speed1, Speed2, Speed3,
+							Speed4,
+							and Speed5. Speed0 is the slowest option, while Speed6 is the fastest. When searching
+							for
+							fixtures, it is important to choose the appropriate speed to ensure a fast and accurate
+							search. However, it should be noted that faster is not always better, and the most
+							suitable,
+							accurate, and stable option should be selected based on the actual situation.
 						</p>
-						<p class="mt-3 mb-2 text-gray-500">
-							<span class="font-bold">★ UID </span> <br>
-							<!-- 写到这里 -->
+
+					</div>
+				</li>
+				<!--  Search buttons  -->
+				<li class="">
+					<span class="font-bold">&#x27A4;"Search buttons :</span><br>
+					<div class="relative flex flex-col">
+						<img class="mt-1 mb-1 zoomable-image object-contain cursor-zoom-in"
+							 src="{% static 'pknight_docs/usbelf/assets/images/search-buttons.png' %}"
+							 alt="search buttons">
+						<p class="">
+							By clicking on the "Speed" dropdown menu in RDM fixtures, you can select the speed at
+							which
+							RDM data is sent. There are six options available: Speed0, Speed1, Speed2, Speed3,
+							Speed4,
+							and Speed5. Speed0 is the slowest option, while Speed6 is the fastest. When searching
+							for
+							fixtures, it is important to choose the appropriate speed to ensure a fast and accurate
+							search. However, it should be noted that faster is not always better, and the most
+							suitable,
+							accurate, and stable option should be selected based on the actual situation.
 						</p>
+
 					</div>
 				</li>
 			</ul>
 		</div>
 	</div>
+
+
 	{# 折叠对象的js #}
 	<script>
         const accordionBtn = document.getElementsByClassName('accordion-btn');
