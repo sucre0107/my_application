@@ -120,6 +120,7 @@
 		<img class="zoomable-image object-contain cursor-zoom-in"
 			 src="{% static 'pknight_docs/usbelf/assets/images/app-interface-areas.jpg' %}?{{ request.GET.urlencode }}"
 			 alt="app interface areas">
+		<!-- 4.4 RDM Fixture Area -->
 		<h4 class="mb-2 mt-5">
 			4.4 RDM Fixture Area
 		</h4>
@@ -345,22 +346,140 @@
 							 src="{% static 'pknight_docs/usbelf/assets/images/search-buttons.png' %}"
 							 alt="search buttons">
 						<p class="">
-							By clicking on the "Speed" dropdown menu in RDM fixtures, you can select the speed at
-							which
-							RDM data is sent. There are six options available: Speed0, Speed1, Speed2, Speed3,
-							Speed4,
-							and Speed5. Speed0 is the slowest option, while Speed6 is the fastest. When searching
-							for
-							fixtures, it is important to choose the appropriate speed to ensure a fast and accurate
-							search. However, it should be noted that faster is not always better, and the most
-							suitable,
-							accurate, and stable option should be selected based on the actual situation.
+							When you click the 'Discover' button, the USBelf dongle sends RDM request messages to all
+							RDM fixtures in the line, allowing you to discover all the RDM fixtures. When you click the
+							'Increase' button, the USBelf dongle first sends RDM request messages to the fixtures in the
+							line that have not been discovered yet. This includes fixtures that failed to be discovered
+							during previous searches or fixtures that were added later.
+
 						</p>
 
 					</div>
 				</li>
 			</ul>
 		</div>
+		<!-- 4.5 Function buttons -->
+		<h4 class="mb-2 mt-5">
+			4.5 Function buttons
+		</h4>
+		<div class="relative flex flex-row items-end">
+
+			<img class="zoomable-image object-contain cursor-zoom-in h-96"
+				 src="{% static 'pknight_docs/usbelf/assets/images/function-buttons.png' %}"
+				 alt="function buttons">
+
+			<div class="ml-3 w-full overflow-scroll h-96 bg-gray-100  rounded-lg">
+				<!-- clear btn -->
+				<div class="p-2">
+					<p><b>"Clear" button:</b></p>
+					<p>
+						"When you press the 'Clear' button, it is used to remove all the discovered RDM fixtures. As a
+						result, the left side's 'Fixtures list info' will be cleared."
+					</p>
+				</div>
+				<!-- Identify btn -->
+				<div class="p-2">
+					<p><b>"Identify" button:</b></p>
+					<p>
+						Before pressing the "Identify" button, you must select a row of fixtures in the left-hand side
+						"Fixtures list info". When you press this button, the selected row's "identify" text will start
+						flashing, and the corresponding fixture(s) will also flash or light up.
+					</p>
+				</div>
+				<!-- up & down btn -->
+				<div class="p-2">
+					<p><b>"Up"&"Down" buttons:</b></p>
+					<p>
+						These two buttons allow you to adjust the position of the fixtures in the left-hand side
+						"Fixtures list info". Pressing the "Up" button moves the selected fixture(s) up one row, while
+						pressing the "Down" button moves the selected fixture(s) down one row. With these buttons, you
+						can meticulously arrange the fixtures to match the exact order in the lighting system,
+						facilitating subsequent batch DMX encoding.
+					</p>
+				</div>
+				<!-- ligh bulb btn -->
+				<div class="p-2">
+					<p><b>"ligh bulb" button:</b></p>
+					<p>
+						This button can only be used when the selected fixtures are capable of being illuminated.
+					</p>
+				</div>
+				<!-- close btn -->
+				<div class="p-2">
+					<p><b>"Close" button:</b></p>
+					<p>
+						The "Close" button is typically not required in normal circumstances. However, in rare cases
+						where two fixtures share the same UUID, pressing this button becomes necessary to avoid program
+						conflicts. As a result, it is seldom utilized in practice.
+					</p>
+				</div>
+				<!-- clear bottom btn -->
+				<div class="p-2">
+					<p><b>"Clear" button:</b></p>
+					<p>
+						Please note that the "Clear" button, located at the bottom, can be clicked to clear the
+						messages in the right-hand side Application Runtime Log Area.
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- 4.6 Function buttons -->
+		<h4 class="mb-2 mt-5">
+			4.6 Single Fixture RDM Setting Area
+		</h4>
+		<div class="relative flex md:flex-row flex-col md:items-end">
+			<img class="zoomable-image object-contain cursor-zoom-in h-96"
+				 src="{% static 'pknight_docs/usbelf/assets/images/single fixture info.png' %}"
+				 alt="single fixture info">
+			<div class="ml-3 w-full overflow-scroll h-96 bg-gray-100  rounded-lg">
+				<!-- clear btn -->
+				<div class="p-2">
+					<p><b>When we need to modify the DMX channel information of a specific fixture, it can be easily
+						done through this section. First, we select a fixture from the 'Fixtures list info', and its
+						details will be displayed here. The aspects we can to modify are: Axes, Personality, and DMX
+						Address.</b></p>
+
+				</div>
+				<!-- Axes -->
+				<div class="p-2">
+					<p><b>"Identify" button:</b></p>
+					<p>
+						Before pressing the "Identify" button, you must select a row of fixtures in the left-hand side
+						"Fixtures list info". When you press this button, the selected row's "identify" text will start
+						flashing, and the corresponding fixture(s) will also flash or light up.
+					</p>
+				</div>
+				<!-- Personality -->
+				<div class="p-2">
+					<p><b>"Up"&"Down" buttons:</b></p>
+					<p>
+						These two buttons allow you to adjust the position of the fixtures in the left-hand side
+						"Fixtures list info". Pressing the "Up" button moves the selected fixture(s) up one row, while
+						pressing the "Down" button moves the selected fixture(s) down one row. With these buttons, you
+						can meticulously arrange the fixtures to match the exact order in the lighting system,
+						facilitating subsequent batch DMX encoding.
+					</p>
+				</div>
+				<!-- DMX Address -->
+				<div class="p-2">
+					<p><b>"ligh bulb" button:</b></p>
+					<p>
+						This button can only be used when the selected fixtures are capable of being illuminated.
+					</p>
+				</div>
+				<!-- write btn -->
+				<div class="p-2">
+					<p><b>"Close" button:</b></p>
+					<p>
+						The "Close" button is typically not required in normal circumstances. However, in rare cases
+						where two fixtures share the same UUID, pressing this button becomes necessary to avoid program
+						conflicts. As a result, it is seldom utilized in practice.
+					</p>
+				</div>
+
+			</div>
+		</div>
+
 	</div>
 
 
