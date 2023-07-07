@@ -13,11 +13,11 @@ var MyEnterFunction = {
         }
     },
 
-    handleEnter: function(event, streamEvent) {
+    handleEnter: function(event) { //不需要传人参数streamEvent
         if (event.keyCode == 13) {
             // 运行streamEvent函数
             event.preventDefault()
-            streamEvent()
+            window.streamEvent()  // 直接调用全局的 streamEvent 函数
         }
     }
 }

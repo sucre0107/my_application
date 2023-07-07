@@ -39,11 +39,11 @@
         $(function () {
             // 点击翻译事件
             $('#generateReplyBtn').click(function () {
-                streamEvent();
+                window.streamEvent();
             });
             $('#id_customer_message', '#id_my_extra_requirement', '#id_include_info').keydown(function (event) {
                 MyEnterFunction.handleShiftEnter(event);
-                MyEnterFunction.handleEnter(event, streamEvent);
+                MyEnterFunction.handleEnter(event);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
@@ -57,7 +57,7 @@
         let lastMyExtraRequirement = ''
         let lastIncludeInfo = ''
 
-        function streamEvent() {
+        window.streamEvent = function () {
             customer_message = $('#id_customer_message').val()
             my_extra_requirement = $('#id_my_extra_requirement').val();
             include_info = $('#id_include_info').val();

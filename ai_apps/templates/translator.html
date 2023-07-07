@@ -40,12 +40,12 @@
         $(function () {
             // 点击翻译事件
             $('#translateBtn').click(function () {
-                streamEvent();
+                window.streamEvent();
             });
             // 按下Enter键运行streamEvent函数
             $('#id_text').keydown(function (event) {
 				MyEnterFunction.handleShiftEnter(event);
-                MyEnterFunction.handleEnter(event, streamEvent);
+                MyEnterFunction.handleEnter(event);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
@@ -57,7 +57,7 @@
 
         let lastText = ''
 
-        function streamEvent() {
+        window.streamEvent  = function () {
             text = $('#id_text').val()
             // 如果内容相同，不连接后端，省钱
             if (text == lastText) {
