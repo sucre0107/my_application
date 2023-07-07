@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -25,13 +24,13 @@ SECRET_KEY = "django-insecure-33i&l@30v(i5)udw*vmy93)vb-k!zsg4c&z1_4_$zqpl*p5ir7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-ALLOWED_HOSTS = [] # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
+ALLOWED_HOSTS = []  # 当DEBUG为False时，需要配置允许访问的域名，否则会报错
 # 这里是验证外部请求request的header中的host是否在ALLOWED_HOSTS中，如果不在，就不能访问
 
 # Application definition
-
+MODELTYPES = {{"gpt3": "gpt-3.5-turbo"}, {"gpt4": "gpt-4"}, {"gpt416k": "gpt-4-16k"}, {"gpt432k": "gpt-4-32k"}}
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -56,16 +55,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "my_application.urls"
 
-
 # 模版文件的文件名不能相同，否则只会渲染第一个路径下的模版文件
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-                    os.path.join(BASE_DIR, "ai_apps/templates"),
-                    os.path.join(BASE_DIR, "pknight_docs/templates"),
-                    os.path.join(BASE_DIR, "templates"),
-                 ],
+            os.path.join(BASE_DIR, "ai_apps/templates"),
+            os.path.join(BASE_DIR, "pknight_docs/templates"),
+            os.path.join(BASE_DIR, "templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -90,38 +88,34 @@ DATABASES = {
     }
 }
 
-
-
 # mysql 数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "", # 数据库名
-        'USER': '',# 数据库用户名
-        'PASSWORD': '', # 数据库密码
-        'HOST': '127.0.0.1', # 数据库主机
-        'PORT': '3306', # 数据库端口
+        'NAME': "",  # 数据库名
+        'USER': '',  # 数据库用户名
+        'PASSWORD': '',  # 数据库密码
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': '3306',  # 数据库端口
     }
 }
-
 
 # 用于连接 Redis 数据库
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379", # Redis 地址
+        "LOCATION": "redis://127.0.0.1:6379",  # Redis 地址
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {"max_connections": 100},
-            "PASSWORD": "", # Redis 密码
+            "PASSWORD": "",  # Redis 密码
         },
-        "KEY_PREFIX": "my_application", # Redis 前缀
-        "TIMEOUT": 300, # Redis 过期时间
+        "KEY_PREFIX": "my_application",  # Redis 前缀
+        "TIMEOUT": 300,  # Redis 过期时间
     }
 }
 
 WSGI_APPLICATION = "my_application.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -152,7 +146,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -177,8 +170,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "pknight_docs/static"),
 
 ]
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

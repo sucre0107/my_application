@@ -1,5 +1,5 @@
 import json
-
+from django.conf import settings
 from ai_apps import forms
 from utils.base import BaseResponse
 from django.shortcuts import render
@@ -103,7 +103,7 @@ def generate_stream_data(received_email,include_info,my_extra_requirement):
         my_extra_requirement=my_extra_requirement
     )
     chunks = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model=settings.MODELTYPES.get("gpt4"),
         messages=[{"role": "system",
                    "content": "You are a reliable AI email writing assistant who can help me write satisfying English emails based on my prompts."},
                   {"role": "user", "content": prompt}

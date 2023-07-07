@@ -6,7 +6,7 @@ from utils.base import BaseResponse
 from django.shortcuts import render
 import openai
 from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
-
+from django.conf import settings
 
 def translator(request):
     # 只是为了页面展示
@@ -81,7 +81,7 @@ def generate_stream_data(text):
     # prompt = template.format(original_text=text)
     prompt = template
     chunks = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model=settings.MODELTYPES.get("gpt4"),
         messages=[{"role": "system",
                    "content": "you are my translate assistant and need to determine whether to translate my text into Chinese or English based on its content I give you.you need give me only the translation result and no more other words"},
                   {"role": "user", "content":

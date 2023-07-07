@@ -7,7 +7,7 @@
 
 
 {% block content %}
-	<div class="container max-w-screen-xl mx-auto pt-5 px-5">
+	<div class="container max-w-screen-xl mx-auto py-5 px-5">
 		<h2 class="mb-2">USBelf Tutorial</h2>
 		<h3 class="mb-2">
 			1. Overview
@@ -120,9 +120,9 @@
 		<img class="zoomable-image object-contain cursor-zoom-in"
 			 src="{% static 'pknight_docs/usbelf/assets/images/app-interface-areas.jpg' %}?{{ request.GET.urlencode }}"
 			 alt="app interface areas">
-		<!-- 4.4 RDM Fixture Area -->
+		<!-- 4.3.1 RDM Fixture Area -->
 		<h4 class="mb-2 mt-5">
-			4.4 RDM Fixture Area
+			4.3.1 RDM Fixture Area
 		</h4>
 		<div class="relative h-full">
 			<img class="zoomable-image object-contain cursor-zoom-in"
@@ -358,9 +358,9 @@
 				</li>
 			</ul>
 		</div>
-		<!-- 4.5 Function buttons -->
+		<!-- 4.3.2 Function buttons -->
 		<h4 class="mb-2 mt-5">
-			4.5 Function buttons
+			4.3.2 Function buttons
 		</h4>
 		<div class="relative flex flex-row items-end">
 
@@ -368,9 +368,9 @@
 				 src="{% static 'pknight_docs/usbelf/assets/images/function-buttons.png' %}"
 				 alt="function buttons">
 
-			<div class="ml-3 w-full overflow-scroll h-96 bg-gray-100  rounded-lg">
+			<div class="p-2 ml-3 w-full overflow-scroll h-96 bg-gray-100  rounded-lg">
 				<!-- clear btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"Clear" button:</b></p>
 					<p>
 						"When you press the 'Clear' button, it is used to remove all the discovered RDM fixtures. As a
@@ -378,7 +378,7 @@
 					</p>
 				</div>
 				<!-- Identify btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"Identify" button:</b></p>
 					<p>
 						Before pressing the "Identify" button, you must select a row of fixtures in the left-hand side
@@ -387,7 +387,7 @@
 					</p>
 				</div>
 				<!-- up & down btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"Up"&"Down" buttons:</b></p>
 					<p>
 						These two buttons allow you to adjust the position of the fixtures in the left-hand side
@@ -398,14 +398,14 @@
 					</p>
 				</div>
 				<!-- ligh bulb btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"ligh bulb" button:</b></p>
 					<p>
 						This button can only be used when the selected fixtures are capable of being illuminated.
 					</p>
 				</div>
 				<!-- close btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"Close" button:</b></p>
 					<p>
 						The "Close" button is typically not required in normal circumstances. However, in rare cases
@@ -414,7 +414,7 @@
 					</p>
 				</div>
 				<!-- clear bottom btn -->
-				<div class="p-2">
+				<div>
 					<p><b>"Clear" button:</b></p>
 					<p>
 						Please note that the "Clear" button, located at the bottom, can be clicked to clear the
@@ -423,17 +423,17 @@
 				</div>
 			</div>
 		</div>
-		<!-- 4.6 Function buttons -->
+		<!-- 4.3.3 Single Fixture RDM Setting Area -->
 		<h4 class="mb-2 mt-5">
-			4.6 Single Fixture RDM Setting Area
+			4.3.3 Single Fixture RDM Setting Area
 		</h4>
-		<div class="relative flex md:flex-row flex-col md:items-end">
+		<div class="relative flex md:flex-row flex-col">
 			<img class="zoomable-image object-contain cursor-zoom-in h-96"
 				 src="{% static 'pknight_docs/usbelf/assets/images/single fixture info.png' %}"
 				 alt="single fixture info">
-			<div class="ml-3 w-full overflow-scroll h-96 bg-gray-100  rounded-lg">
-				<!-- clear btn -->
-				<div class="p-2">
+			<div class="mt-2 md:mt-0 w-full p-2 ml-3 overflow-scroll h-96 md:h-[32]rem bg-gray-100  rounded-lg">
+				<!-- modify the specific -->
+				<div>
 					<p><b>When we need to modify the DMX channel information of a specific fixture, it can be easily
 						done through this section. First, we select a fixture from the 'Fixtures list info', and its
 						details will be displayed here. The aspects we can to modify are: Axes, Personality, and DMX
@@ -441,45 +441,291 @@
 
 				</div>
 				<!-- Axes -->
-				<div class="p-2">
-					<p><b>"Identify" button:</b></p>
+				<div>
+					<p><b>"Axes" checkboxs:</b></p>
 					<p>
-						Before pressing the "Identify" button, you must select a row of fixtures in the left-hand side
-						"Fixtures list info". When you press this button, the selected row's "identify" text will start
-						flashing, and the corresponding fixture(s) will also flash or light up.
+						After the "Axes" option, there are three checkboxes. As the name suggests, "Axes" refers to the
+						directions of the axes. In DMX lighting fixtures, the types that can adjust the direction of the
+						axes are typically those that are rotatable or adjustable. These fixtures often include Moving
+						Head Lights, Scanner Lights, and Rotating Ball Lights. By checking the checkboxes, we can
+						achieve different axis direction reversals. Checking the first checkbox will reverse the X-axis
+						direction, checking the second checkbox will reverse the Y-axis direction, and checking the
+						third checkbox will simultaneously reverse both the X and Y axes. This way, you can freely
+						adjust the axis direction of the fixtures according to your needs.
 					</p>
 				</div>
 				<!-- Personality -->
-				<div class="p-2">
-					<p><b>"Up"&"Down" buttons:</b></p>
+				<div>
+					<p><b>Personality:</b></p>
 					<p>
-						These two buttons allow you to adjust the position of the fixtures in the left-hand side
-						"Fixtures list info". Pressing the "Up" button moves the selected fixture(s) up one row, while
-						pressing the "Down" button moves the selected fixture(s) down one row. With these buttons, you
-						can meticulously arrange the fixtures to match the exact order in the lighting system,
-						facilitating subsequent batch DMX encoding.
+						After the "Personality" option, there is a dropdown menu. This menu displays the current channel
+						mode of the selected fixture. If the fixture supports multiple channel modes, you can click on
+						the menu to reveal a list of other available channel modes from which you can choose.
+						By selecting different channel modes, you can change the control method and functionality of the
+						fixture. Each channel mode defines a specific set of channel configurations that control various
+						attributes and effects of the fixture. For example, a channel mode may include settings for
+						color, brightness, movement, and other aspects.
+						Using this dropdown menu, you can easily switch between different channel modes for the fixture,
+						adapting to different lighting needs and effects.
 					</p>
 				</div>
 				<!-- DMX Address -->
-				<div class="p-2">
-					<p><b>"ligh bulb" button:</b></p>
+				<div>
+					<p><b>DMX Address:</b></p>
 					<p>
-						This button can only be used when the selected fixtures are capable of being illuminated.
-					</p>
+						After the "DMX Address" option, there is a numeric input field and two buttons: a forward button
+						and a backward button. The numeric input field displays the current DMX address of the selected
+						fixture. You can adjust the value by clicking the forward or backward buttons, or directly
+						inputting the desired value in the input field.
+						Using this numeric input field and buttons, you can conveniently modify the DMX address of the
+						fixture. The DMX address is used to identify the unique position of each fixture within the DMX
+						control system. By adjusting the DMX address, you can ensure the correct correspondence between
+						the fixture and the control system, enabling precise control and operation of the lights. </p>
 				</div>
 				<!-- write btn -->
-				<div class="p-2">
-					<p><b>"Close" button:</b></p>
+				<div>
+					<p><b>"Write" button:</b></p>
 					<p>
-						The "Close" button is typically not required in normal circumstances. However, in rare cases
-						where two fixtures share the same UUID, pressing this button becomes necessary to avoid program
-						conflicts. As a result, it is seldom utilized in practice.
+						It is important to remember to click the "Write" button after making any desired modifications
+						to ensure that the changes are properly applied and stored in the fixture's memory.
 					</p>
 				</div>
-
 			</div>
 		</div>
+		<!-- 4.3.4 RDM Fixture Status Area -->
+		<h4 class="mb-2 mt-5">
+			4.3.4 RDM Fixture Status Area
+		</h4>
+		<div class="relative">
+			<img class="zoomable-image object-contain cursor-zoom-in"
+				 src="{% static 'pknight_docs/usbelf/assets/images/RDM fixture status.png' %}"
+				 alt="RDM fixture status">
+		</div>
 
+		<!-- 4.3.5 Batch RDM Setting Area -->
+		<h4 class="mb-2 mt-5">
+			4.3.5 Batch RDM Setting Area
+		</h4>
+		<h5 class="mb-2 mt-5">
+			One-Click batch addressing
+		</h5>
+		<div class="relative">
+			<img class="zoomable-image object-contain cursor-zoom-in"
+				 src="{% static 'pknight_docs/usbelf/assets/images/one click batch addressing.png' %}"
+				 alt="one click batch addressing">
+			<ul class="m-5">
+				<!-- Channel Mode -->
+				<li class="">
+					<span class="font-bold">&#x27A4;Channel Mode :</span><br>
+					There is a dropdown menu that allows me to select the Personality for the fixtures that require
+					batch addressing. Please note that the configuration will only take effect after checking the
+					checkboxes.
+				</li>
+				<!-- Start Address  -->
+				<li class="">
+					<span class="font-bold">&#x27A4;Start Address :</span><br>
+					"Start Address" refers to the address value of the first fixture in the actual lighting system.
+				</li>
+				<!-- Start fixture  -->
+				<li class="">
+					<span class="font-bold">&#x27A4;Start fixture :</span><br>
+					"Start Fixture" refers to the number of the first fixture in the actual lighting system.
+				</li>
+				<!-- End Fixture -->
+				<li class="">
+					<span class="font-bold">&#x27A4;End Fixture :</span><br>
+					"End Fixture" refers to the number of the last fixture in the actual lighting system.
+				</li>
+				<!--  Channels per Fixture  -->
+				<li class="">
+					<span class="font-bold">&#x27A4;Channels per Fixture :</span><br>
+					"Channels per Fixture" refers to the number of channels that each fixture occupies in the actual
+					lighting system.
+				</li>
+				<!--  One-Click batch addressing btn  -->
+				<li class="">
+					<span class="font-bold">&#x27A4;One-Click batch addressing :</span><br>
+					By clicking the "One-Click batch addressing" button, the system automatically calculates the DMX
+					addresses and selects the specified personality for each fixture, and writes them into the lights.
+					This eliminates the need for manually setting the address code and personality for each individual
+					fixture, allowing you to complete the entire process with just one click.
+				</li>
+			</ul>
+		</div>
+		<h5 class="mb-2 mt-5">
+			Visual addressing
+		</h5>
+		<img class="zoomable-image object-contain cursor-zoom-in h-6 inline-block"
+			 src="{% static 'pknight_docs/usbelf/assets/images/visual addressing.png' %}"
+			 alt="visual addressing">
+		<span class="text-blue-700">click this Visual addressing button </span>
+		<img class="zoomable-image object-contain cursor-zoom-in"
+			 src="{% static 'pknight_docs/usbelf/assets/images/visual-addressing.jpg' %}"
+			 alt="visual-addressing.jpg">
+		<ul class="m-5">
+			<!-- Fixture List -->
+			<li class="">
+				<span class="font-bold">&#x27A4;Fixture List :</span><br>
+				This section showcases all the RDM fixtures that have been discovered. Each row represents an individual
+				fixture, with the first column labeled "No." indicating the fixture's serial number. The second column
+				labeled "Addr" denotes the DMX address code of the fixture, while the third column labeled "Ch"
+				signifies the Personality associated with the fixture.
+			</li>
+			<!-- Visual Enconding Panel  -->
+			<li class="">
+				<span class="font-bold">&#x27A4;Visual Enconding Panel :</span><br>
+				The Visual Encoding Panel consists of 512 small squares, with 32 squares horizontally and 16 squares
+				vertically, totaling 512 squares. Each square represents an address code. In this DMX universe, there
+				are 6 fixtures, with each fixture occupying 4 channels. You can see 6 colored squares representing these
+				fixtures. The first square of each fixture is blue, indicating the address code of that fixture in this
+				DMX universe. When we click on a fixture in the "Fixtures list" on the right side or directly click on
+				the fixture displayed as a square, it sends an "identify" command to that fixture. As a result, the
+				squares representing the identified fixture on the panel, except for the blue square, will turn purple.
+				You can simply drag and drop these small squares to the appropriate positions and click the "Write"
+				button to write the new address code into the fixtures.
+				<button type="button"
+						class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+				>
+					<span>Watch the demonstration.</span>
+					<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+						 viewBox="0 0 20 20"
+						 xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+							  clip-rule="evenodd"></path>
+					</svg>
+				</button>
+				<div id="accordion-flush-body" class="cus-accordion-flush-body"
+					 aria-labelledby="accordion-flush-heading-1">
+					<img class="zoomable-image object-contain cursor-zoom-in"
+						 src="{% static 'pknight_docs/usbelf/assets/images/visual encoding demonstration.gif' %}"
+						 alt="visual encoding demonstration-gif">
+					<p>
+						<b>note：</b>When you click and select a fixture, the bottom right corner displays the fixture's
+						address code in real-time.
+					</p>
+				</div>
+			</li>
+			<!-- Mini DMX Console  -->
+			<li class="">
+				<span class="font-bold">&#x27A4;Mini DMX Console :</span><br>
+				The "Mini DMX Console" allows us to send simple DMX signals to the fixtures for basic testing purposes.
+				<br>
+				<b>note：</b>When you click and select a fixture, our "Mini DMX Console" automatically switches to
+				the position where you can control the address code of that specific fixture. This saves you the
+				trouble of manually searching for its location.
+				<button type="button"
+						class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+				>
+					<span>Watch the demonstration.</span>
+					<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+						 viewBox="0 0 20 20"
+						 xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+							  clip-rule="evenodd"></path>
+					</svg>
+				</button>
+				<div id="accordion-flush-body" class="cus-accordion-flush-body"
+					 aria-labelledby="accordion-flush-heading-1">
+					<img class="zoomable-image object-contain cursor-zoom-in"
+						 src="{% static 'pknight_docs/usbelf/assets/images/mini dmx console demostration.gif' %}"
+						 alt="mini dmx console demostration-gif">
+				</div>
+			</li>
+			<!-- Function Buttons -->
+			<li class="">
+				<span class="font-bold">&#x27A4;Function Buttons :</span><br>
+				<div class="relative flex md:flex-row flex-col">
+					<img class="zoomable-image object-contain cursor-zoom-in h-96"
+						 src="{% static 'pknight_docs/usbelf/assets/images/visual coding function buttons.png' %}"
+						 alt="visual coding function buttons">
+					<div class="mt-2 md:mt-0 w-full p-2 ml-3 overflow-scroll h-96 md:h-[32]rem bg-gray-100  rounded-lg">
+						<!-- Cancel Identify btn -->
+						<div>
+							<p><b>"Cancel Identify" button:</b></p>
+							<p>
+								Before using the Mini DMX Console, it is necessary to click the "Cancel Identify" button
+								to cancel any previous "identify" commands sent to the fixture. Otherwise, the fixtures
+								will not be able to receive the DMX signals sent by the DMX console.
+							</p>
+						</div>
+						<!-- Write btn -->
+						<div>
+							<p><b>"Write" button:</b></p>
+							<p>
+								After you have dragged all the fixtures to their desired positions, simply click the
+								"Write" button, and the software will automatically write the DMX address codes to all
+								the fixtures.
+							</p>
+						</div>
+						<!-- Save List & load List btn -->
+						<div>
+							<p><b>"Save List" button:</b></p>
+							<p>
+								This is a truly groundbreaking feature. When you click the "Save list" button, the
+								software allows you to save your current encoding information to a local file. If you
+								need to use it again in the future, simply click the "Load List" button to import the
+								previously saved file and effortlessly restore your previous encoding settings.
+							</p>
+						</div>
+					</div>
+				</div>
+				<button type="button"
+						class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+				>
+					<span>Watch the demonstration.</span>
+					<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+						 viewBox="0 0 20 20"
+						 xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd"
+							  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+							  clip-rule="evenodd"></path>
+					</svg>
+				</button>
+				<div id="accordion-flush-body" class="cus-accordion-flush-body"
+					 aria-labelledby="accordion-flush-heading-1">
+					<img class="zoomable-image object-contain cursor-zoom-in"
+						 src="{% static 'pknight_docs/usbelf/assets/images/save load function.gif' %}"
+						 alt="save load function-gif">
+				</div>
+			</li>
+		</ul>
+		<h4 class="mb-2 mt-5">
+			4.4 App Interface -Recorder Tab
+		</h4>
+		<img class="zoomable-image object-contain cursor-zoom-in"
+			 src="{% static 'pknight_docs/usbelf/assets/images/app-interface-recorder.jpg' %}?{{ request.GET.urlencode }}"
+			 alt="app interface recorder">
+		<p class="font-bold text-xl">When you click on the "Recorder" tab in the software, you can utilize the recording
+			functionality. Within this feature, you have the option to select the desired Art-Net universe to record
+			(ranging from 0 to 15). Once you have chosen the target universe, simply click the "Record" button, and the
+			program will immediately commence real-time recording of the Art-Net signals transmitted within the local
+			network. The recorded data will be saved as DMX files with the ".dmx" extension and displayed in the
+			"Recorder Files" section. Upon completion of the saving process, you can play the recorded file by clicking
+			the "Play" button. Through this process, you can conveniently record Art-Net data and output DMX
+			signals.We use a computer in the local network to send Art-Net signals to our USBelf using the "QLC+" app on
+			the computer. Please note that the universe for sending and recording must be the same. In this case, we are
+			using universe 3.
+		</p>
+		<button type="button"
+				class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+		>
+			<span>Watch the demonstration.</span>
+			<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+				 viewBox="0 0 20 20"
+				 xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd"
+					  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+					  clip-rule="evenodd"></path>
+			</svg>
+		</button>
+		<div id="accordion-flush-body" class="cus-accordion-flush-body"
+			 aria-labelledby="accordion-flush-heading-1">
+			<img class="zoomable-image object-contain cursor-zoom-in"
+				 src="{% static 'pknight_docs/usbelf/assets/images/save load function.gif' %}"
+				 alt="save load function-gif">
+		</div>
 	</div>
 
 
