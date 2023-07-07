@@ -33,6 +33,7 @@
 
 	<script src="{% static 'staticfiles_for_project/js/jquery.js' %}"></script>
 	<script src="{% static 'staticfiles_for_project/js/csrf.js' %}"></script>
+	<script src="{% static 'staticfiles_for_project/js/handleShiftEnter.js' %}"></script>
 
 	<script>
         $(function () {
@@ -42,22 +43,7 @@
             });
             // 按下Enter键运行streamEvent函数
             $('#id_received_email, #id_my_extra_requirement, #id_include_info').keydown(function (event) {
-                // 检查是否按下了 Shift + Enter
-                if (event.shiftKey && event.keyCode == 13) {
-                    // 阻止默认行为（例如，不发送表单）
-                    event.preventDefault();
-                    // 在光标位置插入换行符
-                    var cursorPos = event.target.selectionStart;
-                    var textBefore = event.target.value.substring(0, cursorPos);
-                    var textAfter = event.target.value.substring(cursorPos, event.target.value.length);
-                    event.target.value = textBefore + "\n" + textAfter;
-                }
-                // 检查是否按下了 Enter
-                else if (event.keyCode == 13) {
-                    // 运行streamEvent函数
-                    event.preventDefault()
-                    streamEvent()
-                }
+                handleShiftEnter(event, streamEvent);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {

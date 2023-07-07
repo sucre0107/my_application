@@ -34,6 +34,7 @@
 
 	<script src="{% static 'js/jquery.js' %}"></script>
 	<script src="{% static 'js/csrf.js' %}"></script>
+	<script src="{% static 'staticfiles_for_project/js/handleShiftEnter.js' %}"></script>
 
 	<script>
         $(function () {
@@ -43,9 +44,7 @@
             });
             // 按下Enter键运行streamEvent函数
             $('#id_text').keydown(function (event) {
-                if (event.keyCode == 13) {
-                    streamEvent();
-                }
+				handleShiftEnter(event, streamEvent)
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
