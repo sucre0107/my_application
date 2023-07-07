@@ -45,7 +45,8 @@
                 // 检查是否按下了 Shift + Enter
                 if (event.shiftKey && event.keyCode == 13) {
                     // 阻止默认行为（例如，不发送表单）
-                    event.preventDefault();
+                    var textarea = document.getElementById(event.target.id);
+					event.preventDefault();
                     // 在光标位置插入换行符
                     var cursorPos = textarea.selectionStart;
                     var textBefore = textarea.value.substring(0, cursorPos);
