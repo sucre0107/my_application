@@ -40,6 +40,11 @@
             $('#generateReplyBtn').click(function () {
                 streamEvent();
             });
+            $('#id_customer_message', '#id_my_extra_requirement', '#id_include_info').keydown(function (event) {
+                if (event.keyCode == 13) {
+                    streamEvent();
+                }
+            });
             // 点击停止事件
             $('#stopbtn').click(function () {
                 stopGernerateEvent();

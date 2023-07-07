@@ -1,0 +1,55 @@
+{% extends 'base_for_ai_apps.html' %}
+{% load static %}
+
+{% block title %}
+	邮件助手
+{% endblock title %}
+
+{% block content %}
+<div class="h-screen flex justify-center items-center bg-gray-200">
+    <div class="bg-white p-6 rounded shadow-md w-full">
+        <div id="chatbox" class="overflow-y-auto h-full mb-4 border-b-2">
+            <!-- Messages will be added here -->
+        </div>
+		<form class="block w-3/4 mx-auto" novalidate>
+			{% csrf_token %}
+			{% for field in ChatBotForm %}
+				<div class="my-2">
+					<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
+					{{ field }}
+					{{ endfor }}
+				</div>
+			{% endfor %}
+		</form>
+    </div>
+</div>
+    <script>
+        const chatbox = document.getElementById('chatbox');
+        const userInput = document.getElementById('id_user_input');
+
+        userInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const userText = userInput.value;
+                userInput.value = '';
+
+                // Add user's message to chatbox
+                const userDiv = document.createElement('div');
+                userDiv.textContent = `User: ${userText}`;
+                userDiv.classList.add('text-right', 'font-bold');
+                chatbox.appendChild(userDiv);
+
+                // Generate bot's response
+                const botResponse = `Bot: I'm a static bot, I can't generate responses yet.`;
+
+                // Add bot's response to chatbox after a delay
+                setTimeout(() => {
+                    const botDiv = document.createElement('div');
+                    botDiv.textContent = botResponse;
+                    botDiv.classList.add('text-left', 'text-gray-500');
+                    chatbox.appendChild(botDiv);
+                }, 1000);
+            }
+        });
+    </script>
+
+{% endblock %}

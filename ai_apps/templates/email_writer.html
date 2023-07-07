@@ -40,6 +40,12 @@
             $('#generateEmailBtn').click(function () {
                 streamEvent();
             });
+            // 按下Enter键运行streamEvent函数
+            $('#id_received_email', '#id_my_extra_requirement', '#id_include_info').keydown(function (event) {
+                if (event.keyCode == 13) {
+                    streamEvent();
+                }
+            });
             // 点击停止事件
             $('#stopbtn').click(function () {
                 stopGernerateEvent();
@@ -86,8 +92,8 @@
                         console.log("data:", data, typeof (data)) // 输出data,是string类型
                         // 解析JSON格式的数据，将json字符串转换成json对象
                         var pasedData = JSON.parse(data);
-						var paredContent = pasedData.content
-						// 获取id=id_translation的textarea框
+                        var paredContent = pasedData.content
+                        // 获取id=id_translation的textarea框
                         var textarea = document.getElementById('id_my_response_email');
                         textarea.value += paredContent;
                     }

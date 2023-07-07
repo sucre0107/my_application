@@ -59,3 +59,10 @@ class CustomerServiceAssistantForm(forms.Form):
     # 用来接收翻译好的文本
     my_reply = forms.CharField(label='我的回复',
                                   widget=forms.Textarea(attrs={'class': 'cus-textarea'}))
+
+
+class ChatBotForm(forms.Form):
+    # 用户输入的文本
+    user_input = forms.CharField(label='我说',
+                                 initial="",
+                                 widget=forms.TextInput(attrs={'class': 'w-full px-3 py-2 border rounded focus:outline-none', 'placeholder':"来说点什么把...（Shift + Enter = 换行 ）"}))
