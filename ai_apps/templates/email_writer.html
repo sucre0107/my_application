@@ -55,6 +55,7 @@
                 // 检查是否按下了 Enter
                 else if (event.keyCode == 13) {
                     // 运行streamEvent函数
+					event.preventDefault()
                     streamEvent()
                 }
             });
