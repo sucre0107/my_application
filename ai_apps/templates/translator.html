@@ -32,20 +32,17 @@
 	</div>
 
 
-	<script src="{% static 'js/jquery.js' %}"></script>
-	<script src="{% static 'js/csrf.js' %}"></script>
-	<script src="{% static 'staticfiles_for_project/js/handleShiftEnter.js' %}"></script>
+
 
 	<script>
         $(function () {
             // 点击翻译事件
             $('#translateBtn').click(function () {
-                window.streamEvent();
+                streamEvent();
             });
             // 按下Enter键运行streamEvent函数
             $('#id_text').keydown(function (event) {
-				MyEnterFunction.handleShiftEnter(event);
-                MyEnterFunction.handleEnter(event);
+				handleShiftEnter(event)
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
@@ -57,7 +54,7 @@
 
         let lastText = ''
 
-        window.streamEvent  = function () {
+		function streamEvent() {
             text = $('#id_text').val()
             // 如果内容相同，不连接后端，省钱
             if (text == lastText) {
@@ -97,6 +94,23 @@
                     console.error('连接已断开', "error");
                     // 如果需要，可以尝试重新连接
                 });
+            }
+        }
+
+        function handleShiftEnter(event) {
+            if (event.shiftKey && event.keyCode == 13) {
+                // 阻止默认行为（例如，不发送表单）
+                event.preventDefault();
+                // 在光标位置插入换行符
+                var cursorPos = event.target.selectionStart;
+                var textBefore = event.target.value.substring(0, cursorPos);
+                var textAfter = event.target.value.substring(cursorPos, event.target.value.length);
+                event.target.value = textBefore + "\n" + textAfter;
+            }
+            if (event.keyCode == 13) {
+                // 运行streamEvent函数
+                event.preventDefault()
+                streamEvent()  // 直接调用全局的 streamEvent 函数
             }
         }
 
