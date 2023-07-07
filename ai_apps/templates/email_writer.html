@@ -43,7 +43,8 @@
             });
             // 按下Enter键运行streamEvent函数
             $('#id_received_email, #id_my_extra_requirement, #id_include_info').keydown(function (event) {
-                handleShiftEnter(event, streamEvent);
+                MyEnterFunction.handleShiftEnter(event);
+                MyEnterFunction.handleEnter(event, streamEvent);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {

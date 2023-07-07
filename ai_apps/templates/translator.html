@@ -44,7 +44,8 @@
             });
             // 按下Enter键运行streamEvent函数
             $('#id_text').keydown(function (event) {
-				handleShiftEnter(event, streamEvent)
+				MyEnterFunction.handleShiftEnter(event);
+                MyEnterFunction.handleEnter(event, streamEvent);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
