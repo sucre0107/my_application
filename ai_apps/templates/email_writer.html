@@ -36,14 +36,26 @@
 
 	<script>
         $(function () {
-            // 点击翻译事件
+            // 点击运行streamEvent函数
             $('#generateEmailBtn').click(function () {
                 streamEvent();
             });
             // 按下Enter键运行streamEvent函数
             $('#id_received_email', '#id_my_extra_requirement', '#id_include_info').keydown(function (event) {
-                if (event.keyCode == 13) {
-                    streamEvent();
+                // 检查是否按下了 Shift + Enter
+                if (event.shiftKey && event.keyCode == 13) {
+                    // 阻止默认行为（例如，不发送表单）
+                    event.preventDefault();
+                    // 在光标位置插入换行符
+                    var cursorPos = textarea.selectionStart;
+                    var textBefore = textarea.value.substring(0, cursorPos);
+                    var textAfter = textarea.value.substring(cursorPos, textarea.value.length);
+                    textarea.value = textBefore + "\n" + textAfter;
+                }
+                // 检查是否按下了 Enter
+                else if (event.keyCode == 13) {
+                    // 运行streamEvent函数
+                    streamEvent()
                 }
             });
             // 点击停止事件
