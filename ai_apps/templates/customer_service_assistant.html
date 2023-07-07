@@ -36,7 +36,7 @@
         $(function () {
             // 点击翻译事件
             $('#generateReplyBtn').click(function () {
-                window.streamEvent();
+                streamEvent();
             });
             $('#id_customer_message', '#id_my_extra_requirement', '#id_include_info').keydown(function (event) {
                 handleShiftEnter(event)
@@ -53,7 +53,7 @@
         let lastMyExtraRequirement = ''
         let lastIncludeInfo = ''
 
-        window.streamEvent = function () {
+		function streamEvent() {
             customer_message = $('#id_customer_message').val()
             my_extra_requirement = $('#id_my_extra_requirement').val();
             include_info = $('#id_include_info').val();
