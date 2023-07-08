@@ -13,7 +13,7 @@ from ai_apps.utils.encrypt import md5
 from ai_apps.models import Users
 
 #建立一条用户的数据
-Users.objects.create(username='sucreqiu_ai_apps', password=md5('PxUFcK!&$P2T'))
+#Users.objects.create(username='sucreqiu_ai_apps', password=md5('PxUFcK!&$P2T'))
 print("ok")
 import pymysql
 print(pymysql.__version__)

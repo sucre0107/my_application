@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'my_application',
     "ai_apps",
     "tailwind_app",
     "pknight_docs",
