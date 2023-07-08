@@ -115,6 +115,8 @@
             if (event.keyCode == 13) {
                 // 运行streamEvent函数
                 event.preventDefault()
+				// 每次按下回车键，清空id=id_translation的textarea框的值
+                $('#id_translation').val('')
                 streamEvent()  // 直接调用全局的 streamEvent 函数
             }
         }

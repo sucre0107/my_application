@@ -6,50 +6,84 @@
 {% endblock title %}
 
 {% block content %}
-<div class="h-screen flex justify-center items-center bg-gray-200">
-    <div class="bg-white p-6 rounded shadow-md w-full">
-        <div id="chatbox" class="overflow-y-auto h-full mb-4 border-b-2">
-            <!-- Messages will be added here -->
-        </div>
-		<form class="block w-3/4 mx-auto" novalidate>
-			{% csrf_token %}
-			{% for field in ChatBotForm %}
-				<div class="my-2">
-					<label class="text-xl block mb-3" for="{{ field.name }}">{{ field.label }}</label>
-					{{ field }}
-					{{ endfor }}
-				</div>
-			{% endfor %}
-		</form>
-    </div>
-</div>
-    <script>
-        const chatbox = document.getElementById('chatbox');
-        const userInput = document.getElementById('id_user_input');
 
-        userInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                const userText = userInput.value;
-                userInput.value = '';
+	<div class="h-screen flex justify-center items-center bg-gray-200">
+		<div class="bg-white p-6 rounded shadow-md w-full">
+			<div id="chatbox" class="overflow-y-auto h-full mb-4 border-b-2">
+				<!-- Messages will be added here -->
+			</div>
+			<form class="block w-3/4 mx-auto" novalidate>
+				{% csrf_token %}
+				{% for field in ChatBotForm %}
+					<div class="my-2 flex flex-row items-center h-12">
+						<!-- 三个svg按钮 -->
+						<div class="flex flex-row h-full space-x-1 mr-3">
+							<!-- 删除btn的svg -->
+							<button type="button" >
+								<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
+									 xmlns="http://www.w3.org/2000/svg"
+									 xmlns:xlink="http://www.w3.org/1999/xlink"
+									 aria-hidden="true" role="img"
+									 viewBox="0 0 24 24">
+									<path fill="currentColor"
+										  d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3Zm1 2H6v12h12V8Zm-9 3h2v6H9v-6Zm4 0h2v6h-2v-6ZM9 4v2h6V4H9Z"></path>
+								</svg>
+							</button>
 
-                // Add user's message to chatbox
-                const userDiv = document.createElement('div');
-                userDiv.textContent = `User: ${userText}`;
-                userDiv.classList.add('text-right', 'font-bold');
-                chatbox.appendChild(userDiv);
+							<!-- 下载文件的btn的svg -->
+							<button>
+								<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
+									 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									 aria-hidden="true" role="img"
+									 viewBox="0 0 24 24">
+									<path fill="currentColor"
+										  d="M13 10h5l-6 6l-6-6h5V3h2v7Zm-9 9h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2v7Z"></path>
+								</svg>
+							</button>
 
-                // Generate bot's response
-                const botResponse = `Bot: I'm a static bot, I can't generate responses yet.`;
+							<!-- 上下文开关btn的svg -->
+							<button>
+								<svg class="h-full p-2 text-green-500 rounded-full hover:bg-gray-100"
+									 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									 aria-hidden="true" role="img"
+									 viewBox="0 0 24 24">
+									<path fill="currentColor"
+										  d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.956 9.956 0 0 1-4.708-1.175L2 22l1.176-5.29A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2Zm0 2a8 8 0 0 0-8 8c0 1.335.326 2.618.94 3.766l.35.654l-.656 2.946l2.948-.654l.653.349A7.955 7.955 0 0 0 12 20a8 8 0 1 0 0-16Zm1 3v5h4v2h-6V7h2Z"></path>
+								</svg>
+							</button>
+						</div>
 
-                // Add bot's response to chatbox after a delay
-                setTimeout(() => {
-                    const botDiv = document.createElement('div');
-                    botDiv.textContent = botResponse;
-                    botDiv.classList.add('text-left', 'text-gray-500');
-                    chatbox.appendChild(botDiv);
-                }, 1000);
-            }
+						{{ field }}
+						<button id="generateChatBtn"
+								class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
+							send
+						</button>
+					</div>
+
+				{% endfor %}
+			</form>
+		</div>
+	</div>
+
+
+	<script>
+        $(function () {
+            // 点击运行streamEvent函数
+            $('#generateChatBtn').click(function () {
+                streamEvent();
+            });
+            // 按下Enter键运行streamEvent函数
+            $('#id_received_email, #id_my_extra_requirement, #id_include_info').keydown(function (event) {
+                handleShiftEnter(event);
+            });
+            // 点击停止事件
+            $('#stopbtn').click(function () {
+                stopGernerateEvent();
+            });
+            clearOldTranslation();
+
         });
-    </script>
+
+	</script>
 
 {% endblock %}
