@@ -15,9 +15,9 @@ from ai_apps.models import Users
 # 建立一条管理员的数据
 #Administrator.objects.create(username='admin111', password=md5('123456'),active=1,mobile='15088870679')
 #建立一条用户的数据
-# Users.objects.create(username='sucreqiu_ai_apps', password=md5('PxUFcK!&$P2T'))
+Users.objects.create(username='sucreqiu_ai_apps', password=md5('PxUFcK!&$P2T'))
+print("ok")
 import pymysql
 print(pymysql.__version__)
 
 
-Users.objects.create(username='sucreqiu_ai_app', password=md5('PxUFcK!&$P2'))
