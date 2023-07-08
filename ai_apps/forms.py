@@ -1,4 +1,37 @@
 from django import forms
+from django.core.validators import RegexValidator
+
+from ai_apps.utils.encrypt import md5
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label="Username",
+        label_suffix="",  # 去掉label后面的冒号
+        required=True,  # 校验不能为空
+        # 添加正则表达式，要求含有英文字母和数字，且长度为6-12位
+        widget=forms.TextInput(attrs={
+            "class": "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline",
+            "placeholder": "用户名"}),
+    )
+    password = forms.CharField(
+        label="Password",
+        label_suffix="",  # 去掉label后面的冒号
+        required=True,  # 校验不能为空
+        # 添加正则表达式，要求含有英文字母,英文标点符号或者下划线和数字，且长度为6-12位
+        widget=forms.PasswordInput(attrs={
+            "class": "w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline",
+            "placeholder": "密码"}, render_value=True),
+    )  # render_value=True,即使我们输错密码，先前输入的密码仍然会显示在输入框中
+
+    def clean_username(self):
+        return self.cleaned_data.get('username')
+    def clean_password(self):
+        # 预先对密码进行加密，视图函数中的加密就可以省略了，这样就可以保证密码的一致性
+        # 直接返回加密后的密码
+        print(md5(self.cleaned_data.get('password')))
+        return md5(self.cleaned_data.get('password'))
+
 
 
 class TranslationForm(forms.Form):

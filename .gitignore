@@ -3,7 +3,7 @@ node_modules
 #------------------------#
 
 # for settings
-local_settings.py
+my_application/local_settings.py
 
 
 # for mirgrations
@@ -19,3 +19,6 @@ local_settings.py
 
 # for rav
 rav.yaml
+
+# for proxy_middleware.py
+ai_apps/middleware/proxy_middleware.py

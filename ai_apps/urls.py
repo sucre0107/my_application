@@ -1,10 +1,12 @@
 from django.conf.urls.static import static
 from django.urls import path
 from ai_apps import views
-from ai_apps.views import translator, index, email, customer_service_assistant, chatbot
+from ai_apps.views import translator, index, email, customer_service_assistant, chatbot, auth
 from django.conf import settings
 
 urlpatterns = [
+                  path('auth/', auth.login_page, name='login_page'),
+                  path('auth/login/', auth.login_view, name='login'),
                   path("", index.index, name="index"),
                   path("trans/", translator.translator, name="translator"),
                   path("trans/translate/", translator.pack_trans_stream, name="pack_trans_stream"),

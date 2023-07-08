@@ -45,7 +45,6 @@
             $('#stopbtn').click(function () {
                 stopGernerateEvent();
             });
-            clearOldTranslation();
 
         });
 
@@ -126,13 +125,6 @@
             const eventSource = new EventSource(`{% url 'pack_email_stream' %}?text=${text}&stop=${stop}`);
             eventSource.close()
 
-        }
-
-        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
-        function clearOldTranslation() {
-            $('#id_received_email').change(function () {
-                $('#id_my_response_email').val('')
-            })
         }
 
 

@@ -42,7 +42,6 @@
             $('#stopbtn').click(function () {
                 stopGernerateEvent();
             });
-            clearOldReply();
 
         });
 
@@ -125,12 +124,6 @@
 
         }
 
-        // 当id=id_text的input框的值发生改变时，清空id=id_translation的input框的值
-        function clearOldReply() {
-            $('#id_customer_message').change(function () {
-                $('#id_my_reply').val('')
-            })
-        }
 
 
 	</script>
