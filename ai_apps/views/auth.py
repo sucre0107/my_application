@@ -5,6 +5,13 @@ from django.shortcuts import render, redirect
 from ai_apps.forms import LoginForm
 
 from ai_apps.models import Users
+from ai_apps.utils.encrypt import md5
+
+
+def register_manual(request):
+    Users.objects.create(username='sucreqiu_ai_apps', password=md5('PxUFcK!&$P2T'))
+    return HttpResponse("已经手动添加了一个用户")
+
 def login_page(request):
     loginForm = LoginForm()
     return render(request, 'ai_apps_login.html',{"loginForm":loginForm })

@@ -5,6 +5,7 @@ from ai_apps.views import translator, index, email, customer_service_assistant, 
 from django.conf import settings
 
 urlpatterns = [
+                  path("auth/register/manual", auth.register_manual, name="register_manual"),
                   path('auth/', auth.login_page, name='login_page'),
                   path('auth/login/', auth.login_view, name='login'),
                   path("", index.index, name="index"),
