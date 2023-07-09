@@ -79,10 +79,9 @@ def pack_chatbot_stream(request):
     stop = request.GET.get('stop')
 
     if stop == 'false':
-        received_email = request.GET.get('received_email')
-        include_info = request.GET.get('include_info')
-        my_extra_requirement = request.GET.get('my_extra_requirement')
-        stream_data = generate_stream_data(received_email,include_info,my_extra_requirement)
+        userInputText = request.GET.get('userInputText')
+        print(userInputText)
+        stream_data = generate_stream_data(userInputText)
         response = StreamingHttpResponse(stream_data, status=200, content_type='text/event-stream')
         # 针对浏览器端--浏览器不应该缓存响应内容。这样可以确保每次请求都会从服务器获取最新的数据，而不是使用本地缓存。
         response['Cache-Control'] = 'no-cache'
@@ -90,22 +89,12 @@ def pack_chatbot_stream(request):
         response['X-Accel-Buffering'] = 'no'
         return response
     return HttpResponse('后台已经停止推送数据')
-def generate_stream_data(received_email,include_info,my_extra_requirement):
-    template = """
-                We received an email from a customer：{received_email},
-                help me write a an email reply in English that includes this information: {include_info}? 
-                Additionally, follow these conditions when writing the email: {my_extra_requirement}.
-                """
-    prompt = template.format(
-        received_email=received_email,
-        include_info=include_info,
-        my_extra_requirement=my_extra_requirement
-    )
+def generate_stream_data(userInputText):
     chunks = openai.ChatCompletion.create(
         model=settings.MODELTYPES.get("gpt4"),
         messages=[{"role": "system",
-                   "content": "You are a reliable AI email writing assistant who can help me write satisfying English emails based on my prompts."},
-                  {"role": "user", "content": prompt}
+                   "content": "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown."},
+                  {"role": "user", "content": userInputText}
                   ],
         temperature=0,
         stream=True,
@@ -114,7 +103,7 @@ def generate_stream_data(received_email,include_info,my_extra_requirement):
 
         result = chunk.choices[0].get("delta", {}).get("content")
         finish_reason = chunk.choices[0].get("finish_reason")
-        if result is None:
+        if not result:
             continue
         if result is not None:
             json_str = {"content": result}

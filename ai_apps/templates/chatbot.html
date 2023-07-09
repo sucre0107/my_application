@@ -11,14 +11,8 @@
 			<div id="chatbox" class="overflow-y-auto h-max mb-4 border-b-2">
 
 
-				<!-- Assistant Message -->
-				<div class="flex justify-start my-2">
-					<img src="assistant_avatar_url" alt="Assistant Avatar"
-						 class="rounded-full h-10 w-10 mr-3 object-cover">
-					<div class=" bg-green-100 text-green-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
-						<div class="ai-message">## h1</div>
-					</div>
-				</div>
+				<!-- 右边用户消息  左边ai消息 -->
+
 
 			</div>
 			<!-- 电脑端的输入框 -->
@@ -61,12 +55,16 @@
 						</button>
 					</div>
 					<input type="text" id="user_input"
-						   class="w-full text-xl px-3 py-2 border rounded focus:outline-none text-gray-300"
+						   class="w-full text-xl px-3 py-2 border rounded focus:outline-none text-gray-700"
 						   placeholder="来说点什么把...（Shift + Enter = 换行 ）">
 
 					<button id="generateChatBtn"
 							class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
 						send
+					</button>
+					<button id="stopbtn"
+							class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5"
+							type="button">stop
 					</button>
 				</div>
 
@@ -78,77 +76,94 @@
 	<script>
 
         $(function () {
-            // 点击运行streamEvent函数
             $('#generateChatBtn').click(function () {
-                creatMychatDiv();
-                //streamEvent();
+                // 执行createMychatDiv()函数，并且把返回值赋值给userInputText
+                let userInputText = creatMychatDiv();
+                // 当userInputText不为空时，执行streamEvent()函数
+                if (userInputText) {
+                    streamEvent(userInputText);
+                }
             });
-            // 按下Enter键运行streamEvent函数
+
             $('#user_input').keydown(function (event) {
                 handleShiftEnter(event);
             });
-            // 点击停止事件
+
             $('#stopbtn').click(function () {
                 stopGenerateEvent();
             });
-            $('#generateChatBtn').click(function () {
 
-                //streamEvent();
-            });
-
-            convertMarkdownToHtml()
-
-
+            //convertMarkdownToHtml()
         });
+
         var chatbox = document.getElementById("chatbox");
 
         function creatMychatDiv() {
-            var userInputText = document.getElementById("user_input").value;
             var div = document.createElement("div");
+            var userInputText = document.getElementById("user_input").value
 
-            div.innerHTML = `
-        <div class="flex justify-end my-2">
-            <div class="user-message bg-blue-100 text-blue-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
-                ${userInputText}
+            if (userInputText == "") {
+                return;
+            } else {
+                div.innerHTML = `
+            <div class="flex justify-end my-2">
+                <div class="user-message bg-blue-100 text-blue-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
+                    ${userInputText}
+                </div>
+                <img src="{% static 'ai_apps/svg/ai_avatar.svg' %}" alt="User Avatar" class="rounded-full h-10 w-10 ml-3 object-cover">
             </div>
-            <img src="user_avatar_url" alt="User Avatar" class="rounded-full h-10 w-10 ml-3 object-cover">
-        </div>
-    `;
-
-            // 把这个div插入到id为chatbox的div中
-            chatbox.appendChild(div);
-
-            return div;
+        `;
+                chatbox.appendChild(div);
+                document.getElementById("user_input").value = "";
+                return userInputText;
+            }
         };
 
-        function creatStopbtnButton() {
-            // 新建一个button标签，id为stopbtn，类名为
-            var stopbtn = document.createElement("button");
-            stopbtn.innerHTML = `
-			<button id="stopbtn" type="button" class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
-				stop
-			</button>
-            `
-            // 把这个div插入到id为chatbox的div中
+        function creatAichatDIV(aiChatHtml) {
+            var div = document.createElement("div");
+            div.innerHTML = `<div class="flex justify-start my-2">
+            <img src="assistant_avatar_url" alt="Assistant Avatar"
+                 class="rounded-full h-10 w-10 mr-3 object-cover">
+            <div class=" bg-green-100 text-green-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
+                <div class="ai-message">${aiChatHtml}</div>
+            </div>
+        </div>`;
             chatbox.appendChild(div);
-        };
+        }
+
+        function streamEvent(userInputText) {
+            let stop = "false"
+            const eventSource = new EventSource(`{% url 'pack_chatbot_stream' %}?stop=${stop}&userInputText=${userInputText}`);
+            eventSource.addEventListener('message', function (e) {
+                const data = e.data;
+                var aiChatText = '';
+                if (data == '') {
+                    eventSource.close()
+                    console.log("由于后端停止，关闭sse连接")
+                } else {
+                    console.log("data:", data, typeof (data))
+                    var parsedData = JSON.parse(data);
+                    var parsedContent = parsedData.content
+                    aiChatText += parsedContent;
+                    console.log(aiChatText)
+                }
+            });
+        }
 
         function handleShiftEnter(event) {
             if (event.shiftKey && event.keyCode == 13) {
-                // 阻止默认行为（例如，不发送表单）
                 event.preventDefault();
-                // 在光标位置插入换行符
                 var cursorPos = event.target.selectionStart;
                 var textBefore = event.target.value.substring(0, cursorPos);
                 var textAfter = event.target.value.substring(cursorPos, event.target.value.length);
                 event.target.value = textBefore + "\n" + textAfter;
             }
             if (event.keyCode == 13) {
-                // 运行streamEvent函数
                 event.preventDefault()
-
-
-                streamEvent()  // 直接调用全局的 streamEvent 函数
+                let userInputText = creatMychatDiv();
+                if (userInputText) {
+                    streamEvent(userInputText);
+                }
             }
         }
 
@@ -156,20 +171,15 @@
             stop = "true"
             const eventSource = new EventSource(`{% url 'pack_chatbot_stream' %}?text=${text}&stop=${stop}`);
             eventSource.close()
-
         }
-
+		/*
         function convertMarkdownToHtml() {
-            // 创建一个 showdown 的 converter 对象
             var converter = new showdown.Converter();
-            // 获取 markdown 文本
             var markdownText = document.getElementsByClassName('ai-message')[0].innerHTML;
-
-            // 使用 converter 将 markdown 转换为 html
             var htmlText = converter.makeHtml(markdownText);
-            // 显示在页面上
             document.getElementsByClassName('ai-message')[0].innerHTML = htmlText;
-        }
+        }*/
+
 
 	</script>
 
