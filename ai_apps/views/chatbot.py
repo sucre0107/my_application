@@ -8,9 +8,8 @@ from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
 
 def chatbot(request):
     # 只是为了页面展示
-    ChatBotForm = forms.ChatBotForm()
 
-    return render(request, "chatbot.html", {"ChatBotForm": ChatBotForm})
+    return render(request, "chatbot.html")
 
 
 # def translate(request):

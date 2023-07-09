@@ -94,8 +94,3 @@ class CustomerServiceAssistantForm(forms.Form):
                                   widget=forms.Textarea(attrs={'class': 'cus-textarea'}))
 
 
-class ChatBotForm(forms.Form):
-    # 用户输入的文本
-    user_input = forms.CharField(label='',
-                                 initial="",
-                                 widget=forms.TextInput(attrs={'class': 'w-full text-xl px-3 py-2 border rounded focus:outline-none', 'placeholder':"来说点什么把...（Shift + Enter = 换行 ）"}))

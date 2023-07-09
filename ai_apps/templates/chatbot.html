@@ -1,6 +1,5 @@
 {% extends 'base_for_ai_apps.html' %}
 {% load static %}
-
 {% block title %}
 	邮件助手
 {% endblock title %}
@@ -9,80 +8,168 @@
 
 	<div class="h-screen flex justify-center items-center bg-gray-200">
 		<div class="bg-white p-6 rounded shadow-md w-full">
-			<div id="chatbox" class="overflow-y-auto h-full mb-4 border-b-2">
-				<!-- Messages will be added here -->
+			<div id="chatbox" class="overflow-y-auto h-max mb-4 border-b-2">
+
+
+				<!-- Assistant Message -->
+				<div class="flex justify-start my-2">
+					<img src="assistant_avatar_url" alt="Assistant Avatar"
+						 class="rounded-full h-10 w-10 mr-3 object-cover">
+					<div class=" bg-green-100 text-green-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
+						<div class="ai-message">## h1</div>
+					</div>
+				</div>
+
 			</div>
-			<form class="block w-3/4 mx-auto" novalidate>
-				{% csrf_token %}
-				{% for field in ChatBotForm %}
-					<div class="my-2 flex flex-row items-center h-12">
-						<!-- 三个svg按钮 -->
-						<div class="flex flex-row h-full space-x-1 mr-3">
-							<!-- 删除btn的svg -->
-							<button type="button" >
-								<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
-									 xmlns="http://www.w3.org/2000/svg"
-									 xmlns:xlink="http://www.w3.org/1999/xlink"
-									 aria-hidden="true" role="img"
-									 viewBox="0 0 24 24">
-									<path fill="currentColor"
-										  d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3Zm1 2H6v12h12V8Zm-9 3h2v6H9v-6Zm4 0h2v6h-2v-6ZM9 4v2h6V4H9Z"></path>
-								</svg>
-							</button>
+			<!-- 电脑端的输入框 -->
+			<div class="block w-3/4 mx-auto">
+				<div class="my-2 flex flex-row items-center h-12">
+					<!-- 三个svg按钮 -->
+					<div class="flex flex-row h-full space-x-1 mr-3">
+						<!-- 删除btn的svg -->
+						<button type="button">
+							<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
+								 xmlns="http://www.w3.org/2000/svg"
+								 xmlns:xlink="http://www.w3.org/1999/xlink"
+								 aria-hidden="true" role="img"
+								 viewBox="0 0 24 24">
+								<path fill="currentColor"
+									  d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3Zm1 2H6v12h12V8Zm-9 3h2v6H9v-6Zm4 0h2v6h-2v-6ZM9 4v2h6V4H9Z"></path>
+							</svg>
+						</button>
 
-							<!-- 下载文件的btn的svg -->
-							<button>
-								<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
-									 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-									 aria-hidden="true" role="img"
-									 viewBox="0 0 24 24">
-									<path fill="currentColor"
-										  d="M13 10h5l-6 6l-6-6h5V3h2v7Zm-9 9h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2v7Z"></path>
-								</svg>
-							</button>
+						<!-- 下载文件的btn的svg -->
+						<button>
+							<svg class="h-full p-2 text-gray-500 rounded-full hover:bg-gray-100"
+								 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								 aria-hidden="true" role="img"
+								 viewBox="0 0 24 24">
+								<path fill="currentColor"
+									  d="M13 10h5l-6 6l-6-6h5V3h2v7Zm-9 9h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2v7Z"></path>
+							</svg>
+						</button>
 
-							<!-- 上下文开关btn的svg -->
-							<button>
-								<svg class="h-full p-2 text-green-500 rounded-full hover:bg-gray-100"
-									 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-									 aria-hidden="true" role="img"
-									 viewBox="0 0 24 24">
-									<path fill="currentColor"
-										  d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.956 9.956 0 0 1-4.708-1.175L2 22l1.176-5.29A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2Zm0 2a8 8 0 0 0-8 8c0 1.335.326 2.618.94 3.766l.35.654l-.656 2.946l2.948-.654l.653.349A7.955 7.955 0 0 0 12 20a8 8 0 1 0 0-16Zm1 3v5h4v2h-6V7h2Z"></path>
-								</svg>
-							</button>
-						</div>
-
-						{{ field }}
-						<button id="generateChatBtn"
-								class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
-							send
+						<!-- 上下文开关btn的svg -->
+						<button>
+							<svg class="h-full p-2 text-green-500 rounded-full hover:bg-gray-100"
+								 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								 aria-hidden="true" role="img"
+								 viewBox="0 0 24 24">
+								<path fill="currentColor"
+									  d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10a9.956 9.956 0 0 1-4.708-1.175L2 22l1.176-5.29A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2Zm0 2a8 8 0 0 0-8 8c0 1.335.326 2.618.94 3.766l.35.654l-.656 2.946l2.948-.654l.653.349A7.955 7.955 0 0 0 12 20a8 8 0 1 0 0-16Zm1 3v5h4v2h-6V7h2Z"></path>
+							</svg>
 						</button>
 					</div>
+					<input type="text" id="user_input"
+						   class="w-full text-xl px-3 py-2 border rounded focus:outline-none text-gray-300"
+						   placeholder="来说点什么把...（Shift + Enter = 换行 ）">
 
-				{% endfor %}
-			</form>
+					<button id="generateChatBtn"
+							class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
+						send
+					</button>
+				</div>
+
+			</div>
 		</div>
 	</div>
 
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
 	<script>
+
         $(function () {
             // 点击运行streamEvent函数
             $('#generateChatBtn').click(function () {
-                streamEvent();
+                creatMychatDiv();
+                //streamEvent();
             });
             // 按下Enter键运行streamEvent函数
-            $('#id_received_email, #id_my_extra_requirement, #id_include_info').keydown(function (event) {
+            $('#user_input').keydown(function (event) {
                 handleShiftEnter(event);
             });
             // 点击停止事件
             $('#stopbtn').click(function () {
-                stopGernerateEvent();
+                stopGenerateEvent();
             });
-            clearOldTranslation();
+            $('#generateChatBtn').click(function () {
+
+                //streamEvent();
+            });
+
+            convertMarkdownToHtml()
+
 
         });
+        var chatbox = document.getElementById("chatbox");
+
+        function creatMychatDiv() {
+            var userInputText = document.getElementById("user_input").value;
+            var div = document.createElement("div");
+
+            div.innerHTML = `
+        <div class="flex justify-end my-2">
+            <div class="user-message bg-blue-100 text-blue-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
+                ${userInputText}
+            </div>
+            <img src="user_avatar_url" alt="User Avatar" class="rounded-full h-10 w-10 ml-3 object-cover">
+        </div>
+    `;
+
+            // 把这个div插入到id为chatbox的div中
+            chatbox.appendChild(div);
+
+            return div;
+        };
+
+        function creatStopbtnButton() {
+            // 新建一个button标签，id为stopbtn，类名为
+            var stopbtn = document.createElement("button");
+            stopbtn.innerHTML = `
+			<button id="stopbtn" type="button" class="h-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5">
+				stop
+			</button>
+            `
+            // 把这个div插入到id为chatbox的div中
+            chatbox.appendChild(div);
+        };
+
+        function handleShiftEnter(event) {
+            if (event.shiftKey && event.keyCode == 13) {
+                // 阻止默认行为（例如，不发送表单）
+                event.preventDefault();
+                // 在光标位置插入换行符
+                var cursorPos = event.target.selectionStart;
+                var textBefore = event.target.value.substring(0, cursorPos);
+                var textAfter = event.target.value.substring(cursorPos, event.target.value.length);
+                event.target.value = textBefore + "\n" + textAfter;
+            }
+            if (event.keyCode == 13) {
+                // 运行streamEvent函数
+                event.preventDefault()
+
+
+                streamEvent()  // 直接调用全局的 streamEvent 函数
+            }
+        }
+
+        function stopGenerateEvent() {
+            stop = "true"
+            const eventSource = new EventSource(`{% url 'pack_chatbot_stream' %}?text=${text}&stop=${stop}`);
+            eventSource.close()
+
+        }
+
+        function convertMarkdownToHtml() {
+            // 创建一个 showdown 的 converter 对象
+            var converter = new showdown.Converter();
+            // 获取 markdown 文本
+            var markdownText = document.getElementsByClassName('ai-message')[0].innerHTML;
+
+            // 使用 converter 将 markdown 转换为 html
+            var htmlText = converter.makeHtml(markdownText);
+            // 显示在页面上
+            document.getElementsByClassName('ai-message')[0].innerHTML = htmlText;
+        }
 
 	</script>
 
