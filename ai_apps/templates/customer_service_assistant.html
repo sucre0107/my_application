@@ -49,7 +49,7 @@
         let lastMyExtraRequirement = ''
         let lastIncludeInfo = ''
 
-		function streamEvent() {
+        function streamEvent() {
             customer_message = $('#id_customer_message').val()
             my_extra_requirement = $('#id_my_extra_requirement').val();
             include_info = $('#id_include_info').val();
@@ -72,6 +72,8 @@
             } else {
                 // 内容不为空，连接后端
                 stop = "false"  // 设置get请求的stop参数，在后端判断是否停止
+				// 清空id=id_my_reply的textarea框的值
+                $('#id_my_reply').val('')
                 const eventSource = new EventSource(`{% url 'pack_reply_stream' %}?stop=${stop}&customer_message=${customer_message}&my_extra_requirement=${my_extra_requirement}&include_info=${include_info}`);
                 eventSource.addEventListener('message', function (e) {
                     const data = e.data;
@@ -111,8 +113,7 @@
             if (event.keyCode == 13) {
                 // 运行streamEvent函数
                 event.preventDefault()
-				// 每次按下回车键，清空id=id_translation的textarea框的值
-                $('#id_translation').val('')
+                // 每次按下回车键，清空id=id_translation的textarea框的值
                 streamEvent()  // 直接调用全局的 streamEvent 函数
             }
         }
@@ -123,7 +124,6 @@
             eventSource.close()
 
         }
-
 
 
 	</script>

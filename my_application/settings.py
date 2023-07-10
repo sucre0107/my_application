@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []  # 当DEBUG为False时，需要配置允许访问的域名，
 # 这里是验证外部请求request的header中的host是否在ALLOWED_HOSTS中，如果不在，就不能访问
 
 # Application definition
-MODELTYPES = {"gpt3": "gpt-3.5-turbo", "gpt4": "gpt-4", "gpt416k": "gpt-4-16k", "gpt432k": "gpt-4-32k"}
+MODELTYPES = {"gpt3.5turbo": "gpt-3.5-turbo", "gpt4": "gpt-4", "gpt416k": "gpt-4-16k", "gpt432k": "gpt-4-32k"}
 
 INSTALLED_APPS = [
     "django.contrib.admin",

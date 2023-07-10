@@ -91,7 +91,7 @@ def pack_chatbot_stream(request):
     return HttpResponse('后台已经停止推送数据')
 def generate_stream_data(userInputText):
     chunks = openai.ChatCompletion.create(
-        model=settings.MODELTYPES.get("gpt4"),
+        model=settings.MODELTYPES.get("gpt3.5turbo"),
         messages=[{"role": "system",
                    "content": "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown."},
                   {"role": "user", "content": userInputText}
