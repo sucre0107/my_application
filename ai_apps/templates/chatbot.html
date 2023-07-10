@@ -152,11 +152,12 @@
                     fullAiChatHtml = convertMarkdownToHtml(fullAiChatText); // 将AI的回复转换为html格式
                     div.querySelector("#new-ai-message").innerHTML = fullAiChatHtml; // 首先运行div=createAiChat()函数，并且更新div的内容
                     chatbox.appendChild(div);
-                    // 将div.querySelector("#new-ai-message")的id设置去掉，否则会导致多个div公用相同的id
-					div.querySelector("#new-ai-message").removeAttribute("id");
                     console.log(fullAiChatText) // 打印AI的回复
+                    // 将div.querySelector("#new-ai-message")的id设置去掉，否则会导致多个div公用相同的id
+                    div.querySelector("#new-ai-message").removeAttribute("id");
                 }
             });
+
         }
 
 
@@ -188,6 +189,8 @@
             var aiChatHtml = converter.makeHtml(aiChatText);
             return aiChatHtml;
         }
+
+
 
 
 	</script>
