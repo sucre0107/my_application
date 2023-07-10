@@ -75,6 +75,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
 	<script>
 
+
+
         $(function () {
             $('#generateChatBtn').click(function () {
                 // 执行createMychatDiv()函数，并且把返回值赋值给userInputText
@@ -92,13 +94,25 @@
             $('#stopbtn').click(function () {
                 stopGenerateEvent();
             });
-            $('#')
-            //convertMarkdownToHtml()
+
+            recoverChatHistory();
         });
 
         var chatbox = document.getElementById("chatbox");
-        // 必须外部创建一个div，如果在streamEvent()函数里面创建的话，会导致每次都会创建一个新的div，而不是在原来的div里面添加内容，并且多个div公用相同的id
-        var div = creatAichatDIV('')
+
+        // 页面加载时，从localStorage恢复div
+        function recoverChatHistory() {
+            window.onload = function () {
+                var savedMyChatContent = localStorage.getItem('myChatDiv');
+                var savedAiChatContent = localStorage.getItem('aiChatDiv');
+                if (savedMyChatContent) {
+                    chatbox.innerHTML += savedMyChatContent;
+                }
+                if (savedAiChatContent) {
+                    chatbox.innerHTML += savedAiChatContent;
+                }
+            };
+        }
 
         function creatMychatDiv() {
             var div = document.createElement("div");
@@ -116,6 +130,7 @@
             </div>
         `;
                 chatbox.appendChild(div);
+                localStorage.setItem('myChatDiv', chatbox.innerHTML);  // 新增代码保存聊天记录
                 document.getElementById("user_input").value = "";
                 return userInputText;
             }
@@ -127,7 +142,7 @@
         <img src="{% static 'ai_apps/svg/ai_avatar.svg' %}" alt="Assistant Avatar"
              class="rounded-full h-10 w-10 mr-3 object-cover">
         <div class=" bg-green-100 text-green-700 rounded-lg px-4 py-2 inline-block max-w-xs break-words">
-            <div id="new-ai-message">${aiChatText}</div>
+            <div class="ai-message">${aiChatText}</div>
         </div>
     </div>`;
             return div
@@ -135,11 +150,12 @@
 
         function streamEvent(userInputText) {
             let stop = "false"
-            var fullAiChatText = ''; // 定义一个空字符串，用于存储AI的回复
             const eventSource = new EventSource(`{% url 'pack_chatbot_stream' %}?stop=${stop}&userInputText=${userInputText}`);
+            var fullAiChatText = "";  // 用于保存AI的回复
+            // 在调用 streamEvent 函数时创建一个新的 div
+            var aiChatdiv = creatAichatDIV('');
             eventSource.addEventListener('message', function (e) {
                 const data = e.data;
-                var fullAiChatHtml;
                 if (data == '') {
                     eventSource.close()
                     console.log("由于后端停止，关闭sse连接")
@@ -149,14 +165,16 @@
                     var parsedData = JSON.parse(data);
                     var parsedContent = parsedData.content
                     fullAiChatText += parsedContent
-                    fullAiChatHtml = convertMarkdownToHtml(fullAiChatText); // 将AI的回复转换为html格式
-                    div.querySelector("#new-ai-message").innerHTML = fullAiChatHtml; // 首先运行div=createAiChat()函数，并且更新div的内容
-                    chatbox.appendChild(div);
-                    console.log(fullAiChatText) // 打印AI的回复
-                    // 将div.querySelector("#new-ai-message")的id设置去掉，否则会导致多个div公用相同的id
-                    div.querySelector("#new-ai-message").removeAttribute("id");
+                    console.log("fullAiChatText:", fullAiChatText, typeof (fullAiChatText))
+                    var fullAiChatHtml = convertMarkdownToHtml(fullAiChatText); // 将AI的回复转换为html格式
+                    console.log("fullAiChatHtml:", fullAiChatHtml, typeof (fullAiChatHtml))
+                    // 更新 div 的内容
+                    aiChatdiv.querySelector(".ai-message").innerHTML = fullAiChatHtml;
                 }
             });
+            // 一定要在 eventSource.addEventListener 之后再调用 appendChild，不然会一直覆盖原来的aiChatdiv
+            chatbox.appendChild(aiChatdiv);
+            localStorage.setItem('aiChatDiv', chatbox.innerHTML);  // 新增代码，保存聊天记录
 
         }
 
@@ -185,12 +203,16 @@
         }
 
         function convertMarkdownToHtml(aiChatText) {
-            var converter = new showdown.Converter();
-            var aiChatHtml = converter.makeHtml(aiChatText);
-            return aiChatHtml;
+            try {
+                var converter = new showdown.Converter();
+                var aiChatHtml = converter.makeHtml(aiChatText);
+                return aiChatHtml;
+            } catch (error) {
+                console.error("Markdown转换出错: ", error);
+                // 返回原始文本或者一些默认的HTML，以防Markdown转换失败
+                return aiChatText || "<p>无法显示内容</p>";
+            }
         }
-
-
 
 
 	</script>
