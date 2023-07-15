@@ -9,3 +9,19 @@ def usbelf_doc(request):
     response['Cache-Control'] = 'no-cache' #针对浏览器端
     response['X-Accel-Buffering'] = 'no'  #针对nginx服务器端
     return response
+
+def usbelf_ios(request):
+    # 将render返回的HttpResponse对象赋值给response
+    response = HttpResponse(render(request, 'usbelf_doc_for_iOS.html'))
+     # 设置响应头，不缓存
+    response['Cache-Control'] = 'no-cache' #针对浏览器端
+    response['X-Accel-Buffering'] = 'no'  #针对nginx服务器端
+    return response
+
+def usbelf_android(request):
+    # 将render返回的HttpResponse对象赋值给response
+    response = HttpResponse(render(request, 'usbelf_doc_for_Android.html'))
+     # 设置响应头，不缓存
+    response['Cache-Control'] = 'no-cache' #针对浏览器端
+    response['X-Accel-Buffering'] = 'no'  #针对nginx服务器端
+    return response

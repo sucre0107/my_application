@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pknight_docs.views import index,usbelf
+from pknight_docs.views import index, usbelf
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
-    path("",index.index, name="pknight_doc_index"),
-    path("usbelf/",usbelf.usbelf_doc, name="pknight_doc_usbelf"),
-]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  path("", index.index, name="pknight_doc_index"),
+                  path("usbelf/", usbelf.usbelf_doc, name="pknight_doc_usbelf"),
+                  path("usbelf/ios/", usbelf.usbelf_ios, name="pknight_doc_usbelf_ios"),
+                  path("usbelf/android/", usbelf.usbelf_android, name="pknight_doc_usbelf_android"),
+
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # if settings.DEBUG:
 #     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
