@@ -3,6 +3,10 @@
 {% block title %}
 	邮件助手
 {% endblock title %}
+{#插入markdown的css文件#}
+{% block headers %}
+	<link rel="stylesheet" href="{% static 'css/github-markdown.css' %}">
+{% endblock headers %}
 
 {% block content %}
 
@@ -16,7 +20,7 @@
 
 			</div>
 			<!-- 电脑端的输入框 -->
-			<div class="block w-3/4 mx-auto">
+			<div class="block w-3/4 mx-auto fix bottom-0">
 				<div class="my-2 flex flex-row items-center h-12">
 					<!-- 三个svg按钮 -->
 					<div class="flex flex-row h-full space-x-1 mr-3">
@@ -74,7 +78,6 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
 	<script>
-
 
 
         $(function () {
@@ -205,7 +208,11 @@
         function convertMarkdownToHtml(aiChatText) {
             try {
                 var converter = new showdown.Converter();
+                // 使用Showdown转换Markdown为HTML
                 var aiChatHtml = converter.makeHtml(aiChatText);
+                // 添加markdown-body class
+                aiChatHtml = '<div class="markdown-body">' + aiChatHtml + '</div>';
+
                 return aiChatHtml;
             } catch (error) {
                 console.error("Markdown转换出错: ", error);
