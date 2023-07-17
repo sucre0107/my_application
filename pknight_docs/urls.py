@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
                   path("", index.index, name="pknight_doc_index"),
                   path("usbelf/", usbelf.usbelf_doc, name="pknight_doc_usbelf"),
-                  path("usbelf/ios/", usbelf.usbelf_ios, name="pknight_doc_usbelf_ios"),
+                  path("usbelf/apple/", usbelf.usbelf_apple, name="pknight_doc_usbelf_apple"),
                   path("usbelf/android/", usbelf.usbelf_android, name="pknight_doc_usbelf_android"),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
