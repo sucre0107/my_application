@@ -20,7 +20,7 @@ def usbelf_apple(request):
 
 def usbelf_android(request):
     # 将render返回的HttpResponse对象赋值给response
-    response = HttpResponse(render(request, 'usbelf_doc_for_Android.html'))
+    response = HttpResponse(render(request, 'usbelf_doc_for_android.html'))
      # 设置响应头，不缓存
     response['Cache-Control'] = 'no-cache' #针对浏览器端
     response['X-Accel-Buffering'] = 'no'  #针对nginx服务器端
