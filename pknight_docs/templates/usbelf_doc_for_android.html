@@ -17,7 +17,9 @@
 			by establishing a WiFi hotspot that your device can connect to,
 			allowing straightforward adjustments to your lighting setup. <br>
 
-			To use USBelf, download the WIFI-RDM app from <a href="https://qrco.de/USBelf-for-android">this link</a>. This application is the command center for your
+			To use USBelf, download the WIFI-RDM app from <a class="text-blue-700 underline"
+															 href="https://qrco.de/USBelf-for-android">this link</a>.
+			This application is the command center for your
 			lights, permitting changes to settings as needed. <br>
 
 			In short, USBelf is a practical tool for integrating your lighting system with the Apple ecosystem,
@@ -53,22 +55,18 @@
 		</h3>
 		{#	apps 	#}
 		<div class="mt-5 ml-3">
-			<a href="https://qrco.de/USBelf-for-ios">
+			<a href="https://qrco.de/USBelf-for-android">
 				<button
 						type="button"
 						class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
-					>>> Download App for iOS macOS iPadOS
+					>>> Download App for Android
 				</button>
 			</a>
 		</div>
-		<!-- 4. App on macOS-->
+		<!-- 4. App on Android-->
 		<h3 class="mb-2 mt-5">
-			4. App on macOS
+			4. App on Android
 		</h3>
-		<p class="mb-2  text-xl font-bold bg-gray-100 p-2 rounded-md">Given that all devices within the Apple ecosystem
-			utilize the same applications, we will use macOS as the
-			demonstration platform. The operations on iPad and iPhone are identical. Hence, you can apply the same
-			instructions across different devices.</p>
 		<!-- 4.1 How to Connect the Dongle to The App?-->
 		<h4 class="mb-2 mt-5">
 			4.1 How to Connect the Dongle to The App？
@@ -84,54 +82,10 @@
 			computer. If connected to a computer for power, the device will automatically shut down its generated WiFi
 			hotspot.
 		</p>
-		<button type="button"
-				class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
-		>
-			<span>Watch the demonstration.</span>
-			<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
-				 viewBox="0 0 20 20"
-				 xmlns="http://www.w3.org/2000/svg">
-				<path fill-rule="evenodd"
-					  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-					  clip-rule="evenodd"></path>
-			</svg>
-		</button>
-		<div id="accordion-flush-body" class="cus-accordion-flush-body"
-			 aria-labelledby="accordion-flush-heading-1">
-			<img class="zoomable-image object-contain cursor-zoom-in"
-				 src="{% static 'pknight_docs/usbelf/assets/images/How to connect the dongle to the app.gif' %}"
-				 alt="How to connect the dongle to the app">
-		</div>
 
-		<!-- 4.2 how to send identify singnal to fixture?-->
+		<!-- 4.2 How to Discover RDM Fixtures?-->
 		<h4 class="mb-2 mt-5">
-			4.2 How to Send Identify Singnal to Fixture?
-		</h4>
-		<p class="mb-2">
-			By clicking on the icon at the far left of each light fixture row, you can send an 'identify' signal to the
-			fixture. The light will then flash, making it easy for you to locate that specific fixture. </p>
-		<button type="button"
-				class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
-		>
-			<span>Watch the demonstration.</span>
-			<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
-				 viewBox="0 0 20 20"
-				 xmlns="http://www.w3.org/2000/svg">
-				<path fill-rule="evenodd"
-					  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-					  clip-rule="evenodd"></path>
-			</svg>
-		</button>
-		<div id="accordion-flush-body" class="cus-accordion-flush-body"
-			 aria-labelledby="accordion-flush-heading-1">
-			<img class="zoomable-image object-contain cursor-zoom-in"
-				 src="{% static 'pknight_docs/usbelf/assets/images/how to send identify singnal to fixture.gif' %}"
-				 alt="How to connect the dongle to the app">
-		</div>
-
-		<!-- 4.3 How to Discover RDM Fixtures?-->
-		<h4 class="mb-2 mt-5">
-			4.3 How to Discover RDM Fixtures?
+			4.2 How to Discover RDM Fixtures?
 		</h4>
 		<p class="mb-2">
 			After connecting the USBelf to the app, you can discover all the RDM fixtures connected to the USBelf.
@@ -150,15 +104,42 @@
 		</button>
 		<div id="accordion-flush-body" class="cus-accordion-flush-body"
 			 aria-labelledby="accordion-flush-heading-1">
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/6vIkQW0JKAc?start=1"
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/q0FQXkeF_jU?start=1"
 					title="YouTube video player" frameborder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					allowfullscreen></iframe>
-			<p class="mt-3">In the demonstration video above, we introduced two methods for searching for fixtures.
-				Additionally, according to your needs, you can delete either a specific fixture that you've
-				searched for, or all of them.
+			<p class="mt-3">In the demonstration video above, by simply clicking the "Discovery" button, the app begins
+				searching for connected RDM light fixtures. The video displays six rows of data, each row representing a
+				fixture. Clicking "Clear" will remove the search results.
 			</p>
 		</div>
+
+		<!-- 4.3 how to send identify singnal to fixture?-->
+		<h4 class="mb-2 mt-5">
+			4.3 How to Send Identify Singnal to Fixture?
+		</h4>
+		<p class="mb-2">
+			By clicking on the icon at the far left of each light fixture row, you can send an 'identify' signal to the
+			fixture. The fixture will then flash, making it easy for you to locate that specific fixture. </p>
+		<button type="button"
+				class="accordion-btn flex items-center justify-between w-full py-3 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+		>
+			<span>Watch the demonstration.</span>
+			<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+				 viewBox="0 0 20 20"
+				 xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd"
+					  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+					  clip-rule="evenodd"></path>
+			</svg>
+		</button>
+		<div id="accordion-flush-body" class="cus-accordion-flush-body"
+			 aria-labelledby="accordion-flush-heading-1">
+			<img class="zoomable-image object-contain cursor-zoom-in h-96"
+				 src="{% static 'pknight_docs/usbelf/assets/images/how to send identify singnal to fixture-android.gif' %}"
+				 alt="How to connect the dongle to the app">
+		</div>
+
 		<!-- 4.4 How to adjust fixture settings-->
 		<h4 class="mb-2 mt-5">
 			4.4 How to Adjust Fixture Settings?
@@ -177,7 +158,7 @@
 		</button>
 		<div id="accordion-flush-body" class="cus-accordion-flush-body"
 			 aria-labelledby="accordion-flush-heading-1">
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/v-_BBfkaH_E?start=1"
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/XColVfEBpCc?start=1"
 					title="YouTube video player" frameborder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 					allowfullscreen></iframe>
