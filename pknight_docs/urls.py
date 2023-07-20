@@ -25,7 +25,11 @@ urlpatterns = [
                   path("usbelf/", usbelf.usbelf_doc, name="pknight_doc_usbelf"),
                   path("usbelf/apple/", usbelf.usbelf_apple, name="pknight_doc_usbelf_apple"),
                   path("usbelf/android/", usbelf.usbelf_android, name="pknight_doc_usbelf_android"),
-                  path('usbelf/apps/<str:app_type>/', usbelf.usbelf_apps), # 用于处理usbelf的app下载页面
+                  # path('usbelf/apps/<str:app_type>/', usbelf.usbelf_apps),  # 用于处理usbelf的app下载页面，这里不好命名我不使用
+                  path('usbelf/apps/win/', usbelf.usbelf_apps, name="usbelf_app_win"),
+                  path('usbelf/apps/apple/', usbelf.usbelf_apps, name="usbelf_app_apple"),
+                  path('usbelf/apps/android/', usbelf.usbelf_apps, name="usbelf_app_android")
+
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # if settings.DEBUG:
 #     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

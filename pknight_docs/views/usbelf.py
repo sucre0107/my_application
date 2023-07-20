@@ -2,14 +2,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-def usbelf_apps(request, app_type):
-    if app_type == "win":
-        return HttpResponse(render(request, 'usbelf_app_win.html', {"app_type": app_type}))
-    elif app_type == "apple":
+def usbelf_apps(request):
+    path_list = ''
+    if request.path == "/pknight_docs/usbelf/apps/win/":
+        return HttpResponse(render(request, 'usbelf_app_win.html'))
+    elif request.path == "/pknight_docs/usbelf/apps/apple/":
         return redirect("https://qrco.de/USBelf-for-ios")
-    elif app_type == "android":
-        return HttpResponse(render(request, 'usbelf_app_android.html', {"app_type": app_type}))
+    elif request.path == "/pknight_docs/usbelf/apps/android/":
+        return HttpResponse(render(request, 'usbelf_app_android.html'))
     else:
+        print(request.path)
         return HttpResponse("Invalid app type.", status=400)
 
 
