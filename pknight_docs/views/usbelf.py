@@ -7,7 +7,7 @@ def usbelf_apps(request):
     if request.path == "/pknight_docs/usbelf/apps/win/":
         return HttpResponse(render(request, 'usbelf_app_win.html'))
     elif request.path == "/pknight_docs/usbelf/apps/apple/":
-        return redirect("https://qrco.de/USBelf-for-ios")
+        return redirect("https://apps.apple.com/app/id1487361715")
     elif request.path == "/pknight_docs/usbelf/apps/android/":
         return HttpResponse(render(request, 'usbelf_app_android.html'))
     else:
