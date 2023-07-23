@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pknight_docs.views import index, usbelf
+from pknight_docs.views import index, usbelf, ars2048b
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,7 +28,9 @@ urlpatterns = [
                   # path('usbelf/apps/<str:app_type>/', usbelf.usbelf_apps),  # 用于处理usbelf的app下载页面，这里不好命名我不使用
                   path('usbelf/apps/win/', usbelf.usbelf_apps, name="usbelf_app_win"),
                   path('usbelf/apps/apple/', usbelf.usbelf_apps, name="usbelf_app_apple"),
-                  path('usbelf/apps/android/', usbelf.usbelf_apps, name="usbelf_app_android")
+                  path('usbelf/apps/android/', usbelf.usbelf_apps, name="usbelf_app_android"),
+                  path('ars2048b/', ars2048b.ars2048b_doc, name='pknight_doc_ars2048b'),
+                  path('ars2048b/apps/win/', ars2048b.ars2048b_apps, name="ars2048b_app_win"),
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # if settings.DEBUG:
