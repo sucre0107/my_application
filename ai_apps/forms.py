@@ -26,12 +26,14 @@ class LoginForm(forms.Form):
 
     def clean_username(self):
         return self.cleaned_data.get('username')
+
     def clean_password(self):
         # 预先对密码进行加密，视图函数中的加密就可以省略了，这样就可以保证密码的一致性
         # 直接返回加密后的密码
-        print(md5(self.cleaned_data.get('password')))
-        return md5(self.cleaned_data.get('password'))
-
+        password_hash = md5(self.cleaned_data.get('password'))
+        print(password_hash)
+        # 确保返回一个字符串
+        return str(password_hash)
 
 
 class TranslationForm(forms.Form):
