@@ -9,6 +9,7 @@
 {% block content %}
 	<div class="relative mt-10">
 		<form class="block w-3/4 mx-auto" novalidate>
+
 			{% csrf_token %}
 			{% for field in form %}
 				<div class="my-2">
