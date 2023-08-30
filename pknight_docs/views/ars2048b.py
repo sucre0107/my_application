@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 
 def ars2048b_apps(request):
