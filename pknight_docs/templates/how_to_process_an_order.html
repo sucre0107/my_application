@@ -7,7 +7,81 @@
 
 
 {% block content %}
-<div class="container max-w-screen-xl mx-auto py-5 px-5">
-		<h2 class="mb-2">How to process the order</h2>
-</div>
+	<div class="container mx-auto p-8">
+		<h1 class="text-4xl font-bold mb-4">Shopping Guide</h1>
+
+		<!-- Page One: How to Place an Order -->
+		<div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+			<h2 class="text-2xl font-semibold mb-4">Page One: How to Place an Order</h2>
+			<div class="mb-4">
+				<img class="zoomable-image object-contain cursor-zoom-in"
+					 src="{% static 'pknight_docs/shopping_guide/shopping_guide_1.jpg' %}"
+					 alt="web config">
+			</div> <!-- Placeholder for image -->
+			<ul class="list-disc pl-8">
+				<li>Choose the country of shipment, product specifications, and quantity.</li>
+				<li>You have three buttons to choose from:
+					<ul class="list-decimal pl-8">
+						<li>Add To Cart: Use this to add the product to your shopping cart. This is usually for
+							purchasing multiple items.
+						</li>
+						<li>BUY IT NOW: Use this to go directly to the checkout page.</li>
+						<li>Inquiry Now: Use this to send an email for product inquiries or to request a discount
+							code.
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Page Two: Shopping Cart -->
+		<div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+			<h2 class="text-2xl font-semibold mb-4">Page Two: Shopping Cart</h2>
+			<div class="mb-4">
+				<img class="zoomable-image object-contain cursor-zoom-in"
+					 src="{% static 'pknight_docs/shopping_guide/shopping_guide_2.jpg' %}"
+					 alt="web config">
+			</div> <!-- Placeholder for image -->
+			<ul class="list-disc pl-8">
+				<li>You can modify the quantity of the products in your cart or remove them entirely.</li>
+				<li>In the ORDER SUMMARY section, you can see the total cost of the items you're purchasing.</li>
+				<li>You have three buttons to choose from:
+					<ul class="list-decimal pl-8">
+						<li>Proceed To Checkout: Use this to go to the detailed checkout page where you can choose your
+							payment method and billing and shipping addresses.
+						</li>
+						<li>Continue Shopping: Use this to go back to the product page on the website, where you can
+							continue to add other products to your cart.
+						</li>
+						<li>PayPal: Use this to skip the detailed checkout page and directly proceed with PayPal as your
+							payment method.
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Page Three: Checkout Details -->
+		<div class="bg-white p-6 rounded-lg shadow-lg">
+			<h2 class="text-2xl font-semibold mb-4">Page Three: Checkout Details</h2>
+			<div class="mb-4">
+				<img class="zoomable-image object-contain cursor-zoom-in"
+					 src="{% static 'pknight_docs/shopping_guide/shopping_guide_3.jpg' %}"
+					 alt="web config">
+			</div> <!-- Placeholder for image -->
+			<ul class="list-disc pl-8">
+				<li>If you still wish to use PayPal, you can click on the Paypal in red section.</li>
+				<li>If you want to pay by credit card, please use the blue section.</li>
+				<ul class="list-decimal pl-8">
+					<li>Fill in your shipping address.</li>
+					<li>Choose your shipping method.</li>
+					<li>Select your payment method; here, choose Pay by "credit/debit card and more"</li>
+					<li>If you have a discount code, please enter it in the section on the right and click "apply" to use
+						your discount code.
+					</li>
+				</ul>
+			</ul>
+		</div>
+
+	</div>
 {% endblock content %}
