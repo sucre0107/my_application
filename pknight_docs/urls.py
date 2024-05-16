@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pknight_docs.views import index, usbelf, ars2048b, how_to_process_an_order, wifi_dmx_pro
+from pknight_docs.views import index, usbelf, ars2048b, how_to_process_an_order, wifi_dmx_pro, dr_pb_mini
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -32,6 +32,7 @@ urlpatterns = [
                   path('ars2048b/', ars2048b.ars2048b_doc, name='pknight_doc_ars2048b'),
                   path('ars2048b/apps/win/', ars2048b.ars2048b_apps, name="ars2048b_app_win"),
                   path('wifidmxpro/apps/android/', wifi_dmx_pro.wifi_dmx_pro_apps, name="wifidmxpro_apps"),
+                  path('dmx_recorder/dr_pb_mini/', dr_pb_mini.dr_pb_mini_doc, name="dr_pb_mini_doc"),
 
                   path('how_to_process_an_order/', how_to_process_an_order.how_to_process_an_order, name="how_to_process_an_order" )
 
