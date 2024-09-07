@@ -1,0 +1,44 @@
+{% extends 'base_for_pknight_docs.html' %}
+{% load static %}
+
+{% block title %}
+	WIFI 512 App for Android
+{% endblock title %}
+
+
+{% block content %}
+
+	<div class="container h-screen max-w-screen-xl mx-auto py-5 px-5">
+		<div class="flex flex-row justify-between">
+
+			<a class="text-blue-700 hover:underline"
+			   href="{% static 'pknight_docs/wifi512/apps/WIFI512_1.0.8.apk' %}">USBelf-android-23.7.18.apk</a>
+			<span class="text-gray-500">2023.12.18</span>
+		</div>
+
+	</div>
+
+	{# 折叠对象的js #}
+	<script>
+        const accordionBtn = document.getElementsByClassName('accordion-btn');
+        for (let i = 0; i < accordionBtn.length; i++) {
+            accordionBtn[i].addEventListener("click", function () {
+                let icon = this.querySelector('[data-accordion-icon]');
+                this.classList.toggle("active");
+                icon.classList.toggle('rotate-180');
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+	</script>
+
+
+
+
+
+
+{% endblock content %}
