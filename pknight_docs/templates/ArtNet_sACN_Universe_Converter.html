@@ -1,13 +1,12 @@
-{% extends 'base_for_pknight_docs.html' %}
-{% load static %}
-
-{% block title %}
-	Art-Net & sACN Universe Converter
-{% endblock title %}
-
-
-{% block content %}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Art-Net & sACN Universe Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
   <div style="text-align: right; padding: 12px 24px 0;">
     <span style="font-weight: 600; font-size: 1.03em; color: #444;">Language / 语言：</span>
     <select id="langSelect" onchange="switchLanguage()" style="font-size: 1em; margin-left: 4px;">
@@ -240,11 +239,5 @@
       switchLanguage();
     });
   </script>
-
-
-
-
-
-
-
-{% endblock content %}
+</body>
+</html>
