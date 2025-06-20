@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pknight_docs.views import index, usbelf, ars2048b, how_to_process_an_order, wifi_dmx_pro, dr_pb_mini, wifi512
+from pknight_docs.views import index, usbelf, ars2048b, how_to_process_an_order, wifi_dmx_pro, dr_pb_mini, wifi512, ArtNet_sACN_Universe_Converter
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -36,7 +36,10 @@ urlpatterns = [
 
                   path('dmx_recorder/dr_pb_mini/', dr_pb_mini.dr_pb_mini_doc, name="dr_pb_mini_doc"),
 
-                  path('how_to_process_an_order/', how_to_process_an_order.how_to_process_an_order, name="how_to_process_an_order" )
+                  path('how_to_process_an_order/', how_to_process_an_order.how_to_process_an_order, name="how_to_process_an_order" ),
+
+                  path('ArtNet_sACN_Universe_Converter/', ArtNet_sACN_Universe_Converter.ArtNet_sACN_Universe_Converter,
+                       name="ArtNet_sACN_Universe_Converter")
 
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # if settings.DEBUG:
